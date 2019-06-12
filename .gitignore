@@ -16,6 +16,7 @@ nginx.conf
 /.vscode
 /nbproject
 /.vagrant
+/~/.vscode-root
 Homestead.json
 Homestead.yaml
 npm-debug.log
