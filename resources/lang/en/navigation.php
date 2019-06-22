@@ -55,8 +55,12 @@ return [
 
     'dashboard' => 'Dashboard',
     'resources' => 'Resources',
+    'clientsResources' => 'Clients',
     'users' => 'Users',
     'roles' => 'Roles',
+    'clients'=>'Clients',
+    'traders' => 'Traders',
+    'vendors' => 'Vendors',
 
     'citation' => 'Built with ❤️ by'
 ];

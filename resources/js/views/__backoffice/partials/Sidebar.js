@@ -102,7 +102,39 @@ function Sidebar(props) {
                 },
             ],
         },
-
+        {
+            name: Lang.get('navigation.traders'),
+            id: 'traders',
+            links:[
+                {
+                    name:Lang.get('navigation.clients'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.clients') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'backoffice.resources.clients.index',
+                    ),
+                },{
+                    name:Lang.get('navigation.vendors'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.vendors') :''
+                            }
+                        >
+                        <PeopleIcon/>
+                        </Tooltip>
+                    ),
+                    path: null,
+                }
+            ],
+        },
         {
             name: 'Analytics',
             id: 'analytics',
