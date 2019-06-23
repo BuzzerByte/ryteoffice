@@ -20,6 +20,7 @@ import * as UrlUtils from '../../../helpers/URL';
 import { Table } from '../../../ui';
 import { Master as MasterLayout } from '../layouts';
 import { User } from '../../../models';
+import { Client } from '../../../models';
 import { AppContext } from '../../../AppContext';
 
 function List(props) {
@@ -45,10 +46,10 @@ function List(props) {
         setAlert({
             type: 'confirmation',
             title: Lang.get('resources.delete_confirmation_title', {
-                name: 'User',
+                name: 'Client',
             }),
             body: Lang.get('resources.delete_confirmation_body', {
-                name: 'User',
+                name: 'Client',
             }),
             confirmText: Lang.get('actions.continue'),
             confirmed: async () => await deleteUser(resourceId),
@@ -156,7 +157,7 @@ function List(props) {
         setLoading(true);
 
         try {
-            const pagination = await User.restore(resourceId);
+            const pagination = await Client.restore(resourceId);
 
             setLoading(false);
             setPagination(pagination);
@@ -164,7 +165,7 @@ function List(props) {
             setMessage({
                 type: 'success',
                 body: Lang.get('resources.restored', {
-                    name: 'User',
+                    name: 'Client',
                 }),
                 closed: () => setMessage({}),
             });
@@ -174,7 +175,7 @@ function List(props) {
             setMessage({
                 type: 'error',
                 body: Lang.get('resources.not_restored', {
-                    name: 'User',
+                    name: 'Client',
                 }),
                 closed: () => setMessage({}),
                 actionText: Lang.get('actions.retry'),
@@ -194,7 +195,7 @@ function List(props) {
         setLoading(true);
 
         try {
-            const pagination = await User.delete(resourceId);
+            const pagination = await Client.delete(resourceId);
 
             setLoading(false);
             setPagination(pagination);
@@ -202,7 +203,7 @@ function List(props) {
             setMessage({
                 type: 'success',
                 body: Lang.get('resources.deleted', {
-                    name: 'User',
+                    name: 'Client',
                 }),
                 closed: () => setMessage({}),
                 actionText: Lang.get('actions.undo'),
@@ -214,7 +215,7 @@ function List(props) {
             setMessage({
                 type: 'error',
                 body: Lang.get('resources.not_deleted', {
-                    name: 'User',
+                    name: 'Client',
                 }),
                 closed: () => setMessage({}),
                 actionText: Lang.get('actions.retry'),
@@ -250,7 +251,7 @@ function List(props) {
                 ...newFilters,
             };
 
-            const pagination = await User.paginated(queryParams);
+            const pagination = await Client.paginated(queryParams);
 
             setLoading(false);
             setSorting({
@@ -347,11 +348,11 @@ function List(props) {
 
     const primaryAction = {
         text: Lang.get('resources.create', {
-            name: 'User',
+            name: 'Client',
         }),
         clicked: () =>
             history.push(
-                NavigationUtils.route('backoffice.resources.users.create'),
+                NavigationUtils.route('backoffice.resources.clients.create'),
             ),
     };
 
@@ -386,33 +387,7 @@ function List(props) {
                         alignItems="center"
                         wrap="nowrap"
                     >
-                        <Grid item style={{ marginRight: 10 }}>
-                            {user.hasOwnProperty('thumbnail_url') &&
-                            user.thumbnail_url !== null ? (
-                                <Avatar
-                                    alt={user.name}
-                                    src={user.thumbnail_url}
-                                />
-                            ) : (
-                                <Avatar
-                                    style={{
-                                        fontSize: 17,
-                                        backgroundColor: RandomUtils.color(
-                                            user.firstname.length -
-                                                user.created_at.charAt(
-                                                    user.created_at.length - 2,
-                                                ),
-                                        ),
-                                    }}
-                                >
-                                    <Typography>
-                                        {`${user.firstname.charAt(
-                                            0,
-                                        )}${user.lastname.charAt(0)}`}
-                                    </Typography>
-                                </Avatar>
-                            )}
-                        </Grid>
+                        
 
                         <Grid item>{user.name}</Grid>
                     </Grid>
@@ -422,7 +397,7 @@ function List(props) {
                     <div style={{ width: 120, flex: 'no-wrap' }}>
                         <Tooltip
                             title={Lang.get('resources.edit_image', {
-                                name: 'User',
+                                name: 'Client',
                             })}
                         >
                             <IconButton
@@ -446,7 +421,7 @@ function List(props) {
 
                         <Tooltip
                             title={Lang.get('resources.edit', {
-                                name: 'User',
+                                name: 'Client',
                             })}
                         >
                             <IconButton
@@ -468,7 +443,7 @@ function List(props) {
                         {authUser.id !== user.id && (
                             <Tooltip
                                 title={Lang.get('resources.delete', {
-                                    name: 'User',
+                                    name: 'Client',
                                 })}
                             >
                                 <IconButton
@@ -488,7 +463,7 @@ function List(props) {
         <MasterLayout
             {...childProps}
             loading={loading}
-            pageTitle={Lang.get('navigation.users')}
+            pageTitle={Lang.get('navigation.clients')}
             primaryAction={primaryAction}
             tabs={tabs}
             loading={loading}
@@ -497,7 +472,7 @@ function List(props) {
         >
             {!loading && data && (
                 <Table
-                    title={Lang.get('navigation.users')}
+                    title={Lang.get('navigation.clients')}
                     data={data}
                     total={total}
                     columns={columns}

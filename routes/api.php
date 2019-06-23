@@ -49,7 +49,7 @@ Route::namespace('Api')->name('api.')->group(function () {
                 });
             });
 
-            Route::apiResource('clients','ClientController');
+            Route::resource('clients','ClientController');
         });
     });
 });

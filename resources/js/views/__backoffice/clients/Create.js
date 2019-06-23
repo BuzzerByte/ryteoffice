@@ -75,7 +75,7 @@ function Create(props) {
                 setMessage({
                     type: 'success',
                     body: Lang.get('resources.created', {
-                        name: 'User',
+                        name: 'Client',
                     }),
                     closed: () => setMessage({}),
                 });
@@ -162,7 +162,7 @@ function Create(props) {
     return (
         <MasterLayout
             {...other}
-            pageTitle="Create a user"
+            pageTitle="Create a client"
             tabs={[]}
             message={message}
         >
@@ -177,7 +177,7 @@ function Create(props) {
                             align="center"
                             gutterBottom
                         >
-                            User Creation
+                            Client Creation
                         </Typography>
 
                         <Stepper

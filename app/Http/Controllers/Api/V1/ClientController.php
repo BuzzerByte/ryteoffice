@@ -40,6 +40,34 @@ class ClientController extends Controller
        
         return ClientResource::collection($userQuery->paginate($limit));
     }
+    /**
+     * Get the paginated resource query.
+     *
+     * @param Illuminate\Http\Request
+     *
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
+    protected function paginatedQuery(Request $request) : LengthAwarePaginator
+    {
+        $users = Client::orderBy(
+            $request->input('sortBy') ?? 'name',
+            $request->input('sortType') ?? 'ASC'
+        );
+
+        if ($type = $request->input('type')) {
+            $this->filter($users, 'type', $type);
+        }
+
+        if ($name = $request->input('name')) {
+            $this->filter($users, 'name', $name);
+        }
+
+        if ($email = $request->input('email')) {
+            $this->filter($users, 'email', $email);
+        }
+
+        return $users->paginate($request->input('perPage') ?? 10);
+    }
 
     /**
      * Show the form for creating a new resource.
