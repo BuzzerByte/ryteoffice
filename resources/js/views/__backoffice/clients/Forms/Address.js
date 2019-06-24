@@ -16,16 +16,21 @@ import {
     withStyles,
 } from '@material-ui/core';
 
-const Account = props => {
+const Address = props => {
     const { classes, values, handleSubmit, handleBack } = props;
 
     return (
         <Formik
             initialValues={values}
             validationSchema={Yup.object().shape({
-                email: Yup.string().required(
+                shipping_address: Yup.string().required(
                     Lang.get('validation.required', {
-                        attribute: 'email',
+                        attribute: 'shipping_address',
+                    }),
+                ),
+                billing_address: Yup.string().required(
+                    Lang.get('validation.required', {
+                        attribute: 'billing_address',
                     }),
                 ),
             })}
@@ -35,7 +40,7 @@ const Account = props => {
             {({ values, handleChange, errors, submitCount, isSubmitting }) => (
                 <Form>
                     <Typography variant="h6" gutterBottom>
-                        Account Settings
+                        Address Settings
                     </Typography>
 
                     <Grid container spacing={24}>
@@ -44,37 +49,30 @@ const Account = props => {
                                 className={classes.formControl}
                                 error={
                                     submitCount > 0 &&
-                                    errors.hasOwnProperty('type')
+                                    errors.hasOwnProperty('shipping_address')
                                 }
                             >
-                                <InputLabel htmlFor="type">
-                                    Type{' '}
+                                <InputLabel htmlFor="shipping_address">
+                                    Shipping Address{' '}
                                     <span className={classes.required}>*</span>
                                 </InputLabel>
 
-                                <Select
-                                    id="type"
-                                    name="type"
-                                    value={values.type}
+                                <Input
+                                    id="shipping_address"
+                                    name="shipping_address"
+                                    value={values.shipping_address}
                                     onChange={handleChange}
                                     input={<Input fullWidth />}
-                                    autoWidth
+                                    multiline
+                                    rows = {3}
                                 >
-                                    <MenuItem value="">
-                                        Please select the user's type
-                                    </MenuItem>
-
-                                    <MenuItem value="superuser">
-                                        Superuser
-                                    </MenuItem>
-
-                                    <MenuItem value="user">User</MenuItem>
-                                </Select>
+                
+                                </Input>
 
                                 {submitCount > 0 &&
-                                    errors.hasOwnProperty('type') && (
+                                    errors.hasOwnProperty('shipping_address') && (
                                         <FormHelperText>
-                                            {errors.type}
+                                            {errors.shipping_address}
                                         </FormHelperText>
                                     )}
                             </FormControl>
@@ -87,55 +85,27 @@ const Account = props => {
                                 className={classes.formControl}
                                 error={
                                     submitCount > 0 &&
-                                    errors.hasOwnProperty('email')
+                                    errors.hasOwnProperty('billing_address')
                                 }
                             >
-                                <InputLabel htmlFor="email">
-                                    Email{' '}
+                                <InputLabel htmlFor="billing_address">
+                                    Billing Address{' '}
                                     <span className={classes.required}>*</span>
                                 </InputLabel>
 
                                 <Input
-                                    id="email"
-                                    name="email"
-                                    value={values.email}
+                                    id="billing_address"
+                                    name="billing_address"
+                                    value={values.billing_address}
                                     onChange={handleChange}
-                                    fullWidth
+                                    multiline
+                                    rows = {3}
                                 />
 
                                 {submitCount > 0 &&
-                                    errors.hasOwnProperty('email') && (
+                                    errors.hasOwnProperty('billing_address') && (
                                         <FormHelperText>
-                                            {errors.email}
-                                        </FormHelperText>
-                                    )}
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <FormControl
-                                className={classes.formControl}
-                                error={
-                                    submitCount > 0 &&
-                                    errors.hasOwnProperty('username')
-                                }
-                            >
-                                <InputLabel htmlFor="username">
-                                    Username
-                                </InputLabel>
-
-                                <Input
-                                    id="username"
-                                    name="username"
-                                    value={values.username}
-                                    onChange={handleChange}
-                                    fullWidth
-                                />
-
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('username') && (
-                                        <FormHelperText>
-                                            {errors.username}
+                                            {errors.billing_address}
                                         </FormHelperText>
                                     )}
                             </FormControl>
@@ -174,7 +144,7 @@ const Account = props => {
     );
 };
 
-Account.propTypes = {
+Addres.propTypes = {
     values: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
 };
@@ -197,4 +167,4 @@ const styles = theme => ({
     },
 });
 
-export default withStyles(styles)(Account);
+export default withStyles(styles)(Address);

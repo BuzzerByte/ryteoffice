@@ -91,7 +91,7 @@ function List(props) {
             ...filters,
             [`${values.filterBy}[${values.filterType}]`]: values.filterValue,
         };
-
+        
         await fetchUsers({
             ...defaultQueryString(),
             filters: newFilters,
@@ -252,6 +252,7 @@ function List(props) {
             };
 
             const pagination = await Client.paginated(queryParams);
+            console.log(pagination);
 
             setLoading(false);
             setSorting({
@@ -333,6 +334,7 @@ function List(props) {
             ...queryParams,
             filters: prevFilters,
         });
+        
     }, [pagination.data]);
 
     const { user: authUser } = useContext(AppContext);
@@ -364,8 +366,8 @@ function List(props) {
     ];
 
     const columns = [
-        { name: 'Type', property: 'type' },
         { name: 'Name', property: 'name', sort: true },
+        { name: 'Company', property: 'company', sort: true },
         { name: 'Email', property: 'email', sort: true },
         {
             name: 'Actions',
@@ -377,9 +379,8 @@ function List(props) {
 
     const data =
         rawData &&
-        rawData.map(user => {
+        rawData.map(client => {
             return {
-                type: user.type,
                 name: (
                     <Grid
                         container
@@ -389,10 +390,11 @@ function List(props) {
                     >
                         
 
-                        <Grid item>{user.name}</Grid>
+                        <Grid item>{client.name}</Grid>
                     </Grid>
                 ),
-                email: user.email,
+                company: client.company,
+                email: client.email,
                 actions: (
                     <div style={{ width: 120, flex: 'no-wrap' }}>
                         <Tooltip
@@ -404,9 +406,9 @@ function List(props) {
                                 onClick={() =>
                                     history.push(
                                         NavigationUtils.route(
-                                            'backoffice.resources.users.edit',
+                                            'backoffice.resources.clients.edit',
                                             {
-                                                id: user.id,
+                                                id: client.id,
                                             },
                                             {
                                                 step: 2,
@@ -428,9 +430,9 @@ function List(props) {
                                 onClick={() =>
                                     history.push(
                                         NavigationUtils.route(
-                                            'backoffice.resources.users.edit',
+                                            'backoffice.resources.clients.edit',
                                             {
-                                                id: user.id,
+                                                id: client.id,
                                             },
                                         ),
                                     )
@@ -440,7 +442,7 @@ function List(props) {
                             </IconButton>
                         </Tooltip>
 
-                        {authUser.id !== user.id && (
+                        {authUser.id !== client.id && (
                             <Tooltip
                                 title={Lang.get('resources.delete', {
                                     name: 'Client',
@@ -448,7 +450,7 @@ function List(props) {
                             >
                                 <IconButton
                                     color="secondary"
-                                    onClick={() => handleDeleteClick(user.id)}
+                                    onClick={() => handleDeleteClick(client.id)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>

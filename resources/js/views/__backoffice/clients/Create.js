@@ -13,8 +13,8 @@ import * as NavigationUtils from '../../../helpers/Navigation';
 import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
-
-import { Profile, Account, Avatar } from './Forms';
+import { Client } from '../../../models';
+import { Profile, Address, Others } from './Forms';
 
 function Create(props) {
     const [loading, setLoading] = useState(false);
@@ -101,16 +101,20 @@ function Create(props) {
     const { classes, ...other } = props;
     const { history } = props;
 
-    const steps = ['Profile', 'Account', 'Avatar'];
+    const steps = ['Profile', 'Address', 'Others'];
 
     const renderForm = () => {
         const defaultProfileValues = {
-            firstname: '',
-            middlename: '',
-            lastname: '',
-            gender: '',
-            birthdate: null,
-            address: '',
+            name: '',
+            company: '',
+            phone: '',
+            email: '',
+            fax: '',
+            open_balance: '',
+            billing_address: '',
+            shipping_address: '',
+            website: '',
+            note:'',
         };
 
         switch (activeStep) {
@@ -127,7 +131,7 @@ function Create(props) {
 
             case 1:
                 return (
-                    <Account
+                    <Address
                         {...other}
                         values={{
                             type: '',
@@ -141,13 +145,13 @@ function Create(props) {
 
             case 2:
                 return (
-                    <Avatar
+                    <Others
                         {...other}
                         user={user}
                         handleSkip={() =>
                             history.push(
                                 NavigationUtils.route(
-                                    'backoffice.resources.users.index',
+                                    'backoffice.resources.clients.index',
                                 ),
                             )
                         }

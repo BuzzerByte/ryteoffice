@@ -18,8 +18,9 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
+        
         return response()->json($this->paginatedQuery($request));
         $searchParams = $request->all();
         $userQuery = Client::query();
@@ -49,24 +50,42 @@ class ClientController extends Controller
      */
     protected function paginatedQuery(Request $request) : LengthAwarePaginator
     {
-        $users = Client::orderBy(
+        $clients = Client::orderBy(
             $request->input('sortBy') ?? 'name',
             $request->input('sortType') ?? 'ASC'
         );
 
-        if ($type = $request->input('type')) {
-            $this->filter($users, 'type', $type);
-        }
+        // if ($type = $request->input('type')) {
+        //     $this->filter($clients, 'type', $type);
+        // }
 
         if ($name = $request->input('name')) {
-            $this->filter($users, 'name', $name);
+            $this->filter($clients, 'name', $name);
         }
 
         if ($email = $request->input('email')) {
-            $this->filter($users, 'email', $email);
+            $this->filter($clients, 'email', $email);
         }
 
-        return $users->paginate($request->input('perPage') ?? 10);
+        return $clients->paginate($request->input('perPage') ?? 10);
+    }
+
+    protected function filter($clients, string $property, array $filters)
+    {
+        foreach ($filters as $keyword => $value) {
+            // Needed since LIKE statements requires values to be wrapped by %
+            if (in_array($keyword, ['like', 'nlike'])) {
+                $clients->where(
+                    $property,
+                    _to_sql_operator($keyword),
+                    "%{$value}%"
+                );
+
+                return;
+            }
+
+            $clients->where($property, _to_sql_operator($keyword), "{$value}");
+        }
     }
 
     /**

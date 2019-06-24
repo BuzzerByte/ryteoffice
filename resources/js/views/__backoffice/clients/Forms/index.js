@@ -1,5 +1,5 @@
 import loadable from '@loadable/component';
 
-export const Account = loadable(() => import('./Account'));
-export const Avatar = loadable(() => import('./Avatar'));
+export const Address = loadable(() => import('./Address'));
+export const Others = loadable(() => import('./Others'));
 export const Profile = loadable(() => import('./Profile'));
