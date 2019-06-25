@@ -20,7 +20,7 @@ function Create(props) {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
-    const [user, setUser] = useState({});
+    const [client, setClient] = useState({});
     const [message, setMessage] = useState({});
 
     /**
@@ -45,7 +45,7 @@ function Create(props) {
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         setSubmitting(false);
 
-        // Stop here as it is the last step...
+        //Stop here as it is the last step...
         if (activeStep === 2) {
             return;
         }
@@ -61,11 +61,12 @@ function Create(props) {
                     return { ...prev, ...next };
                 });
             }
+            
 
             // Instruct the API the current step.
             values.step = activeStep;
-
-            const user = await User.store({ ...previousValues, ...values });
+            console.log(previousValues);
+            const client = await Client.store({ ...previousValues, ...values });
 
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
@@ -83,7 +84,7 @@ function Create(props) {
 
             setLoading(false);
             setFormValues(newFormValues);
-            setUser(user);
+            setClient(client);
             setActiveStep(activeStep + 1);
         } catch (error) {
             if (!error.response) {
@@ -134,9 +135,10 @@ function Create(props) {
                     <Address
                         {...other}
                         values={{
-                            type: '',
+                            name: '',
+                            company: '',
+                            phone: '',
                             email: '',
-                            username: '',
                         }}
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
@@ -147,14 +149,16 @@ function Create(props) {
                 return (
                     <Others
                         {...other}
-                        user={user}
-                        handleSkip={() =>
-                            history.push(
-                                NavigationUtils.route(
-                                    'backoffice.resources.clients.index',
-                                ),
-                            )
-                        }
+                        values={{
+                            name: '',
+                            company: '',
+                            phone: '',
+                            email: '',
+                            shipping_address:'',
+                            billing_address:'',
+                        }}
+                        handleSubmit={handleSubmit}
+                        handleBack={handleBack}
                     />
                 );
 

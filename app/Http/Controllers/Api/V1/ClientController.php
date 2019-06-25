@@ -104,9 +104,46 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         //
+        $request->validate([
+            'name' => 'required_if:step,0|string|max:255',
+            'company' => 'nullable|string|max:255',
+
+            'phone' => 'nullable|string|max:255',
+            'email' => 'nullable|string|max:255',
+                //'nullable|date:Y-m-d|before:'.now()->subYear(10)->format('Y-m-d'),
+            'billing_address' => 'nullable|string|max:510',
+
+            'shipping_address' => 'nullable|string|max:510',
+            'fax' => 'nullable|string|max:255',
+            'open_balance' => 'nullable|string|max:255',
+            'note' =>'nullable|string|max:255',
+            'website'=>'nullable|string|max:255',
+        ]);
+
+        // Return here if the user is just in the first step.
+        if ($request->input('step') === 0) {
+            return response()->json(200);
+        }
+        if ($request->input('step') === 1) {
+            return response()->json(200);
+        }
+        $client = Client::create([
+            'name' => $request->input('name'),
+            'company' => $request->input('company'),
+            'phone' => $request->input('phone'),
+            'email' => $request->input('email'),
+            'billing_address' => $request->input('billing_address'),
+            'shipping_address' => $request->input('shipping_address'),
+            'fax' => $request->input('fax'),
+            'open_balance' => $request->input('open_balance'),
+            'website' => $request->input('website'),
+            'note' => $request->input('note'),
+        ]);
+
+        return response()->json($user, 201);
         sleep(1);
         $params = $request->all();
         $user = Client::create([

@@ -31,12 +31,6 @@ const Profile = props => {
                         attribute: 'name',
                     }),
                 ),
-
-                lastname: Yup.string().required(
-                    Lang.get('validation.required', {
-                        attribute: 'lastname',
-                    }),
-                ),
             })}
             onSubmit={async (values, form) => {
                 let mappedValues = {};

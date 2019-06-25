@@ -34,7 +34,30 @@ const Address = props => {
                     }),
                 ),
             })}
-            onSubmit={handleSubmit}
+            
+            onSubmit={async (values, form) => {
+                let mappedValues = {};
+                let valuesArray = Object.values(values);
+
+                // Format values specially the object ones (i.e Moment)
+                Object.keys(values).forEach((filter, key) => {
+                    if (
+                        valuesArray[key] !== null &&
+                        typeof valuesArray[key] === 'object' &&
+                        valuesArray[key].hasOwnProperty('_isAMomentObject')
+                    ) {
+                        mappedValues[filter] = moment(valuesArray[key]).format(
+                            'YYYY-MM-DD',
+                        );
+
+                        return;
+                    }
+
+                    mappedValues[filter] = valuesArray[key];
+                });
+
+                await handleSubmit(mappedValues, form);
+            }}
             validateOnBlur={false}
         >
             {({ values, handleChange, errors, submitCount, isSubmitting }) => (
@@ -80,7 +103,7 @@ const Address = props => {
                     </Grid>
 
                     <Grid container spacing={24}>
-                        <Grid item xs={12} sm={6}>
+                        <Grid item xs={12} sm={12}>
                             <FormControl
                                 className={classes.formControl}
                                 error={
@@ -98,6 +121,7 @@ const Address = props => {
                                     name="billing_address"
                                     value={values.billing_address}
                                     onChange={handleChange}
+                                    input={<Input fullWidth />}
                                     multiline
                                     rows = {3}
                                 />
@@ -144,7 +168,7 @@ const Address = props => {
     );
 };
 
-Addres.propTypes = {
+Address.propTypes = {
     values: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
 };
