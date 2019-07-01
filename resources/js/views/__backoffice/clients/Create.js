@@ -61,7 +61,7 @@ function Create(props) {
                     return { ...prev, ...next };
                 });
             }
-            
+
 
             // Instruct the API the current step.
             values.step = activeStep;
@@ -72,7 +72,7 @@ function Create(props) {
             let newFormValues = [...formValues];
             newFormValues[activeStep] = values;
 
-            if (activeStep === 1) {
+            if (activeStep === 2) {
                 setMessage({
                     type: 'success',
                     body: Lang.get('resources.created', {
