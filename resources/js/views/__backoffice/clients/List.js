@@ -252,7 +252,6 @@ function List(props) {
             };
 
             const pagination = await Client.paginated(queryParams);
-            console.log(pagination);
 
             setLoading(false);
             setSorting({

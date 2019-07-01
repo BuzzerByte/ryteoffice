@@ -43,6 +43,7 @@ function Create(props) {
      * @return {undefined}
      */
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+        console.log(values);
         setSubmitting(false);
 
         //Stop here as it is the last step...
