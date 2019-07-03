@@ -67,6 +67,11 @@ function Create(props) {
                 });
             }
 
+            if (activeStep === 2){
+                previousValues = formValues.reduce((prev, next) => {
+                    return { ...prev, ...next };
+                });
+            }
 
             // Instruct the API the current step.
             values.step = activeStep;
