@@ -20,15 +20,56 @@ import {
 import { Dropzone } from '../../../../ui';
 
 const Others = props => {
-    const { classes, values, handleSubmit, handleBack, handleSkip } = props;
+    const { classes, values, handleSubmit, handleBack } = props;
 
     return (
         <Formik
             initialValues={values}
             validationSchema={Yup.object().shape({
-                
+                open_balance: Yup.string().required(
+                    Lang.get('validation.required', {
+                        attribute: 'open_balance',
+                    }),
+                ),
+                fax: Yup.string().required(
+                    Lang.get('validation.required', {
+                        attribute: 'open_balance',
+                    }),
+                ),
+                website: Yup.string().required(
+                    Lang.get('validation.required', {
+                        attribute: 'website',
+                    }),
+                ),
+                note: Yup.string().required(
+                    Lang.get('validation.required', {
+                        attribute: 'note',
+                    }),
+                ),
             })}
-            onSubmit={handleSubmit}
+            onSubmit={async (values, form) => {
+                let mappedValues = {};
+                let valuesArray = Object.values(values);
+
+                // Format values specially the object ones (i.e Moment)
+                Object.keys(values).forEach((filter, key) => {
+                    if (
+                        valuesArray[key] !== null &&
+                        typeof valuesArray[key] === 'object' &&
+                        valuesArray[key].hasOwnProperty('_isAMomentObject')
+                    ) {
+                        mappedValues[filter] = moment(valuesArray[key]).format(
+                            'YYYY-MM-DD',
+                        );
+
+                        return;
+                    }
+
+                    mappedValues[filter] = valuesArray[key];
+                });
+
+                await handleSubmit(mappedValues, form);
+            }}
             validateOnBlur={false}
         >
             {({ values, handleChange, errors, submitCount, isSubmitting }) => (
@@ -203,7 +244,6 @@ const Others = props => {
 Others.propTypes = {
     values: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
-    handleSkip: PropTypes.func.isRequired,
 };
 
 const styles = theme => ({

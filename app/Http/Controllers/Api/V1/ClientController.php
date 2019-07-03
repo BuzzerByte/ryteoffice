@@ -9,7 +9,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-
 class ClientController extends Controller
 {
     const ITEM_PER_PAGE = 15;
@@ -107,15 +106,14 @@ class ClientController extends Controller
     public function store(Request $request): JsonResponse
     {
         //
+        //return response()->json($request);
         $request->validate([
             'name' => 'required_if:step,0|string|max:255',
             'company' => 'nullable|string|max:255',
-
             'phone' => 'nullable|string|max:255',
             'email' => 'nullable|string|max:255',
                 //'nullable|date:Y-m-d|before:'.now()->subYear(10)->format('Y-m-d'),
             'billing_address' => 'nullable|string|max:510',
-
             'shipping_address' => 'nullable|string|max:510',
             'fax' => 'nullable|string|max:255',
             'open_balance' => 'nullable|string|max:255',
@@ -143,7 +141,7 @@ class ClientController extends Controller
             'note' => $request->input('note'),
         ]);
 
-        return response()->json($user, 201);
+        return response()->json($client, 201);
         sleep(1);
         $params = $request->all();
         $user = Client::create([

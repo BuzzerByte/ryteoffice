@@ -43,11 +43,10 @@ function Create(props) {
      * @return {undefined}
      */
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
-        console.log(values);
         setSubmitting(false);
 
         //Stop here as it is the last step...
-        if (activeStep === 2) {
+        if (activeStep === 3) {
             return;
         }
 
@@ -62,11 +61,16 @@ function Create(props) {
                     return { ...prev, ...next };
                 });
             }
+            if (activeStep === 2) {
+                previousValues = formValues.reduce((prev, next) => {
+                    return { ...prev, ...next };
+                });
+            }
 
 
             // Instruct the API the current step.
             values.step = activeStep;
-            console.log(previousValues);
+            
             const client = await Client.store({ ...previousValues, ...values });
 
             // After persisting the previous values. Move to the next step...
@@ -81,8 +85,14 @@ function Create(props) {
                     }),
                     closed: () => setMessage({}),
                 });
+                setTimeout(1000);
+                history.push(
+                    NavigationUtils.route(
+                        'backoffice.resources.clients.index',
+                    )
+                );
             }
-
+            console.log(newFormValues);
             setLoading(false);
             setFormValues(newFormValues);
             setClient(client);
@@ -135,12 +145,9 @@ function Create(props) {
                 return (
                     <Address
                         {...other}
-                        values={{
-                            name: '',
-                            company: '',
-                            phone: '',
-                            email: '',
-                        }}
+                        values={
+                            formValues[0] ? formValues[0] : defaultProfileValues
+                        }
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
                     />
@@ -150,19 +157,13 @@ function Create(props) {
                 return (
                     <Others
                         {...other}
-                        values={{
-                            name: '',
-                            company: '',
-                            phone: '',
-                            email: '',
-                            shipping_address:'',
-                            billing_address:'',
-                        }}
+                        values={
+                            formValues[0] ? formValues[0] : defaultProfileValues
+                        }
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
                     />
                 );
-
             default:
                 throw new Error('Unknown step!');
         }
