@@ -46,9 +46,6 @@ function Create(props) {
         setSubmitting(false);
 
         //Stop here as it is the last step...
-        if (activeStep === 3) {
-            return;
-        }
 
         setLoading(true);
 
@@ -67,11 +64,6 @@ function Create(props) {
                 });
             }
 
-            if (activeStep === 2){
-                previousValues = formValues.reduce((prev, next) => {
-                    return { ...prev, ...next };
-                });
-            }
 
             // Instruct the API the current step.
             values.step = activeStep;
