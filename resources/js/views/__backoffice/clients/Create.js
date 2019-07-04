@@ -58,12 +58,7 @@ function Create(props) {
                     return { ...prev, ...next };
                 });
             }
-            if (activeStep === 2) {
-                previousValues = formValues.reduce((prev, next) => {
-                    return { ...prev, ...next };
-                });
-            }
-
+            
 
             // Instruct the API the current step.
             values.step = activeStep;
@@ -73,7 +68,10 @@ function Create(props) {
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
             newFormValues[activeStep] = values;
-
+            console.log("Previous Val");
+            console.log(previousValues);
+            console.log("values");
+            console.log(values);
             if (activeStep === 2) {
                 setMessage({
                     type: 'success',
@@ -82,14 +80,14 @@ function Create(props) {
                     }),
                     closed: () => setMessage({}),
                 });
-                setTimeout(1000);
+                
                 history.push(
                     NavigationUtils.route(
                         'backoffice.resources.clients.index',
                     )
                 );
             }
-            console.log(newFormValues);
+            
             setLoading(false);
             setFormValues(newFormValues);
             setClient(client);
