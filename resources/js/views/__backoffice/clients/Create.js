@@ -57,8 +57,13 @@ function Create(props) {
                 previousValues = formValues.reduce((prev, next) => {
                     return { ...prev, ...next };
                 });
+
             }
-            
+            if (activeStep === 2) {
+                previousValues = formValues.reduce((prev, next) => {
+                    return { ...prev, ...next };
+                });
+            }
 
             // Instruct the API the current step.
             values.step = activeStep;
@@ -68,10 +73,6 @@ function Create(props) {
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
             newFormValues[activeStep] = values;
-            console.log("Previous Val");
-            console.log(previousValues);
-            console.log("values");
-            console.log(values);
             if (activeStep === 2) {
                 setMessage({
                     type: 'success',
@@ -140,9 +141,10 @@ function Create(props) {
                 return (
                     <Address
                         {...other}
-                        values={
-                            formValues[0] ? formValues[0] : defaultProfileValues
-                        }
+                        values={{
+                            billing_address: '',
+                            shipping_address: '',
+                        }}
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
                     />
@@ -152,9 +154,12 @@ function Create(props) {
                 return (
                     <Others
                         {...other}
-                        values={
-                            formValues[0] ? formValues[0] : defaultProfileValues
-                        }
+                        values={{
+                            fax: '',
+                            website: '',
+                            open_balance:'',
+                            note: '',
+                        }}
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
                     />

@@ -13,7 +13,7 @@ import {
 
 import * as UrlUtils from '../../../helpers/URL';
 import * as NavigationUtils from '../../../helpers/Navigation';
-import { User } from '../../../models';
+import { Client } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
 
@@ -23,23 +23,23 @@ function Edit(props) {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
-    const [user, setUser] = useState({});
+    const [client, setClient] = useState({});
     const [message, setMessage] = useState({});
 
     /**
-     * Fetch the user.
+     * Fetch the client.
      *
      * @param {number} id
      *
      * @return {undefined}
      */
-    const fetchUser = async id => {
+    const fetchClient = async id => {
         setLoading(true);
 
         try {
-            const user = await User.show(id);
+            const client = await Client.show(id);
 
-            setUser(user);
+            setClient(client);
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -68,10 +68,7 @@ function Edit(props) {
     const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         setSubmitting(false);
 
-        // Stop here as it is the last step...
-        if (activeStep === 2) {
-            return;
-        }
+        //Stop here as it is the last step...
 
         setLoading(true);
 
@@ -83,33 +80,43 @@ function Edit(props) {
                 previousValues = formValues.reduce((prev, next) => {
                     return { ...prev, ...next };
                 });
+
+            }
+            if (activeStep === 2) {
+                previousValues = formValues.reduce((prev, next) => {
+                    return { ...prev, ...next };
+                });
             }
 
             // Instruct the API the current step.
             values.step = activeStep;
-
-            const updatedUser = await User.update(user.id, {
+            
+            const updatedClient = await Client.update(client.id, {
                 ...previousValues,
                 ...values,
             });
-
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
             newFormValues[activeStep] = values;
-
-            if (activeStep === 1) {
+            if (activeStep === 2) {
                 setMessage({
                     type: 'success',
-                    body: Lang.get('resources.updated', {
-                        name: 'User',
+                    body: Lang.get('resources.created', {
+                        name: 'Client',
                     }),
                     closed: () => setMessage({}),
                 });
+                
+                history.push(
+                    NavigationUtils.route(
+                        'backoffice.resources.clients.index',
+                    )
+                );
             }
-
+            
             setLoading(false);
             setFormValues(newFormValues);
-            setUser(user);
+            setClient(client);
             setActiveStep(activeStep + 1);
         } catch (error) {
             if (!error.response) {
@@ -125,7 +132,7 @@ function Edit(props) {
     };
 
     useEffect(() => {
-        if (Object.keys(user).length > 0) {
+        if (Object.keys(client).length > 0) {
             return;
         }
 
@@ -138,7 +145,7 @@ function Edit(props) {
             setActiveStep(parseInt(queryParams.step));
         }
 
-        fetchUser(params.id);
+        fetchClient(params.id);
     });
 
     const { classes, ...other } = props;
@@ -165,12 +172,16 @@ function Edit(props) {
         }
 
         const defaultProfileValues = {
-            firstname: user.firstname === null ? '' : user.firstname,
-            middlename: user.middlename === null ? '' : user.middlename,
-            lastname: user.lastname === null ? '' : user.lastname,
-            gender: user.gender === null ? '' : user.gender,
-            birthdate: user.birthdate,
-            address: user.address === null ? '' : user.address,
+            name: client.name === null ? '' : client.name,
+            company: client.company === null ? '' : client.company,
+            phone: client.phone === null ? '' : client.phone,
+            email: client.email === null ? '' : client.email,
+            fax: client.fax === null ? '' : client.fax,
+            open_balance: client.open_balance === null ? '' : client.open_balance,
+            billing_address: client.billing_address === null ? '' : client.billing_address,
+            shipping_address: client.shipping_address === null ? '' : client.shipping_address,
+            website: client.website === null ? '' : client.website,
+            note:client.note === null ? '' : client.note,
         };
 
         switch (activeStep) {
@@ -190,10 +201,8 @@ function Edit(props) {
                     <Address
                         {...other}
                         values={{
-                            type: user.type === null ? '' : user.type,
-                            email: user.email === null ? '' : user.email,
-                            username:
-                                user.username === null ? '' : user.username,
+                            billing_address: client.billing_address === null ? '' : client.billing_address,
+                            shipping_address: client.shipping_address === null ? '' : client.shipping_address,
                         }}
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
@@ -204,14 +213,14 @@ function Edit(props) {
                 return (
                     <Others
                         {...other}
-                        user={user}
-                        handleSkip={() =>
-                            history.push(
-                                NavigationUtils.route(
-                                    'backoffice.resources.users.index',
-                                ),
-                            )
-                        }
+                        values={{
+                            fax: client.fax === null ? '' : client.fax,
+                            website: client.website === null ? '' : client.website,
+                            open_balance:client.open_balance === null ? '' : client.open_balance,
+                            note: client.note === null ? '' : client.note,
+                        }}
+                        handleSubmit={handleSubmit}
+                        handleBack={handleBack}
                     />
                 );
 
@@ -223,7 +232,7 @@ function Edit(props) {
     return (
         <MasterLayout
             {...other}
-            pageTitle="Edit user"
+            pageTitle="Edit client"
             tabs={[]}
             message={message}
         >
@@ -238,7 +247,7 @@ function Edit(props) {
                             align="center"
                             gutterBottom
                         >
-                            User Modification
+                            Client Modification
                         </Typography>
 
                         <Stepper

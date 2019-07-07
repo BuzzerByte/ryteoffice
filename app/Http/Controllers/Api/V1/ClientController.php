@@ -105,8 +105,6 @@ class ClientController extends Controller
      */
     public function store(Request $request): JsonResponse
     {
-        //
-        //return response()->json($request);
         $request->validate([
             'name' => 'required_if:step,0|string|max:255',
             'company' => 'nullable|string|max:255',
@@ -238,18 +236,16 @@ class ClientController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show a resource.
      *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
+     * @param Illuminate\Http\Request $request
+     * @param App\client $client
+     *
+     * @return Illuminate\Http\JsonResponse
      */
-    public function show(Client $client)
+    public function show(Request $request,Client $client) : JsonResponse
     {
-        //
-        //return response()->json($client);
-        return new ClientResource($client);
-        $client = Client::where('id',$client->id)->get();
-        return response()->json(['client'=>$client]);
+        return response()->json($client);
     }
 
     /**
@@ -275,57 +271,27 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        if ($client === null) {
-            return response()->json(['error' => 'User not found'], 404);
-        }
-        // if ($client->isAdmin()) {
-        //     return response()->json(['error' => 'Admin can not be modified'], 403);
-        // }
+        $request->validate([
+            'name' => 'required_if:step,0|string|max:255',
+            'company' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'email' => 'nullable|string|max:255',
+                //'nullable|date:Y-m-d|before:'.now()->subYear(10)->format('Y-m-d'),
+            'billing_address' => 'nullable|string|max:510',
+            'shipping_address' => 'nullable|string|max:510',
+            'fax' => 'nullable|string|max:255',
+            'open_balance' => 'nullable|string|max:255',
+            'note' =>'nullable|string|max:255',
+            'website'=>'nullable|string|max:255',
+        ]);
 
-        // $validator = Validator::make($request->all(), $this->getValidationRules(false));
-        // if ($validator->fails()) {
-        //     return response()->json(['errors' => $validator->errors()], 403);
-        // } else {
-            $email = $request->get('email');
-            $found = Client::where('email', $email)->first();
-            if ($found && $found->id !== $client->id) {
-                return response()->json(['error' => 'Email has been taken'], 403);
-            }
+        $attributes = $request->all();
+        unset($attributes['step']);
 
-            $client->name = $request->get('name');
-            $client->email = $email;
-            $client->website = $request->get('website');
-            $client->phone   = $request->get('phone');
-            $client->company = $request->get('company');
-            $client->billing_address = $request->get('billing_address');
-            $client->shipping_address = $request->get('shipping_address');
-            $client->note = $request->get('note');
-            $client->fax = $request->get('fax');
-            $client->open_balance = $request->get('open_balance');
-            $client->save();
-            return new ClientResource($client);
-        // }
-        //
-        // $update = Client::where('id',$client->id)->update([
-        //     'name'=>$request->name,
-        //     'company'=>$request->company_name,
-        //     'phone'=>$request->phone,
-        //     'fax'=>$request->fax,
-        //     'email'=>$request->email,
-        //     'website'=>$request->website,
-        //     'billing_address'=>$request->b_address,
-        //     'shipping_address'=>$request->s_address,
-        //     'note'=>$request->note
-        // ]);
-        // if($update){
-        //     flash()->success('Clients Data Updated!');
-        //     // Session::flash('success', 'Clients Data Updated!');
-        // }else{
-        //     flash()->error('Something went wrong!');
-        //     // Session::flash('failure', 'Something went wrong!');
-        // }
-        // $clients = Client::all();
-        // return redirect()->route('client.index',['clients'=>$clients]);    
+        $client->fill($attributes);
+        $client->update();
+
+        return response()->json($client);
     }
 
     /**
