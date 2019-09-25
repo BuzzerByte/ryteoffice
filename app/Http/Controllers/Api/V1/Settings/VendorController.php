@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Vendor;
+use App\Client;
+use Illuminate\Http\UploadedFile;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class VendorController extends Controller
 {
@@ -12,14 +16,49 @@ class VendorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request): JsonResponse
     {
         //
-        $vendors = Vendor::all();
-        if(empty($vendors)){
-            return view('admin.vendors.index',['vendors'=>'No Vendor']);
-        }else{
-            return view('admin.vendors.index',['vendors'=>$vendors]);
+        return response()->json($this->paginatedQuery($request));
+    }
+
+    protected function paginatedQuery(Request $request) : LengthAwarePaginator
+    {
+        $clients = Client::orderBy(
+            $request->input('sortBy') ?? 'name',
+            $request->input('sortType') ?? 'ASC'
+        );
+
+        // if ($type = $request->input('type')) {
+        //     $this->filter($clients, 'type', $type);
+        // }
+
+        if ($name = $request->input('name')) {
+            $this->filter($clients, 'name', $name);
+        }
+
+        if ($email = $request->input('email')) {
+            $this->filter($clients, 'email', $email);
+        }
+
+        return $clients->paginate($request->input('perPage') ?? 10);
+    }
+
+    protected function filter($clients, string $property, array $filters)
+    {
+        foreach ($filters as $keyword => $value) {
+            // Needed since LIKE statements requires values to be wrapped by %
+            if (in_array($keyword, ['like', 'nlike'])) {
+                $clients->where(
+                    $property,
+                    _to_sql_operator($keyword),
+                    "%{$value}%"
+                );
+
+                return;
+            }
+
+            $clients->where($property, _to_sql_operator($keyword), "{$value}");
         }
     }
 

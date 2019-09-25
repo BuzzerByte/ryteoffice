@@ -21,24 +21,24 @@ class ClientController extends Controller
     {
         
         return response()->json($this->paginatedQuery($request));
-        $searchParams = $request->all();
-        $userQuery = Client::query();
-        $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
-        $role = Arr::get($searchParams, 'role', '');
-        $keyword = Arr::get($searchParams, 'keyword', '');
+        // $searchParams = $request->all();
+        // $userQuery = Client::query();
+        // $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
+        // $role = Arr::get($searchParams, 'role', '');
+        // $keyword = Arr::get($searchParams, 'keyword', '');
         
-        if (!empty($role)) {
-            $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
+        // if (!empty($role)) {
+        //     $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
            
-        }
+        // }
         
-        if (!empty($keyword)) {
-            $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
-            $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
+        // if (!empty($keyword)) {
+        //     $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
+        //     $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
             
-        }
+        // }
        
-        return ClientResource::collection($userQuery->paginate($limit));
+        // return ClientResource::collection($userQuery->paginate($limit));
     }
     /**
      * Get the paginated resource query.

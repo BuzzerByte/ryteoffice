@@ -27,6 +27,8 @@ Route::namespace('Api')->name('api.')->group(function () {
                 Route::post('request', 'ForgotPasswordController@sendResetLinkEmail')->name('request');
                 Route::patch('reset/{token}', 'ResetPasswordController@reset')->name('reset');
             });
+
+            
         });
 
         Route::middleware('auth:api')->group(function () {
@@ -50,6 +52,7 @@ Route::namespace('Api')->name('api.')->group(function () {
             });
 
             Route::resource('clients','ClientController');
+            Route::resource('vendors','VendorController');
         });
     });
 });
