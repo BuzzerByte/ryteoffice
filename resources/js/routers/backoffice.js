@@ -2,6 +2,7 @@ import { Home } from '../views/__backoffice';
 import * as Settings from '../views/__backoffice/settings';
 import * as Users from '../views/__backoffice/users';
 import * as Clients from '../views/__backoffice/clients';
+import * as Vendors from '../views/__backoffice/vendors';
 
 const resources = [
     {
@@ -32,12 +33,27 @@ const resources = [
         path: '/clients/create',
         component: Clients.Create,
     },
-
     {
         name: 'clients.edit',
         path: '/clients/:id/edit',
         component: Clients.Edit,
     },
+    {
+        name: 'vendors.index',
+        path: '/vendors',
+        component: Vendors.List,
+    },
+    {
+        name: 'vendors.create',
+        path: '/vendors/create',
+        component: Vendors.Create,
+    },
+    {
+        name: 'vendors.edit',
+        path: '/vendors/:id/edit',
+        component: Vendors.Edit,
+    },
+
 ].map(route => {
     route.name = `resources.${route.name}`;
     route.path = `/resources${route.path}`;
@@ -45,11 +61,18 @@ const resources = [
     return route;
 });
 
-const clientResources = [
-    
+// const clientResources = [  
+// ].map(route=>{
+//     route.name = 'clientResources.${route.name}';
+//     route.path = '/clientResources${route.path}';
+
+//     return route;
+// });
+
+const vendorResources = [  
 ].map(route=>{
-    route.name = 'clientResources.${route.name}';
-    route.path = '/clientResources${route.path}';
+    route.name = 'vendorResources.${route.name}';
+    route.path = '/vendorResources${route.path}';
 
     return route;
 });
@@ -74,7 +97,7 @@ export default [
     },
 
     ...resources,
-    
+    ...vendorResources,
 ].map(route => {
     route.name = `backoffice.${route.name}`;
     route.auth = true;

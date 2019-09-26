@@ -131,7 +131,9 @@ function Sidebar(props) {
                         <PeopleIcon/>
                         </Tooltip>
                     ),
-                    path: null,
+                    path: NavigationUtils.route(
+                        'backoffice.resources.vendors.index',
+                    ),
                 }
             ],
         },

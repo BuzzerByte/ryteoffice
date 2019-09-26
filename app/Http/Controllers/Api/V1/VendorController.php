@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Client;
+use App\Vendor;
 use Illuminate\Http\UploadedFile;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class ClientController extends Controller
+class VendorController extends Controller
 {
-    const ITEM_PER_PAGE = 15;
     /**
      * Display a listing of the resource.
      *
@@ -19,37 +18,13 @@ class ClientController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        
+        //
         return response()->json($this->paginatedQuery($request));
-        // $searchParams = $request->all();
-        // $userQuery = Client::query();
-        // $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
-        // $role = Arr::get($searchParams, 'role', '');
-        // $keyword = Arr::get($searchParams, 'keyword', '');
-        
-        // if (!empty($role)) {
-        //     $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
-           
-        // }
-        
-        // if (!empty($keyword)) {
-        //     $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
-        //     $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
-            
-        // }
-       
-        // return ClientResource::collection($userQuery->paginate($limit));
     }
-    /**
-     * Get the paginated resource query.
-     *
-     * @param Illuminate\Http\Request
-     *
-     * @return Illuminate\Pagination\LengthAwarePaginator
-     */
+
     protected function paginatedQuery(Request $request) : LengthAwarePaginator
     {
-        $clients = Client::orderBy(
+        $vendor = Vendor::orderBy(
             $request->input('sortBy') ?? 'name',
             $request->input('sortType') ?? 'ASC'
         );
@@ -103,8 +78,9 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request)
     {
+        //
         $request->validate([
             'name' => 'required_if:step,0|string|max:255',
             'company' => 'nullable|string|max:255',
@@ -126,7 +102,7 @@ class ClientController extends Controller
         if ($request->input('step') === 1) {
             return response()->json(200);
         }
-        $client = Client::create([
+        $vendor = Vendor::create([
             'name' => $request->input('name'),
             'company' => $request->input('company'),
             'phone' => $request->input('phone'),
@@ -139,24 +115,8 @@ class ClientController extends Controller
             'note' => $request->input('note'),
         ]);
 
-        return response()->json($client, 201);
-        // sleep(1);
-        // $params = $request->all();
-        // $user = Client::create([
-        //     'name' => $params['name'],
-        //     'email' => $params['email'],
-        //     'company' => $params['company'],
-        //     'phone' => $params['phone'],
-        //     'open_balance' => $params['open_balance'],
-        //     'fax' => $params['fax'],
-        //     'website' => $params['website'],
-        //     'billing_address' => $params['billing_address'],
-        //     'shipping_address' => $params['shipping_address'],
-        //     'note' => $params['note'],
-        // ]);
-        // return new ClientResource($user);
+        return response()->json($vendor, 201);
     }
-
     public function downloadClientSample(){
         // Check if file exists in app/storage/file folder
         $file_path = storage_path() . "/app/downloads/client.csv";
@@ -234,43 +194,58 @@ class ClientController extends Controller
         $clients = Client::all();
         return redirect()->route('client.index',['clients'=>$clients]);    
     }
-
     /**
-     * Show a resource.
+     * Display the specified resource.
      *
-     * @param Illuminate\Http\Request $request
-     * @param App\client $client
-     *
-     * @return Illuminate\Http\JsonResponse
+     * @param  \App\Vendor  $vendor
+     * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,Client $client) : JsonResponse
+    public function show(Request $request, Vendor $vendor):JsonResponse
     {
-        return response()->json($client);
+        //
+        return response()->json($vendor);
     }
 
+    public function downloadVendorSample(){
+        // Check if file exists in app/storage/file folder
+        $file_path = storage_path() . "/app/downloads/vendor.csv";
+        $headers = array(
+            'Content-Type: csv',
+            'Content-Disposition: attachment; filename=vendor.csv',
+        );
+        if (file_exists($file_path)) {
+            // Send Download
+            flash()->success('File Downloaded');
+            return Response::download($file_path, 'vendor.csv', $headers);
+        } else {
+            // Error
+            flash()->error('Something went wrong!');
+        }
+        $vendors = Vendor::all();
+        return redirect()->route('vendor.index',['vendors'=>$vendors]);
+    }
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Client  $client
+     * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Client $client)
+    public function edit(Vendor $vendor)
     {
         //
-        return new ClientResource($user);
-        $data = Client::where('id',$client->id)->get();
-        return response()->json(['client'=>$data]);
+        return new VenrdorResource($vendor);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Client  $client
+     * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, Vendor $vendor)
     {
+        //
         $request->validate([
             'name' => 'required_if:step,0|string|max:255',
             'company' => 'nullable|string|max:255',
@@ -291,20 +266,20 @@ class ClientController extends Controller
         $client->fill($attributes);
         $client->update();
 
-        return response()->json($client);
+        return response()->json($vendor);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Client  $client
+     * @param  \App\Vendor  $vendor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Client $client)
+    public function destroy(Vendor $vendor)
     {
         //
         try {
-            $client->delete();
+            $vendor->delete();
         } catch (\Exception $ex) {
             response()->json(['error' => $ex->getMessage()], 403);
         }
