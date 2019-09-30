@@ -84,7 +84,7 @@ function Create(props) {
                 
                 history.push(
                     NavigationUtils.route(
-                        'backoffice.resources.clients.index',
+                        'clients.resources.clients.create',
                     )
                 );
             }

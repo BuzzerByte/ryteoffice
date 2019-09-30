@@ -353,7 +353,7 @@ function List(props) {
         }),
         clicked: () =>
             history.push(
-                NavigationUtils.route('backoffice.resources.clients.create'),
+                NavigationUtils.route('clients.resources.clients.create'),
             ),
     };
 
@@ -405,7 +405,7 @@ function List(props) {
                                 onClick={() =>
                                     history.push(
                                         NavigationUtils.route(
-                                            'backoffice.resources.clients.edit',
+                                            'clients.resources.clients.edit',
                                             {
                                                 id: client.id,
                                             },
@@ -429,7 +429,7 @@ function List(props) {
                                 onClick={() =>
                                     history.push(
                                         NavigationUtils.route(
-                                            'backoffice.resources.clients.edit',
+                                            'clients.resources.clients.edit',
                                             {
                                                 id: client.id,
                                             },
