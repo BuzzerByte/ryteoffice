@@ -19,7 +19,7 @@ import {
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 
-const Profile = props => {
+const Address = props => {
     const { classes, values, handleSubmit } = props;
 
     return (
@@ -301,7 +301,7 @@ const Profile = props => {
     );
 };
 
-Profile.propTypes = {
+Address.propTypes = {
     values: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
 };
@@ -316,4 +316,4 @@ const styles = theme => ({
     },
 });
 
-export default withStyles(styles)(Profile);
+export default withStyles(styles)(Address);

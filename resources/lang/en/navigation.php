@@ -61,6 +61,5 @@ return [
     'clients'=>'Clients',
     'traders' => 'Traders',
     'vendors' => 'Vendors',
-
     'citation' => 'Built with ❤️ by'
 ];

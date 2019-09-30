@@ -5,7 +5,7 @@ import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 
 import { Dropzone } from '../../../../ui';
 
-function Avatar(props) {
+function Other(props) {
     const [files, setFiles] = useState([]);
 
     /**
@@ -126,7 +126,7 @@ function Avatar(props) {
     return (
         <>
             <Typography variant="h6" gutterBottom>
-                Avatar Upload
+                Other Upload
             </Typography>
 
             <Dropzone
@@ -154,7 +154,7 @@ function Avatar(props) {
     );
 }
 
-Avatar.propTypes = {
+Other.propTypes = {
     classes: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     handleSkip: PropTypes.func.isRequired,
@@ -171,4 +171,4 @@ const styles = theme => ({
     },
 });
 
-export default withStyles(styles)(Avatar);
+export default withStyles(styles)(Other);

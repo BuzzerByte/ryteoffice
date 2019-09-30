@@ -1,4 +1,6 @@
 import { BACKOFFICE_ROUTES } from '../routers';
+import { CLIENTS } from '../routers';
+import { VENDORS } from '../routers';
 import * as Auth from '../views/auth';
 import * as Errors from '../views/errors';
 
@@ -25,7 +27,9 @@ export default [
     },
 
     ...BACKOFFICE_ROUTES,
-
+    ...CLIENTS,
+    ...VENDORS,
+    
     {
         name: 'errors.not-found',
         component: Errors.NotFound,

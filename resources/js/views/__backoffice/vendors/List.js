@@ -463,7 +463,7 @@ function List(props) {
         <MasterLayout
             {...childProps}
             loading={loading}
-            pageTitle={Lang.get('navigation.clients')}
+            pageTitle={Lang.get('navigation.vendors')}
             primaryAction={primaryAction}
             tabs={tabs}
             loading={loading}
@@ -472,7 +472,7 @@ function List(props) {
         >
             {!loading && data && (
                 <Table
-                    title={Lang.get('navigation.clients')}
+                    title={Lang.get('navigation.vendors')}
                     data={data}
                     total={total}
                     columns={columns}

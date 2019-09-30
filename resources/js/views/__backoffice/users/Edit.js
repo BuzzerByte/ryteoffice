@@ -17,7 +17,7 @@ import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
 
-import { Profile, Account, Avatar } from './Forms';
+import { Address, Account, Other } from '../users/Forms';
 
 function Edit(props) {
     const [loading, setLoading] = useState(false);
@@ -144,7 +144,7 @@ function Edit(props) {
     const { classes, ...other } = props;
     const { history } = props;
 
-    const steps = ['Profile', 'Account', 'Avatar'];
+    const steps = ['Address', 'Account', 'Other'];
 
     const renderLoading = (
         <Grid
@@ -176,7 +176,7 @@ function Edit(props) {
         switch (activeStep) {
             case 0:
                 return (
-                    <Profile
+                    <Address
                         {...other}
                         values={
                             formValues[0] ? formValues[0] : defaultProfileValues
@@ -202,7 +202,7 @@ function Edit(props) {
 
             case 2:
                 return (
-                    <Avatar
+                    <Other
                         {...other}
                         user={user}
                         handleSkip={() =>

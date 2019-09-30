@@ -118,7 +118,7 @@ function Sidebar(props) {
                         </Tooltip>
                     ),
                     path: NavigationUtils.route(
-                        'backoffice.resources.clients.index',
+                        'clients.resources.clients.index',
                     ),
                 },{
                     name:Lang.get('navigation.vendors'),
@@ -132,7 +132,7 @@ function Sidebar(props) {
                         </Tooltip>
                     ),
                     path: NavigationUtils.route(
-                        'backoffice.resources.vendors.index',
+                        'vendors.resources.vendors.index',
                     ),
                 }
             ],
@@ -157,7 +157,7 @@ function Sidebar(props) {
 
         const groupId = location.pathname.split('/')[1];
         const groupIndex = linkGroups.findIndex(lg => lg.id === groupId);
-
+        
         if (groupId === '') {
             return;
         }

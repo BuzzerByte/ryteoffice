@@ -14,7 +14,7 @@ import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
 import { Vendor } from '../../../models';
-import { Profile, Address, Others } from './Forms';
+import { Address, Account, Other } from './Forms';
 
 function Create(props) {
     const [loading, setLoading] = useState(false);
@@ -109,7 +109,7 @@ function Create(props) {
     const { classes, ...other } = props;
     const { history } = props;
 
-    const steps = ['Profile', 'Address', 'Others'];
+    const steps = ['Account', 'Address', 'Other'];
 
     const renderForm = () => {
         const defaultProfileValues = {
@@ -128,7 +128,7 @@ function Create(props) {
         switch (activeStep) {
             case 0:
                 return (
-                    <Profile
+                    <Account
                         {...other}
                         values={
                             formValues[0] ? formValues[0] : defaultProfileValues
@@ -152,7 +152,7 @@ function Create(props) {
 
             case 2:
                 return (
-                    <Others
+                    <Other
                         {...other}
                         values={{
                             fax: '',
