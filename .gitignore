@@ -5,6 +5,7 @@ public/img/*
 public/css/*
 public/js/*
 .php_cs.cache
+.php_cs
 dump.sql
 /node_modules
 /public/hot
