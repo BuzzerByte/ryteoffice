@@ -13,8 +13,7 @@ import * as NavigationUtils from '../../../helpers/Navigation';
 import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
-
-import { Profile, Account, Avatar } from './Forms';
+import { Address, Account, Other } from '../users/Forms';
 
 function Create(props) {
     const [loading, setLoading] = useState(false);
@@ -101,7 +100,11 @@ function Create(props) {
     const { classes, ...other } = props;
     const { history } = props;
 
+<<<<<<< HEAD
     const steps = ['Profile', 'Account', 'Avatar'];
+=======
+    const steps = ['Address', 'Account', 'Other'];
+>>>>>>> master
 
     const renderForm = () => {
         const defaultProfileValues = {
@@ -116,7 +119,11 @@ function Create(props) {
         switch (activeStep) {
             case 0:
                 return (
+<<<<<<< HEAD
                     <Profile
+=======
+                    <Address
+>>>>>>> master
                         {...other}
                         values={
                             formValues[0] ? formValues[0] : defaultProfileValues
@@ -141,7 +148,11 @@ function Create(props) {
 
             case 2:
                 return (
+<<<<<<< HEAD
                     <Avatar
+=======
+                    <Other
+>>>>>>> master
                         {...other}
                         user={user}
                         handleSkip={() =>
