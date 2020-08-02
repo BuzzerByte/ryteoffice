@@ -100,11 +100,7 @@ function Create(props) {
     const { classes, ...other } = props;
     const { history } = props;
 
-<<<<<<< HEAD
-    const steps = ['Profile', 'Account', 'Avatar'];
-=======
     const steps = ['Address', 'Account', 'Other'];
->>>>>>> master
 
     const renderForm = () => {
         const defaultProfileValues = {
@@ -119,11 +115,7 @@ function Create(props) {
         switch (activeStep) {
             case 0:
                 return (
-<<<<<<< HEAD
-                    <Profile
-=======
                     <Address
->>>>>>> master
                         {...other}
                         values={
                             formValues[0] ? formValues[0] : defaultProfileValues
@@ -148,11 +140,7 @@ function Create(props) {
 
             case 2:
                 return (
-<<<<<<< HEAD
-                    <Avatar
-=======
                     <Other
->>>>>>> master
                         {...other}
                         user={user}
                         handleSkip={() =>
