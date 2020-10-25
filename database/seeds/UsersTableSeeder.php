@@ -1,7 +1,7 @@
 <?php
 
-use App\User;
 use Illuminate\Database\Seeder;
+use App\User;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,34 +12,29 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $user = new User;
-        $user->type = 'superuser';
-        $user->name = 'Jovert Palonpon';
-        $user->username = 'jovert123';
-        $user->email = 'jovert@example.com';
-        $user->password = bcrypt('secret');
-
-        $user->firstname = 'Jovert';
-        $user->middlename = 'Lota';
-        $user->lastname = 'Palonpon';
-        $user->gender = 'male';
-        $user->birthdate = '1998-05-18';
-        $user->address = 'Marungko, Angat, Bulacan';
-        $user->save();
-
-        $user = new User;
-        $user->type = 'superuser';
-        $user->name = 'Ian Lumbao';
-        $user->username = 'ian123';
-        $user->email = 'ian@example.com';
-        $user->password = bcrypt('secret');
-
-        $user->firstname = 'Ian';
-        $user->middlename = null;
-        $user->lastname = 'Lumbao';
-        $user->gender = 'male';
-        $user->birthdate = null;
-        $user->address = 'Tayuman, Manila, Metro Manila';
-        $user->save();
+        $users = [
+            [
+                'email' => 'admin@buzzerbyte.com',
+                'name' => 'admin',
+                'f_name' => 'buzzer',
+                'l_name' => 'admin',
+                'terminate_status'=>false,
+                'id_number' => 'b02321',
+                'password' => bcrypt('123qwe'),
+                'role'=>'admin'
+            ],[
+                'email' => 'user@buzzerbyte.com',
+                'name' => 'user',
+                'f_name' => 'buzzer',
+                'l_name' => 'user',
+                'terminate_status'=>false,
+                'id_number'=> 'b02032',
+                'password' => bcrypt('123qwe'),
+                'role'=> 'user'
+            ]
+        ];
+        foreach($users as $key => $value){
+            User::create($value);
+        }
     }
 }
