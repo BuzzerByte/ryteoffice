@@ -95,7 +95,7 @@ function SignIn(props) {
             }
 
             const { errors } = error.response.data;
-
+            console.log(error.response.data);
             if (errors) {
                 setErrors(errors);
             }
@@ -133,7 +133,7 @@ function SignIn(props) {
             }
 
             const { errors } = error.response.data;
-
+            console.log(error.response.data);
             if (errors) {
                 form.setErrors(errors);
             }
