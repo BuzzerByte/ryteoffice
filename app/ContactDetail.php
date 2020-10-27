@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContactDetail extends Model
 {
-    //
     protected $fillable = [
         'street1',
         'street2',

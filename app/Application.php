@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\LeaveType;
+use Carbon\Carbon;
 
 class Application extends Model
 {
-    //
+    
     protected $fillable=[
         'employee_id',
         'start',

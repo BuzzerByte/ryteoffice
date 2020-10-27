@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Inventory extends Model
 {
     //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'model_no',
@@ -20,14 +25,15 @@ class Inventory extends Model
         'type',
         'category_id',
         'tax_id',
+        'user_id'
     ];
 
     public function purchases(){
-        return $this->hasMany('buzzeroffice\Purchase');
+        return $this->hasMany('App\Purchase');
     }
 
     public function orders(){
-        return $this->hasMany('buzzeroffice\Order');
+        return $this->hasMany('App\Order');
     }
 
     public function category($id){

@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vendor extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'company',
@@ -16,14 +20,14 @@ class Vendor extends Model
         'email',
         'website',
         'billing_address',
-        'shipping_address',
         'note',
+        'user_id',
         'created_at',
         'updated_at',
     ];
 
 
     public function purchase(){
-        return $this->hasMany('buzzeroffice\Purchase');
+        return $this->hasMany('App\Purchase');
     }
 }
