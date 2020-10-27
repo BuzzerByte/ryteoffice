@@ -242,7 +242,7 @@ function SignIn(props) {
                                             id="username"
                                             name="username"
                                             label="Username"
-                                            placeholder="jovert123"
+                                            placeholder="admin"
                                             value={values.username}
                                             onChange={handleChange}
                                             variant="outlined"
@@ -278,7 +278,7 @@ function SignIn(props) {
                                             id="password"
                                             name="password"
                                             label="Password"
-                                            placeholder="secret"
+                                            placeholder="123qwe"
                                             value={values.password}
                                             onChange={handleChange}
                                             variant="outlined"
