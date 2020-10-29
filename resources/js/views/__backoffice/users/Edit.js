@@ -263,13 +263,13 @@ function Edit(props) {
 const styles = theme => ({
     pageContentWrapper: {
         width: '100%',
-        marginTop: theme.spacing.unit * 3,
+        marginTop: theme.spacing(1) * 3,
         minHeight: '75vh',
         overflowX: 'auto',
     },
 
     pageContent: {
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(1) * 3,
     },
 
     loadingContainer: {

@@ -95,7 +95,7 @@ function SignIn(props) {
             }
 
             const { errors } = error.response.data;
-            console.log(error.response.data);
+            
             if (errors) {
                 setErrors(errors);
             }
@@ -133,7 +133,7 @@ function SignIn(props) {
             }
 
             const { errors } = error.response.data;
-            console.log(error.response.data);
+
             if (errors) {
                 form.setErrors(errors);
             }
@@ -366,7 +366,7 @@ function SignIn(props) {
 
 const styles = theme => ({
     formGroup: {
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing(1) * 2,
         paddingTop: 0,
     },
 });

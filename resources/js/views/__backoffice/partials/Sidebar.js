@@ -529,7 +529,7 @@ const styles = theme => {
         },
 
         linkGroupSpacer: {
-            paddingBottom: theme.spacing.unit * 2,
+            paddingBottom: theme.spacing(1) * 2,
         },
 
         text: {

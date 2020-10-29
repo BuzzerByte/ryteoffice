@@ -500,7 +500,7 @@ function Account(props) {
 
 const styles = theme => ({
     form: {
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(1) * 3,
         minHeight: '100%',
     },
 
@@ -509,7 +509,7 @@ const styles = theme => ({
     },
 
     spinner: {
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing(1),
     },
 });
 

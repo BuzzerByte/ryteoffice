@@ -171,17 +171,17 @@ const styles = theme => ({
     },
 
     backButton: {
-        marginLeft: -theme.spacing.unit,
+        marginLeft: -theme.spacing(1),
     },
 
     content: {
         flex: 1,
-        padding: `0 ${theme.spacing.unit}px`,
+        padding: `0 ${theme.spacing(1)}px`,
         marginBottom: 75,
         marginLeft: 0,
         [theme.breakpoints.up('sm')]: {
             marginBottom: 50,
-            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
+            padding: `${theme.spacing(1)}px ${theme.spacing(1) * 3}px`,
         },
     },
 });

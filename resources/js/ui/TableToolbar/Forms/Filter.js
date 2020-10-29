@@ -291,7 +291,7 @@ Filter = withStyles(
         },
 
         input: {
-            margin: theme.spacing.unit,
+            margin: theme.spacing(1),
             minWidth: 200,
         },
     }),

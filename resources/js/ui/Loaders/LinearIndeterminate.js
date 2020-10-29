@@ -9,8 +9,8 @@ const LinearIndeterminate = props => (
 
 const styles = theme => ({
     root: {
-        margin: `0 ${theme.spacing.unit}px`,
-        minHeight: theme.spacing.unit,
+        margin: `0 ${theme.spacing(1)}px`,
+        minHeight: theme.spacing(1),
         borderTopRightRadius: '100%',
         borderTopLeftRadius: '100%',
     },

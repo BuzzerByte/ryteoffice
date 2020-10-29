@@ -162,12 +162,12 @@ Avatar.propTypes = {
 
 const styles = theme => ({
     root: {
-        padding: theme.spacing.unit * 10,
+        padding: theme.spacing(1) * 10,
         border: `1px solid ${theme.palette.text.primary}`,
     },
 
     sectionSpacer: {
-        marginTop: theme.spacing.unit * 2,
+        marginTop: theme.spacing(1) * 2,
     },
 });
 

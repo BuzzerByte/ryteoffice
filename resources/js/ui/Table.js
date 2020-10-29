@@ -172,7 +172,7 @@ Table.propTypes = {
 const styles = theme => ({
     root: {
         width: '100%',
-        marginTop: theme.spacing.unit * 3,
+        marginTop: theme.spacing(1) * 3,
         minHeight: '75vh',
     },
 
