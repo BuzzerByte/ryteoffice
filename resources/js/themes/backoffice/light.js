@@ -46,7 +46,7 @@ theme = {
 
         MuiTabs: {
             root: {
-                marginLeft: theme.spacing.unit,
+                marginLeft: theme.spacing(1),
             },
             indicator: {
                 height: 3,
@@ -76,7 +76,7 @@ theme = {
 
         MuiIconButton: {
             root: {
-                padding: theme.spacing.unit,
+                padding: theme.spacing(1),
             },
         },
 

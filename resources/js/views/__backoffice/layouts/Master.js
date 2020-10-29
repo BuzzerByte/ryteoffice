@@ -247,7 +247,7 @@ const styles = theme => ({
     },
 
     breadcrumbWrapper: {
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(1) * 3,
     },
 
     contentWrapper: {
@@ -259,10 +259,10 @@ const styles = theme => ({
 
     content: {
         flex: 1,
-        padding: `0 ${theme.spacing.unit}px`,
+        padding: `0 ${theme.spacing(1)}px`,
         marginBottom: 75,
         [theme.breakpoints.up('sm')]: {
-            padding: `${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
+            padding: `${theme.spacing(1)}px ${theme.spacing(1) * 3}px`,
         },
     },
 

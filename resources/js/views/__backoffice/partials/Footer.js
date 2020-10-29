@@ -23,7 +23,7 @@ const styles = theme => ({
         right: 0,
         bottom: 0,
         left: 0,
-        padding: theme.spacing.unit * 4,
+        padding: theme.spacing(1) * 4,
         textAlign: 'center',
     },
 });

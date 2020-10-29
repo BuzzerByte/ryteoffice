@@ -44,7 +44,7 @@ const styles = theme => ({
 
     content: {
         width: '85%',
-        marginTop: theme.spacing.unit * 3,
+        marginTop: theme.spacing(1) * 3,
         minHeight: '75vh',
     },
 });

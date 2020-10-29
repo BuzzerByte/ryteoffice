@@ -42,8 +42,8 @@ class UsersController extends Controller
             'address' => 'nullable|string|max:510',
 
             'type' => 'required_if:step,1|in:superuser,user',
-            'email' => 'required_if:step,1|email|unique:users,email,NULL,id,deleted_at,NULL',
-            'username' => 'nullable|unique:users,username,NULL,id,deleted_at,NULL'
+            'email' => 'required_if:step,1|email|unique:users,email,NULL,id',
+            'username' => 'nullable|unique:users,username,NULL,id'
         ]);
 
         // Return here if the user is just in the first step.
@@ -104,9 +104,9 @@ class UsersController extends Controller
 
             'type' => 'required_if:step,1|in:superuser,user',
             'email' =>
-                "required_if:step,1|email|unique:users,email,{$user->id},id,deleted_at,NULL",
+                "required_if:step,1|email|unique:users,email,{$user->id},id",
             'username' =>
-                "nullable|unique:users,username,{$user->id},id,deleted_at,NULL"
+                "nullable|unique:users,username,{$user->id},id"
         ]);
 
         $attributes = $request->all();
@@ -144,7 +144,7 @@ class UsersController extends Controller
     public function restore(Request $request, $id)
     {
         $user = User::withTrashed()->where('id', $id)->first();
-        $user->deleted_at = null;
+        // $user->deleted_at = null;
         $user->update();
 
         return response()->json($this->paginatedQuery($request));

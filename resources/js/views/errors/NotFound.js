@@ -73,11 +73,11 @@ const NotFound = ({ classes }) => (
 
 const styles = theme => ({
     spacer: {
-        height: theme.spacing.unit * 4,
+        height: theme.spacing(1) * 4,
     },
 
     break: {
-        height: theme.spacing.unit * 2,
+        height: theme.spacing(1) * 2,
     },
 });
 

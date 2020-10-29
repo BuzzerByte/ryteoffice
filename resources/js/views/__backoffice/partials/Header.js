@@ -766,7 +766,7 @@ const styles = theme => ({
     },
 
     menuButton: {
-        marginLeft: -theme.spacing.unit,
+        marginLeft: -theme.spacing(1),
     },
 
     iconButtonAvatar: {

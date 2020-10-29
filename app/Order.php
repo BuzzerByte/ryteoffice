@@ -3,10 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Client;
+use Carbon\Carbon;
+use App\Order;
 
 class Order extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'client_id',
         'invoice_date',
@@ -20,12 +27,10 @@ class Order extends Model
         'status',
         'order_note',
         'order_activities',
-        'created_at',
-        'updated_at'
     ];
 
     public function product(){
-        return $this->belongsTo('buzzeroffice\Inventory');
+        return $this->belongsTo('App\Inventory');
     }
 
     public function timeFormat($dateTime){
@@ -33,7 +38,6 @@ class Order extends Model
     }
 
     public function orderClient($id){
-        $clientId = Order::where('id',$id)->first()->client_id;
-        return Client::where('id',$clientId)->first()->name;
+        return Client::select('name')->where('id',Order::select('client_id')->where('id',$id)->first()->client_id)->first()->name;
     }
 }

@@ -30,6 +30,8 @@ class CreateUsersTable extends Migration
             $table->string('photo')->nullable();
             $table->string('gender')->nullable();
             $table->boolean('terminate_status')->nullable();
+            $table->text('auth_token')->nullable();
+            $table->string('last_signin')->nullable();
             $table->rememberToken();
             $table->timestamps();
 

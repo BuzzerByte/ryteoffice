@@ -1,12 +1,13 @@
 <?php
 
 namespace App;
-
+use App\User;
+use App\Department;
+use App\JobCategory;
 use Illuminate\Database\Eloquent\Model;
 
 class JobHistory extends Model
 {
-    //
     protected $fillable = [
         'effective_from',
         'department_id',
@@ -37,3 +38,4 @@ class JobHistory extends Model
         return JobHistory::where('employee_id',$id)->first()->department_id;
     }
 }
+

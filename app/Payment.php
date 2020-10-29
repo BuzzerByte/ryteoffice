@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Payment extends Model
 {
-    //
     protected $fillable = [
         'reference_no',
         'date',
@@ -21,8 +20,6 @@ class Payment extends Model
         'cvc',
         'payment_ref',
         'purchase_id',
-        'order_id',
-        'created_at',
-        'updated_at',
+        'order_id'
     ];
 }

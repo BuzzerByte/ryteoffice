@@ -24,7 +24,7 @@ class SessionsController extends Controller
     public function identify(Request $request) : JsonResponse
     {
         $request->validate([
-            'username' => "required|exists:users,{$this->identifier($request)},deleted_at,NULL",
+            'username' => "required|exists:users,{$this->identifier($request)}",
         ]);
 
         return response()->json(
@@ -85,9 +85,9 @@ class SessionsController extends Controller
     protected function identifier(Request $request) : string
     {
         return filter_var(
-            $request->input('username'),
+            $request->username,
             FILTER_VALIDATE_EMAIL
-        ) ? 'email' : 'username';
+        ) ? 'email' : 'name';
     }
 
     /**

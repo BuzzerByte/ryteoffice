@@ -181,7 +181,7 @@ Account.propTypes = {
 
 const styles = theme => ({
     sectionSpacer: {
-        marginTop: theme.spacing.unit * 2,
+        marginTop: theme.spacing(1) * 2,
     },
 
     formControl: {
@@ -193,7 +193,7 @@ const styles = theme => ({
     },
 
     backButton: {
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing(1),
     },
 });
 

@@ -34,9 +34,9 @@ class AccountController extends Controller
     {
         $request->validate([
             'username' =>
-                "required|string|unique:users,username,{$this->user->id},id,deleted_at,NULL",
+                "required|string|unique:users,username,{$this->user->id},id",
             'email' =>
-                "required|email|unique:users,email,{$this->user->id},id,deleted_at,NULL"
+                "required|email|unique:users,email,{$this->user->id},id"
         ]);
 
         $this->user->username = $request->input('username');

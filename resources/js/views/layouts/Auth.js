@@ -150,7 +150,7 @@ const styles = theme => ({
     },
 
     formGroup: {
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing(1) * 2,
         paddingTop: 0,
     },
 });

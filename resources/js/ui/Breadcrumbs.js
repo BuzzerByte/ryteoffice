@@ -98,7 +98,7 @@ const styles = theme => ({
     },
 
     icon: {
-        marginRight: theme.spacing.unit / 2,
+        marginRight: theme.spacing(1) / 2,
         width: 20,
     },
 });

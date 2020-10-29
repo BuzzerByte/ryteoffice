@@ -95,7 +95,7 @@ function SignIn(props) {
             }
 
             const { errors } = error.response.data;
-
+            
             if (errors) {
                 setErrors(errors);
             }
@@ -242,7 +242,7 @@ function SignIn(props) {
                                             id="username"
                                             name="username"
                                             label="Username"
-                                            placeholder="jovert123"
+                                            placeholder="admin"
                                             value={values.username}
                                             onChange={handleChange}
                                             variant="outlined"
@@ -278,7 +278,7 @@ function SignIn(props) {
                                             id="password"
                                             name="password"
                                             label="Password"
-                                            placeholder="secret"
+                                            placeholder="123qwe"
                                             value={values.password}
                                             onChange={handleChange}
                                             variant="outlined"
@@ -366,7 +366,7 @@ function SignIn(props) {
 
 const styles = theme => ({
     formGroup: {
-        padding: theme.spacing.unit * 2,
+        padding: theme.spacing(1) * 2,
         paddingTop: 0,
     },
 });

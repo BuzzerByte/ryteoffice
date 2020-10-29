@@ -161,8 +161,8 @@ module.exports = env => {
         config.plugins.push(
             new BrowserSyncPlugin({
                 host: env && env.host ? env.host : 'localhost',
-                port: env && env.port ? env.port : 3000,
-                proxy: env && env.proxy ? env.proxy : 'http://localhost:8000',
+                port: env && env.port ? env.port : 8080,
+                proxy: env && env.proxy ? env.proxy : 'http://localhost:8080',
                 open: true,
                 notify: false,
             }),

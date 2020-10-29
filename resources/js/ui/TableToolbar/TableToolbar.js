@@ -214,7 +214,7 @@ export default withStyles(
             flexWrap: 'no-wrap',
             flexDirection: 'row',
             alignItems: 'center',
-            margin: theme.spacing.unit / 2,
+            margin: theme.spacing(1) / 2,
         },
 
         filterName: {
