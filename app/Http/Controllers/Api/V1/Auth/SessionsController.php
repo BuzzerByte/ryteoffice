@@ -30,7 +30,7 @@ class SessionsController extends Controller
         return response()->json(
             User::where(
                 $this->identifier($request),
-                $request->username
+                $request->input('username')
             )->first()->email
         );
     }

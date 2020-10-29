@@ -13,7 +13,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements JWTSubject, Uploader
 {
-    use Notifiable, SoftDeletes, HasJWT, UploadsFiles;
+    use Notifiable, HasJWT, UploadsFiles;
 
     /**
      * The attributes that are mass assignable.
