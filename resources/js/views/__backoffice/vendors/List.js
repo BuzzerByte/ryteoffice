@@ -11,7 +11,7 @@ import {
 import {
     Delete as DeleteIcon,
     Edit as EditIcon,
-    Image as ImageIcon,
+    Image as ImageIcon
 } from '@material-ui/icons';
 
 import * as RandomUtils from '../../../helpers/Random';
