@@ -9,6 +9,7 @@ import { ROUTES } from './config';
 import { Loading } from './views';
 import { AppProvider } from './AppContext';
 
+
 // function App(props) {
 const App = React.forwardRef((props, ref) => {
     const [initialized, setInitialized] = useState(false);
@@ -279,17 +280,17 @@ const App = React.forwardRef((props, ref) => {
         handleLock,
         handleSignOut,
     };
-
+    // const ref = React.createRef();
     return (
         <MuiThemeProvider theme={nightMode ? darkTheme : lightTheme}>
             <CssBaseline />
 
             <AppProvider {...pageProps} {...props} forwardRef={ref}>
                 {loading ? (
-                    <Loading />
+                    <Loading ref = {ref}/>
                 ) : (
-                    <Router>
-                        <Navigator />
+                    <Router >
+                        <Navigator ref = {ref}/>
                     </Router>
                 )}
             </AppProvider>

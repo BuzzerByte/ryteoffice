@@ -5,13 +5,14 @@ import * as NavigationUtils from '../helpers/Navigation';
 import * as UrlUtils from '../helpers/URL';
 import { AppContext } from '../AppContext';
 
-const Navigator = props => {
+// const Navigator = props => {
+const Navigator = React.forwardRef((props, ref) => {
     const { environment, routes, authenticated, username } = useContext(
         AppContext,
     );
 
     return (
-        <Switch>
+        <Switch ref = {ref}>
             {routes.map((route, i) => {
                 const View = route.component;
 
@@ -57,6 +58,6 @@ const Navigator = props => {
             })}
         </Switch>
     );
-};
+});
 
 export default withRouter(Navigator);
