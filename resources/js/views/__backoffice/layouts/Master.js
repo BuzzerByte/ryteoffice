@@ -196,7 +196,6 @@ Master.propTypes = {
     classes: PropTypes.object.isRequired,
     pageTitle: PropTypes.string.isRequired,
     loading: PropTypes.bool,
-
     primaryAction: PropTypes.object,
     tabs: PropTypes.array,
     showBreadcrumbs: PropTypes.bool,
@@ -206,7 +205,6 @@ Master.propTypes = {
 
 Master.defaultProps = {
     loading: false,
-
     tabs: [],
     showBreadcrumbs: true,
     message: {},

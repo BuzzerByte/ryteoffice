@@ -9,7 +9,8 @@ import { ROUTES } from './config';
 import { Loading } from './views';
 import { AppProvider } from './AppContext';
 
-function App(props) {
+// function App(props) {
+const App = React.forwardRef((props, ref) => {
     const [initialized, setInitialized] = useState(false);
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
@@ -283,7 +284,7 @@ function App(props) {
         <MuiThemeProvider theme={nightMode ? darkTheme : lightTheme}>
             <CssBaseline />
 
-            <AppProvider {...pageProps}>
+            <AppProvider {...pageProps} {...props} forwardRef={ref}>
                 {loading ? (
                     <Loading />
                 ) : (
@@ -294,7 +295,7 @@ function App(props) {
             </AppProvider>
         </MuiThemeProvider>
     );
-}
+});
 
 App.propTypes = {
     environment: PropTypes.oneOf(['backoffice']).isRequired,
