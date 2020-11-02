@@ -26,7 +26,8 @@ import * as NavigationUtils from '../../helpers/Navigation';
 import { Auth as AuthLayout } from '../layouts';
 import { AppContext } from '../../AppContext';
 
-function SignIn(props) {
+// function SignIn(props) {
+const SignIn = React.forwardRef((props, ref) => {
     const { authenticate } = useContext(AppContext);
 
     const [loading, setLoading] = useState(false);
@@ -317,6 +318,7 @@ function SignIn(props) {
                                             component={props => (
                                                 <RouterLink
                                                     {...props}
+                                                    ref = {ref}
                                                     to={{
                                                         search: UrlUtils.queryString(
                                                             {
@@ -362,7 +364,7 @@ function SignIn(props) {
             </Formik>
         </AuthLayout>
     );
-}
+});
 
 const styles = theme => ({
     formGroup: {

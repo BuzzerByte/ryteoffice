@@ -285,12 +285,12 @@ const App = React.forwardRef((props, ref) => {
         <MuiThemeProvider theme={nightMode ? darkTheme : lightTheme}>
             <CssBaseline />
 
-            <AppProvider {...pageProps} {...props} forwardRef={ref}>
+            <AppProvider {...pageProps} {...props} ref={ref}>
                 {loading ? (
-                    <Loading ref = {ref}/>
+                    <Loading/>
                 ) : (
-                    <Router >
-                        <Navigator ref = {ref}/>
+                    <Router>
+                        <Navigator/>
                     </Router>
                 )}
             </AppProvider>

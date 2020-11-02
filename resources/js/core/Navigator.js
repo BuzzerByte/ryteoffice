@@ -12,10 +12,9 @@ const Navigator = React.forwardRef((props, ref) => {
     );
 
     return (
-        <Switch ref = {ref}>
+        <Switch>
             {routes.map((route, i) => {
                 const View = route.component;
-
                 return (
                     <Route
                         key={i}
@@ -51,7 +50,7 @@ const Navigator = React.forwardRef((props, ref) => {
                                 }
                             }
 
-                            return <View {...props} {...routeProps} />;
+                            return <View {...props} {...routeProps} ref={ref}/>;
                         }}
                     />
                 );
