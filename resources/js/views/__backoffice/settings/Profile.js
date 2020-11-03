@@ -30,7 +30,7 @@ import {
 } from '../layouts';
 import { AppContext } from '../../../AppContext';
 
-function Profile(props) {
+const Profile = React.forwardRef((props, ref) => {
     const { user } = useContext(AppContext);
     const { classes, ...other } = props;
     const { location } = props;
@@ -367,11 +367,11 @@ function Profile(props) {
     const Layout = formVisible ? SlaveLayout : CleanLayout;
 
     return (
-        <Layout {...other} pageTitle="Profile" message={message}>
+        <Layout {...other} ref={ref} pageTitle="Profile" message={message}>
             {renderBody}
         </Layout>
     );
-}
+});
 
 const styles = theme => ({
     form: {

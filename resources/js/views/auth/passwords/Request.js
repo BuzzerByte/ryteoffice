@@ -9,7 +9,7 @@ import * as NavigationUtils from '../../../helpers/Navigation';
 import * as UrlUtils from '../../../helpers/URL';
 import { Auth as AuthLayout } from '../../layouts';
 
-function PasswordRequest(props) {
+const PasswordRequest = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState({});
@@ -143,6 +143,7 @@ function PasswordRequest(props) {
                                     component={props => (
                                         <RouterLink
                                             {...props}
+                                            ref = {ref}
                                             to={{
                                                 search: UrlUtils.queryString({
                                                     username: email,
@@ -183,7 +184,7 @@ function PasswordRequest(props) {
             </Formik>
         </AuthLayout>
     );
-}
+});
 
 const styles = theme => ({
     formGroup: {

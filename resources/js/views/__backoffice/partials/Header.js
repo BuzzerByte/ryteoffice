@@ -50,11 +50,12 @@ import { Ph as PhIcon, Us as UsIcon } from '../../../icons/flags/4x3';
 import { Skeleton } from '../../../ui';
 import { AppContext } from '../../../AppContext';
 
-const UserAvatar = props => {
+// const UserAvatar = props => {
+const UserAvatar = React.forwardRef((props, ref) => {
     const { user } = props;
 
     return user.thumbnail_url !== null ? (
-        <Avatar alt={user.name} src={user.thumbnail_url} />
+        <Avatar alt={user.name} src={user.thumbnail_url} ref={ref}/>
     ) : (
         <Avatar
             style={{
@@ -64,13 +65,14 @@ const UserAvatar = props => {
                         user.created_at.charAt(user.created_at.length - 2),
                 ),
             }}
+            ref={ref}
         >
             <Typography>
                 {`${user.firstname.charAt(0)}${user.lastname.charAt(0)}`}
             </Typography>
         </Avatar>
     );
-};
+});
 
 UserAvatar.propTypes = {
     user: PropTypes.object.isRequired,
@@ -256,7 +258,7 @@ const AccountMenu = props => {
     );
 };
 
-function Header(props) {
+const Header = React.forwardRef((props, ref) => {
     const {
         classes,
         pageTitle,
@@ -587,7 +589,7 @@ function Header(props) {
                                         <LanguageIcon />
                                     </IconButton>
 
-                                    <LocaleMenu {...props} />
+                                    <LocaleMenu {...props} ref={ref}/>
                                 </div>
                             </Tooltip>
                         </Grid>
@@ -629,7 +631,7 @@ function Header(props) {
                                         ) && <UserAvatar user={user} />}
                                     </IconButton>
 
-                                    <AccountMenu {...props} />
+                                    <AccountMenu {...props} ref={ref}/>
                                 </div>
                             </Tooltip>
                         </Grid>
@@ -706,7 +708,7 @@ function Header(props) {
     );
 
     return <>{loading ? renderNavigating : renderNavigated}</>;
-}
+});
 
 Header.propTypes = {
     classes: PropTypes.object.isRequired,

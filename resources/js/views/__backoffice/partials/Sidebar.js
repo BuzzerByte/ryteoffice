@@ -34,7 +34,7 @@ import brandLogoLight from '../../../../img/logos/short-light.svg';
 import brandLogoDark from '../../../../img/logos/short-dark.svg';
 import { AppContext } from '../../../AppContext';
 
-function Sidebar(props) {
+const Sidebar = React.forwardRef((props, ref) => {
     const { nightMode } = useContext(AppContext);
     const {
         classes,
@@ -275,8 +275,8 @@ function Sidebar(props) {
                                                     classes={{
                                                         primary:
                                                             classes.linkText,
-                                                        textDense:
-                                                            classes.textDense,
+                                                        dense:
+                                                            classes.dense,
                                                     }}
                                                 >
                                                     {name}
@@ -370,7 +370,7 @@ function Sidebar(props) {
     );
 
     return (
-        <Drawer variant="permanent" {...other}>
+        <Drawer variant="permanent" {...other} ref={ref}>
             <div
                 className={classNames(classes.nav, {
                     [classes.minimized]: minimized,
@@ -396,7 +396,7 @@ function Sidebar(props) {
             </div>
         </Drawer>
     );
-}
+});
 
 Sidebar.propTypes = {
     PaperProps: PropTypes.object.isRequired,
@@ -542,12 +542,12 @@ const styles = theme => {
         linkText: {
             color: 'inherit',
             fontSize: theme.typography.fontSize,
-            '&$textDense': {
+            '&$dense': {
                 fontSize: theme.typography.fontSize,
             },
         },
 
-        textDense: {},
+        dense: {},
 
         center: {
             display: 'flex',

@@ -16,7 +16,7 @@ import { Master as MasterLayout } from '../layouts';
 import { Vendor } from '../../../models';
 import { Address, Account, Other } from './Forms';
 
-function Create(props) {
+const Create = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
@@ -175,6 +175,7 @@ function Create(props) {
             pageTitle="Create a client"
             tabs={[]}
             message={message}
+            ref = {ref}
         >
             <div className={classes.pageContentWrapper}>
                 {loading && <LinearIndeterminate />}
@@ -207,7 +208,7 @@ function Create(props) {
             </div>
         </MasterLayout>
     );
-}
+});
 
 const styles = theme => ({
     pageContentWrapper: {

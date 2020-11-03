@@ -11,11 +11,11 @@ import { Home as HomeIcon } from '@material-ui/icons';
 import * as NavigationUtils from '../helpers/Navigation';
 import * as StringUtils from '../helpers/String';
 
-function Breadcrumbs(props) {
+const Breadcrumbs = React.forwardRef((props, ref) => {
     const { classes, segments, blacklistedSegments, ...other } = props;
 
     return (
-        <MuiBreadcrumbs arial-label="Breadcrumb" {...other}>
+        <MuiBreadcrumbs arial-label="Breadcrumb" {...other} ref = {ref}>
             {segments.length > 0 ? (
                 <Link
                     color="inherit"
@@ -81,7 +81,7 @@ function Breadcrumbs(props) {
             })}
         </MuiBreadcrumbs>
     );
-}
+});
 
 Breadcrumbs.propTypes = {
     segments: PropTypes.array.isRequired,

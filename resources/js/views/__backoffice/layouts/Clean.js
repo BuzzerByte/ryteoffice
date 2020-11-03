@@ -14,7 +14,7 @@ import { Snackbar } from '../../../ui';
 import { LinearDeterminate } from '../../../ui/Loaders';
 import { Footer, Header, Sidebar } from '../partials';
 
-function Clean(props) {
+const Clean = React.forwardRef((props, ref) => {
     const { classes, ...other } = props;
     const { history, loading, message } = props;
 
@@ -92,7 +92,7 @@ function Clean(props) {
             )}
         </>
     );
-}
+});
 
 Clean.propTypes = {
     classes: PropTypes.object.isRequired,

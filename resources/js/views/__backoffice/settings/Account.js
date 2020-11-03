@@ -28,7 +28,7 @@ import {
 } from '../layouts';
 import { AppContext } from '../../../AppContext';
 
-function Account(props) {
+const Account = React.forwardRef((props, ref) => {
     const { user } = useContext(AppContext);
     const { classes, ...other } = props;
     const { location } = props;
@@ -492,11 +492,11 @@ function Account(props) {
     const Layout = formVisible ? SlaveLayout : CleanLayout;
 
     return (
-        <Layout {...other} pageTitle="Account" message={message}>
+        <Layout {...other} ref={ref} pageTitle="Account" message={message}>
             {renderBody}
         </Layout>
     );
-}
+});
 
 const styles = theme => ({
     form: {
