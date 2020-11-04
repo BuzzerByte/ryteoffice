@@ -100,6 +100,7 @@ FileIcon = withStyles(theme => ({
     },
 }))(FileIcon);
 
+// function Dropzone(props) {
 const Dropzone = React.forwardRef((props, ref) => {
     const {
         classes,

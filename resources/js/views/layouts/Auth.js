@@ -37,7 +37,6 @@ const formattedSubTitle = subTitle => {
     return subTitle;
 };
 
-// const Auth = props => {
 const Auth = React.forwardRef((props, ref) => {
     const { nightMode } = useContext(AppContext);
 

@@ -41,6 +41,7 @@ const SignIn = React.forwardRef((props, ref) => {
      * @return {undefined}
      */
     const handleUsernameChipClicked = () => {
+
         setUsername('');
         setIdentified(false);
 
@@ -75,11 +76,12 @@ const SignIn = React.forwardRef((props, ref) => {
             });
 
             const { history, location } = props;
+            console.log('in identify:'+history);
 
             setIdentified(true);
             setUsername(response.data);
             setLoading(false);
-
+            console.log('in identify:'+response.data);
             const queryString = UrlUtils.queryString({
                 username: response.data,
             });
@@ -87,7 +89,6 @@ const SignIn = React.forwardRef((props, ref) => {
             if (queryString === location.search) {
                 return;
             }
-
             history.push(`${location.pathname}${queryString}`);
         } catch (error) {
             if (!error.response) {
@@ -115,7 +116,6 @@ const SignIn = React.forwardRef((props, ref) => {
      */
     const signIn = async (values, form = {}) => {
         setLoading(true);
-
         try {
             const { password } = values;
 
@@ -177,10 +177,12 @@ const SignIn = React.forwardRef((props, ref) => {
      * Identify here after component mounts.
      */
     useEffect(() => {
+        console.log('use effect');
+        console.log(identified);
         if (identified) {
             return;
         }
-
+        console.log('use effect 2');
         const { location } = props;
 
         const q = UrlUtils.queryParams(location.search);
@@ -188,6 +190,7 @@ const SignIn = React.forwardRef((props, ref) => {
         if (q.hasOwnProperty('username') && q.username !== '') {
             identify(q.username, {});
         }
+
     }, [identified]);
 
     const { classes, ...other } = props;
@@ -215,6 +218,7 @@ const SignIn = React.forwardRef((props, ref) => {
             }
             loading={loading}
             message={message}
+            ref = {ref}
         >
             <Formik
                 initialValues={{
@@ -317,7 +321,7 @@ const SignIn = React.forwardRef((props, ref) => {
                                             component={props => (
                                                 <RouterLink
                                                     {...props}
-                                                    ref = {ref}
+                                                    
                                                     to={{
                                                         search: UrlUtils.queryString(
                                                             {

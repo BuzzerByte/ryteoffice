@@ -78,7 +78,8 @@ UserAvatar.propTypes = {
     user: PropTypes.object.isRequired,
 };
 
-const LocaleMenu = props => {
+// const LocaleMenu = props => {
+const LocaleMenu = React.forwardRef((props, ref) => {
     const { classes, localeMenuOpen, onLocaleMenuToggle } = props;
 
     return (
@@ -87,6 +88,7 @@ const LocaleMenu = props => {
             className={classes.navLinkMenu}
             transition
             disablePortal
+            ref = {ref}
         >
             {({ TransitionProps, placement }) => (
                 <Grow
@@ -151,9 +153,10 @@ const LocaleMenu = props => {
             )}
         </Popper>
     );
-};
+});
 
-const AccountMenu = props => {
+// const AccountMenu = props => {
+const AccountMenu = React.forwardRef((props, ref) => {
     const { user, handleLock, handleSignOut } = useContext(AppContext);
 
     const {
@@ -172,6 +175,7 @@ const AccountMenu = props => {
             className={classes.navLinkMenu}
             transition
             disablePortal
+            ref = {ref}
         >
             {({ TransitionProps, placement }) => (
                 <Grow
@@ -256,7 +260,7 @@ const AccountMenu = props => {
             )}
         </Popper>
     );
-};
+});
 
 const Header = React.forwardRef((props, ref) => {
     const {

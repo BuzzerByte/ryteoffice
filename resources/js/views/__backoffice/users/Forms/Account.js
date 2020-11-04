@@ -16,7 +16,6 @@ import {
     withStyles,
 } from '@material-ui/core';
 
-// const Account = props => {
 const Account = React.forwardRef((props, ref) => {
     const { classes, values, handleSubmit, handleBack } = props;
 

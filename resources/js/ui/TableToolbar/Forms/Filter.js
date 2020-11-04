@@ -19,7 +19,8 @@ import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 
 import MomentUtils from '@date-io/moment';
 
-const FilterValueInput = props => {
+// const FilterValueInput = props => {
+const FilterValueInput = React.forwardRef((props, ref) => {
     const inputProps = {
         name: 'filterValue',
         id: 'filterValue',
@@ -33,12 +34,13 @@ const FilterValueInput = props => {
                 type="number"
                 {...inputProps}
                 {...props}
+                ref = {ref}
                 placeholder={Lang.get('table.numeric_value_placeholder')}
             />
         );
     } else if (props.columntype === 'date') {
         return (
-            <MuiPickersUtilsProvider utils={MomentUtils}>
+            <MuiPickersUtilsProvider utils={MomentUtils} ref={ref}>
                 <DatePicker
                     {...inputProps}
                     value={props.value}
@@ -57,11 +59,12 @@ const FilterValueInput = props => {
             <TextField
                 {...inputProps}
                 {...props}
+                ref = {ref}
                 placeholder={Lang.get('table.string_value_placeholder')}
             />
         );
     }
-};
+});
 
 let Filter = props => {
     const { classes, errors: formErrors, columns, onFilter } = props;

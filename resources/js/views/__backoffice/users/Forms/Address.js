@@ -19,7 +19,6 @@ import {
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 
-// const Address = props => {
 const Address = React.forwardRef((props, ref) => {
     const { classes, values, handleSubmit } = props;
 

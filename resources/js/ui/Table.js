@@ -17,7 +17,8 @@ import {
 
 import { TableToolbar, TablePaginationActions } from './';
 
-const Table = props => {
+// const Table = props => {
+const Table = React.forwardRef((props, ref) => {
     const {
         classes,
         title,
@@ -37,7 +38,7 @@ const Table = props => {
     } = props;
 
     return (
-        <Paper className={classes.root}>
+        <Paper className={classes.root} ref={ref}>
             <TableToolbar
                 title={title}
                 columns={columns}
@@ -150,7 +151,7 @@ const Table = props => {
             </div>
         </Paper>
     );
-};
+});
 
 Table.propTypes = {
     title: PropTypes.string.isRequired,
