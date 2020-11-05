@@ -5,7 +5,7 @@ import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 
 import { Dropzone } from '../../../../ui';
 
-function Avatar(props) {
+const Avatar = React.forwardRef((props, ref) => {
     const [files, setFiles] = useState([]);
 
     /**
@@ -152,7 +152,7 @@ function Avatar(props) {
             </Grid>
         </>
     );
-}
+});
 
 Avatar.propTypes = {
     classes: PropTypes.object.isRequired,

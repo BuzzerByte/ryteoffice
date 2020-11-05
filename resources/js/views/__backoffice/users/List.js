@@ -22,7 +22,7 @@ import { Master as MasterLayout } from '../layouts';
 import { User } from '../../../models';
 import { AppContext } from '../../../AppContext';
 
-function List(props) {
+const List = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [pagination, setPagination] = useState({});
     const [sorting, setSorting] = useState({
@@ -494,6 +494,7 @@ function List(props) {
             loading={loading}
             message={message}
             alert={alert}
+            ref = {ref}
         >
             {!loading && data && (
                 <Table
@@ -520,6 +521,6 @@ function List(props) {
             )}
         </MasterLayout>
     );
-}
+});
 
 export default List;

@@ -15,7 +15,7 @@ import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
 import { Address, Account, Other } from '../users/Forms';
 
-function Create(props) {
+const Create = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
@@ -164,6 +164,7 @@ function Create(props) {
             pageTitle="Create a user"
             tabs={[]}
             message={message}
+            ref = {ref}
         >
             <div className={classes.pageContentWrapper}>
                 {loading && <LinearIndeterminate />}
@@ -196,7 +197,7 @@ function Create(props) {
             </div>
         </MasterLayout>
     );
-}
+});
 
 const styles = theme => ({
     pageContentWrapper: {

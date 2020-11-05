@@ -11,7 +11,7 @@ import {
 import {
     Delete as DeleteIcon,
     Edit as EditIcon,
-    Image as ImageIcon,
+    Image as ImageIcon
 } from '@material-ui/icons';
 
 import * as RandomUtils from '../../../helpers/Random';
@@ -22,7 +22,7 @@ import { Master as MasterLayout } from '../layouts';
 import { Vendor } from '../../../models';
 import { AppContext } from '../../../AppContext';
 
-function List(props) {
+const List = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [pagination, setPagination] = useState({});
     const [sorting, setSorting] = useState({
@@ -469,6 +469,7 @@ function List(props) {
             loading={loading}
             message={message}
             alert={alert}
+            ref = {ref}
         >
             {!loading && data && (
                 <Table
@@ -491,10 +492,11 @@ function List(props) {
                     onChangePerPage={handlePerPageChange}
                     onFilter={handleFiltering}
                     onFilterRemove={handleFilterRemove}
+                    ref = {ref}
                 />
             )}
         </MasterLayout>
     );
-}
+});
 
 export default List;

@@ -27,7 +27,8 @@ const icons = {
     info: InfoIcon,
 };
 
-const Snackbar = props => {
+// const Snackbar = props => {
+const Snackbar = React.forwardRef((props, ref) => {
     const {
         classes,
         className,
@@ -96,7 +97,7 @@ const Snackbar = props => {
             />
         </MuiSnackbar>
     );
-};
+});
 
 Snackbar.propTypes = {
     type: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,

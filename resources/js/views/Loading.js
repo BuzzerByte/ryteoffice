@@ -5,11 +5,13 @@ import darkLogo from '../../img/logos/short-dark.svg';
 import lightLogo from '../../img/logos/short-light.svg';
 import { AppContext } from '../AppContext';
 
-const Loading = props => {
+// const Loading = props => {
+const Loading = React.forwardRef((props, ref) => {
     const { nightMode } = useContext(AppContext);
 
     return (
         <Grid
+            ref={ref}
             container
             justify="center"
             alignItems="center"
@@ -30,7 +32,7 @@ const Loading = props => {
             </Grid>
         </Grid>
     );
-};
+});
 
 const styles = theme => ({
     container: {

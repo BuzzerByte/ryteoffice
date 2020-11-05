@@ -100,7 +100,8 @@ FileIcon = withStyles(theme => ({
     },
 }))(FileIcon);
 
-function Dropzone(props) {
+// function Dropzone(props) {
+const Dropzone = React.forwardRef((props, ref) => {
     const {
         classes,
         initialFiles,
@@ -308,10 +309,10 @@ function Dropzone(props) {
         noKeyboard: true,
     });
 
-    const { ref, ...rootProps } = getRootProps();
+    const { rootRef, ...rootProps } = getRootProps();
 
     return (
-        <RootRef rootRef={ref}>
+        <RootRef rootRef={rootRef} ref={ref}>
             <Grid
                 {...rootProps}
                 container
@@ -463,7 +464,7 @@ function Dropzone(props) {
             </Grid>
         </RootRef>
     );
-}
+});
 
 Dropzone.propTypes = {
     initialFiles: PropTypes.array,

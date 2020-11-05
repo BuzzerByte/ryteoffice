@@ -16,7 +16,7 @@ import { LinearDeterminate } from '../../../ui/Loaders';
 import { Footer, Header, Sidebar } from '../partials';
 import { AppContext } from '../../../AppContext';
 
-function Master(props) {
+const Master = React.forwardRef((props, ref) => {
     const [minimized, setMinimized] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [localeMenuOpen, setLocaleMenuOpen] = useState(false);
@@ -106,6 +106,7 @@ function Master(props) {
             style={{
                 backgroundColor: nightMode ? '#303030' : '#FAFAFA',
             }}
+            ref = {ref}
         >
             <div className={classes.breadcrumbWrapper}>
                 <Breadcrumbs
@@ -140,6 +141,7 @@ function Master(props) {
                             open={mobileOpen}
                             onClose={handleDrawerToggled}
                             PaperProps={{ style: { width: drawerWidth } }}
+                            ref = {ref}
                         />
                     </Hidden>
 
@@ -153,6 +155,7 @@ function Master(props) {
                             PaperProps={{
                                 style: { width: minimized ? 70 : drawerWidth },
                             }}
+                            ref = {ref}
                         />
                     </Hidden>
                 </nav>
@@ -190,13 +193,12 @@ function Master(props) {
             {alert && alert.hasOwnProperty('type') > 0 && <Modal {...alert} />}
         </>
     );
-}
+});
 
 Master.propTypes = {
     classes: PropTypes.object.isRequired,
     pageTitle: PropTypes.string.isRequired,
     loading: PropTypes.bool,
-
     primaryAction: PropTypes.object,
     tabs: PropTypes.array,
     showBreadcrumbs: PropTypes.bool,
@@ -206,7 +208,6 @@ Master.propTypes = {
 
 Master.defaultProps = {
     loading: false,
-
     tabs: [],
     showBreadcrumbs: true,
     message: {},

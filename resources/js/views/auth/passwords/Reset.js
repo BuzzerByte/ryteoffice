@@ -23,7 +23,7 @@ import * as UrlUtils from '../../../helpers/URL';
 import { Auth as AuthLayout } from '../../layouts';
 import { AppContext } from '../../../AppContext';
 
-function PasswordReset(props) {
+const PasswordReset = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({});
     const [email, setEmail] = useState('');
@@ -270,6 +270,7 @@ function PasswordReset(props) {
                                     component={props => (
                                         <RouterLink
                                             {...props}
+                                            ref = {ref}
                                             to={{
                                                 search: UrlUtils.queryString({
                                                     username: email,
@@ -310,7 +311,7 @@ function PasswordReset(props) {
             </Formik>
         </AuthLayout>
     );
-}
+});
 
 const styles = theme => ({
     formGroup: {

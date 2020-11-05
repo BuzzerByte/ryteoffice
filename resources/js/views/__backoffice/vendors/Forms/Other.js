@@ -5,7 +5,7 @@ import { Button, Grid, Typography, withStyles } from '@material-ui/core';
 
 import { Dropzone } from '../../../../ui';
 
-function Other(props) {
+const Other = React.forwardRef((props, ref) => {
     const [files, setFiles] = useState([]);
 
     /**
@@ -125,7 +125,7 @@ function Other(props) {
 
     return (
         <>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom ref={ref}>
                 Other Upload
             </Typography>
 
@@ -135,12 +135,13 @@ function Other(props) {
                 maxFileSize={25}
                 handleUpload={handleUpload}
                 handleFileRemoved={handleFileRemoved}
+                ref = {ref}
             />
 
             <div className={classes.sectionSpacer} />
 
-            <Grid container spacing={24} justify="flex-end">
-                <Grid item>
+            <Grid container spacing={24} justify="flex-end" ref={ref}>
+                <Grid item ref={ref}>
                     <Button
                         variant="contained"
                         color="primary"
@@ -152,7 +153,7 @@ function Other(props) {
             </Grid>
         </>
     );
-}
+});
 
 Other.propTypes = {
     classes: PropTypes.object.isRequired,

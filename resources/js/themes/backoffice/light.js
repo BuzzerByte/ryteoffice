@@ -66,12 +66,12 @@ theme = {
                 },
             },
 
-            labelContainer: {
-                padding: 0,
-                [theme.breakpoints.up('md')]: {
-                    padding: 0,
-                },
-            },
+            // labelContainer: {
+            //     padding: 0,
+            //     [theme.breakpoints.up('md')]: {
+            //         padding: 0,
+            //     },
+            // },
         },
 
         MuiIconButton: {

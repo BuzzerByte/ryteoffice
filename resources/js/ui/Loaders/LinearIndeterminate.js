@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 
 import { LinearProgress, withStyles } from '@material-ui/core';
 
-const LinearIndeterminate = props => (
-    <LinearProgress className={props.classes.root} />
-);
+// const LinearIndeterminate = props = (
+const LinearIndeterminate = React.forwardRef((props, ref) => (
+    <LinearProgress className={props.classes.root} ref = {ref}/>
+));
 
 const styles = theme => ({
     root: {

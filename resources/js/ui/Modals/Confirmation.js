@@ -10,7 +10,8 @@ import {
     DialogTitle,
 } from '@material-ui/core';
 
-const Confirmation = props => {
+// const Confirmation = props => {
+const Confirmation = React.forwardRef((props, ref) => {
     const {
         title,
         body,
@@ -26,6 +27,7 @@ const Confirmation = props => {
             onClose={cancelled}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
+            ref = {ref}
         >
             <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
 
@@ -46,7 +48,7 @@ const Confirmation = props => {
             </DialogActions>
         </Dialog>
     );
-};
+});
 
 Confirmation.propTypes = {
     title: PropTypes.string.isRequired,

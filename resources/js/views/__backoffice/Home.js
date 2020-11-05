@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 
 import { Master as MasterLayout } from './layouts';
 
-function Home(props) {
+const Home = React.forwardRef((props, ref) => {
     const primaryAction = {
         text: 'Export Stats',
         clicked: () => alert('Exporting your awesome stats...'),
@@ -24,6 +24,7 @@ function Home(props) {
     return (
         <MasterLayout
             {...props}
+            ref = {ref}
             pageTitle={Lang.get('navigation.dashboard')}
             primaryAction={primaryAction}
             tabs={tabs}
@@ -31,6 +32,6 @@ function Home(props) {
             <Typography>There is no place like home</Typography>
         </MasterLayout>
     );
-}
+});
 
 export default Home;

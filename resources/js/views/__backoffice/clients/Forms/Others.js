@@ -19,7 +19,8 @@ import {
 
 import { Dropzone } from '../../../../ui';
 
-const Others = props => {
+// const Others = props => {
+const Others = React.forwardRef((props, ref) => {
     const { classes, values, handleSubmit, handleBack } = props;
 
     return (
@@ -71,6 +72,7 @@ const Others = props => {
                 await handleSubmit(mappedValues, form);
             }}
             validateOnBlur={false}
+            ref = {ref}
         >
             {({ values, handleChange, errors, submitCount, isSubmitting }) => (
                 <Form>
@@ -239,7 +241,7 @@ const Others = props => {
             )}
         </Formik>
     );
-}
+});
 
 Others.propTypes = {
     values: PropTypes.object.isRequired,

@@ -19,7 +19,7 @@ import { Master as MasterLayout } from '../layouts';
 
 import { Account, Address, Other } from './Forms';
 
-function Edit(props) {
+const Edit = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
@@ -235,6 +235,7 @@ function Edit(props) {
             pageTitle="Edit client"
             tabs={[]}
             message={message}
+            ref = {ref}
         >
             <div className={classes.pageContentWrapper}>
                 {loading && <LinearIndeterminate />}
@@ -267,7 +268,7 @@ function Edit(props) {
             </div>
         </MasterLayout>
     );
-}
+});
 
 const styles = theme => ({
     pageContentWrapper: {

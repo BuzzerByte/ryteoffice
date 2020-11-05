@@ -19,7 +19,7 @@ import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 import { LinearDeterminate } from '../../../ui/Loaders';
 import { Skeleton, Snackbar } from '../../../ui';
 
-function Slave(props) {
+const Slave = React.forwardRef((props, ref) => {
     const { classes, ...other } = props;
     const { history, location, loading, message, pageTitle } = props;
 
@@ -34,6 +34,7 @@ function Slave(props) {
             className={classes.root}
             justify="center"
             alignItems="center"
+            ref={ref}
         >
             <Grid item>
                 <CircularProgress color="primary" />
@@ -48,6 +49,7 @@ function Slave(props) {
                 position="sticky"
                 elevation={0}
                 className={classes.header}
+                ref={ref}
             >
                 <Toolbar>
                     <Grid container spacing={8} alignItems="center">
@@ -81,6 +83,7 @@ function Slave(props) {
                 position="sticky"
                 elevation={0}
                 className={classes.header}
+                ref ={ref}
             >
                 <Toolbar>
                     <Grid container spacing={8} alignItems="center">
@@ -131,7 +134,7 @@ function Slave(props) {
             )}
         </>
     );
-}
+});
 
 Slave.propTypes = {
     classes: PropTypes.object.isRequired,

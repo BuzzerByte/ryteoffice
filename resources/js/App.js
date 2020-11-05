@@ -9,7 +9,7 @@ import { ROUTES } from './config';
 import { Loading } from './views';
 import { AppProvider } from './AppContext';
 
-function App(props) {
+const App = React.forwardRef((props, ref) => {
     const [initialized, setInitialized] = useState(false);
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
@@ -278,23 +278,23 @@ function App(props) {
         handleLock,
         handleSignOut,
     };
-
+    // const ref = React.createRef();
     return (
         <MuiThemeProvider theme={nightMode ? darkTheme : lightTheme}>
             <CssBaseline />
 
-            <AppProvider {...pageProps}>
+            <AppProvider {...pageProps} {...props} ref={ref}>
                 {loading ? (
-                    <Loading />
+                    <Loading/>
                 ) : (
                     <Router>
-                        <Navigator />
+                        <Navigator/>
                     </Router>
                 )}
             </AppProvider>
         </MuiThemeProvider>
     );
-}
+});
 
 App.propTypes = {
     environment: PropTypes.oneOf(['backoffice']).isRequired,

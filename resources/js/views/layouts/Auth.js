@@ -37,7 +37,7 @@ const formattedSubTitle = subTitle => {
     return subTitle;
 };
 
-const Auth = props => {
+const Auth = React.forwardRef((props, ref) => {
     const { nightMode } = useContext(AppContext);
 
     return (
@@ -46,6 +46,7 @@ const Auth = props => {
             justify="center"
             alignItems="center"
             className={props.classes.container}
+            ref = {ref}
         >
             <Grid item className={props.classes.content}>
                 <>
@@ -106,7 +107,7 @@ const Auth = props => {
             </Grid>
         </Grid>
     );
-};
+});
 
 Auth.propTypes = {
     loading: PropTypes.bool,

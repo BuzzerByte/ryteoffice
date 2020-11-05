@@ -29,7 +29,7 @@ import { FilterList as FilterListIcon } from '@material-ui/icons';
 
 import FilterForm from './Forms/Filter';
 
-function TableToolbar(props) {
+const TableToolbar = React.forwardRef((props, ref) => {
     const [filterMenuVisible, setFilterMenuVisibility] = useState(false);
 
     const filterIcon = type => {
@@ -88,7 +88,7 @@ function TableToolbar(props) {
 
     return (
         <>
-            <Toolbar>
+            <Toolbar ref={ref}>
                 <div className={classes.title}>
                     <Typography variant="h6" id="tableTitle">
                         {title}
@@ -172,7 +172,7 @@ function TableToolbar(props) {
             )}
         </>
     );
-}
+});
 
 TableToolbar.propTypes = {
     title: PropTypes.string.isRequired,

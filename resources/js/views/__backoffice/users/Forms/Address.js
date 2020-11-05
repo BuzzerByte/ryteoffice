@@ -19,7 +19,7 @@ import {
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 
-const Address = props => {
+const Address = React.forwardRef((props, ref) => {
     const { classes, values, handleSubmit } = props;
 
     return (
@@ -62,6 +62,7 @@ const Address = props => {
                 await handleSubmit(mappedValues, form);
             }}
             validateOnBlur={false}
+            ref = {ref}
         >
             {({
                 values,
@@ -299,7 +300,7 @@ const Address = props => {
             )}
         </Formik>
     );
-};
+});
 
 Address.propTypes = {
     values: PropTypes.object.isRequired,

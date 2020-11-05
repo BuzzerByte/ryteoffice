@@ -26,7 +26,7 @@ import * as NavigationUtils from '../../helpers/Navigation';
 import { Auth as AuthLayout } from '../layouts';
 import { AppContext } from '../../AppContext';
 
-function SignIn(props) {
+const SignIn = React.forwardRef((props, ref) => {
     const { authenticate } = useContext(AppContext);
 
     const [loading, setLoading] = useState(false);
@@ -41,6 +41,7 @@ function SignIn(props) {
      * @return {undefined}
      */
     const handleUsernameChipClicked = () => {
+
         setUsername('');
         setIdentified(false);
 
@@ -75,11 +76,12 @@ function SignIn(props) {
             });
 
             const { history, location } = props;
+            console.log('in identify:'+history);
 
             setIdentified(true);
             setUsername(response.data);
             setLoading(false);
-
+            console.log('in identify:'+response.data);
             const queryString = UrlUtils.queryString({
                 username: response.data,
             });
@@ -87,7 +89,6 @@ function SignIn(props) {
             if (queryString === location.search) {
                 return;
             }
-
             history.push(`${location.pathname}${queryString}`);
         } catch (error) {
             if (!error.response) {
@@ -115,7 +116,6 @@ function SignIn(props) {
      */
     const signIn = async (values, form = {}) => {
         setLoading(true);
-
         try {
             const { password } = values;
 
@@ -177,10 +177,12 @@ function SignIn(props) {
      * Identify here after component mounts.
      */
     useEffect(() => {
+        console.log('use effect');
+        console.log(identified);
         if (identified) {
             return;
         }
-
+        console.log('use effect 2');
         const { location } = props;
 
         const q = UrlUtils.queryParams(location.search);
@@ -188,6 +190,7 @@ function SignIn(props) {
         if (q.hasOwnProperty('username') && q.username !== '') {
             identify(q.username, {});
         }
+
     }, [identified]);
 
     const { classes, ...other } = props;
@@ -215,6 +218,7 @@ function SignIn(props) {
             }
             loading={loading}
             message={message}
+            ref = {ref}
         >
             <Formik
                 initialValues={{
@@ -317,6 +321,7 @@ function SignIn(props) {
                                             component={props => (
                                                 <RouterLink
                                                     {...props}
+                                                    
                                                     to={{
                                                         search: UrlUtils.queryString(
                                                             {
@@ -362,7 +367,7 @@ function SignIn(props) {
             </Formik>
         </AuthLayout>
     );
-}
+});
 
 const styles = theme => ({
     formGroup: {

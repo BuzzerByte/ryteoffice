@@ -5,7 +5,7 @@ import { Grid, Hidden, withStyles } from '@material-ui/core';
 
 import { Navigation } from '../settings';
 
-function Settings(props) {
+const Settings = React.forwardRef((props, ref) => {
     const { classes, children, navigationProps } = props;
     const { formVisible } = navigationProps;
 
@@ -16,6 +16,7 @@ function Settings(props) {
                 spacing={16}
                 justify="center"
                 className={classes.content}
+                ref = {ref}
             >
                 <Hidden mdUp>
                     {!formVisible && <Navigation {...navigationProps} />}
@@ -29,7 +30,7 @@ function Settings(props) {
             </Grid>
         </div>
     );
-}
+});
 
 Settings.propTypes = {
     classes: PropTypes.object.isRequired,

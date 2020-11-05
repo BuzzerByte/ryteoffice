@@ -16,7 +16,8 @@ import {
     withStyles,
 } from '@material-ui/core';
 
-const Address = props => {
+// const Address = props => {
+const Address = React.forwardRef((props, ref) => {
     const { classes, values, handleSubmit, handleBack } = props;
 
     return (
@@ -59,6 +60,7 @@ const Address = props => {
                 await handleSubmit(mappedValues, form);
             }}
             validateOnBlur={false}
+            ref = {ref}
         >
             {({ values, handleChange, errors, submitCount, isSubmitting }) => (
                 <Form>
@@ -166,7 +168,7 @@ const Address = props => {
             )}
         </Formik>
     );
-};
+});
 
 Address.propTypes = {
     values: PropTypes.object.isRequired,

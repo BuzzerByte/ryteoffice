@@ -16,7 +16,7 @@ import {
     withStyles,
 } from '@material-ui/core';
 
-const Account = props => {
+const Account = React.forwardRef((props, ref) => {
     const { classes, values, handleSubmit, handleBack } = props;
 
     return (
@@ -31,6 +31,7 @@ const Account = props => {
             })}
             onSubmit={handleSubmit}
             validateOnBlur={false}
+            ref = {ref}
         >
             {({ values, handleChange, errors, submitCount, isSubmitting }) => (
                 <Form>
@@ -172,7 +173,7 @@ const Account = props => {
             )}
         </Formik>
     );
-};
+});
 
 Account.propTypes = {
     values: PropTypes.object.isRequired,

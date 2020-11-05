@@ -14,7 +14,7 @@ import {
 
 import { ChevronRight as ChevronRightIcon } from '@material-ui/icons';
 
-function Navigation(props) {
+const Navigation = React.forwardRef((props, ref) => {
     const { classes, history, location } = props;
 
     const links = [
@@ -30,7 +30,7 @@ function Navigation(props) {
     ];
 
     return (
-        <Grid item md={4} sm={12} xs={12}>
+        <Grid item md={4} sm={12} xs={12} ref={ref}>
             <Paper>
                 <MenuList>
                     {links.map(link => (
@@ -71,7 +71,7 @@ function Navigation(props) {
             </Paper>
         </Grid>
     );
-}
+});
 
 Navigation.propTypes = {
     history: PropTypes.object.isRequired,

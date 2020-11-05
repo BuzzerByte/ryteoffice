@@ -1,9 +1,11 @@
 import React from 'react';
 import { SvgIcon } from '@material-ui/core';
 
-const Us = props => (
+// const Us = props => (
+const Us = React.forwardRef((props, ref) => (
     <SvgIcon
         {...props}
+        ref = {ref}
         xmlns="http://www.w3.org/2000/svg"
         id="flag-icon-css-us"
         viewBox="0 0 512 512"
@@ -33,6 +35,6 @@ const Us = props => (
             />
         </g>
     </SvgIcon>
-);
+));
 
 export default Us;

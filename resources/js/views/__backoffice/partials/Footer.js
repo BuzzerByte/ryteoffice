@@ -2,8 +2,9 @@ import React from 'react';
 
 import { Link, Typography, withStyles } from '@material-ui/core';
 
-const Footer = props => (
-    <footer {...props} className={props.classes.root}>
+// const Footer = props => (
+const Footer = React.forwardRef((props, ref) => (
+    <footer {...props} ref={ref} className={props.classes.root}>
         <Typography>
             {Lang.get('navigation.citation')}{' '}
             <Link
@@ -15,7 +16,7 @@ const Footer = props => (
             </Link>
         </Typography>
     </footer>
-);
+));
 
 const styles = theme => ({
     root: {

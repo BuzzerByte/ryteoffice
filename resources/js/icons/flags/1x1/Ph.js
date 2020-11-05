@@ -1,9 +1,11 @@
 import React from 'react';
 import { SvgIcon } from '@material-ui/core';
 
-const Ph = props => (
+// const Ph = props => (
+const Ph = React.forwardRef((props, ref) => (
     <SvgIcon
         {...props}
+        ref = {ref}
         xmlns="http://www.w3.org/2000/svg"
         id="flag-icon-css-ph"
         viewBox="0 0 512 512"
@@ -22,6 +24,6 @@ const Ph = props => (
             />
         </g>
     </SvgIcon>
-);
+));
 
 export default Ph;
