@@ -106,7 +106,6 @@ const Master = React.forwardRef((props, ref) => {
             style={{
                 backgroundColor: nightMode ? '#303030' : '#FAFAFA',
             }}
-            ref = {ref}
         >
             <div className={classes.breadcrumbWrapper}>
                 <Breadcrumbs

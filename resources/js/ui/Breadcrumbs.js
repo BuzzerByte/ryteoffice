@@ -13,11 +13,37 @@ import * as StringUtils from '../helpers/String';
 
 const Breadcrumbs = React.forwardRef((props, ref) => {
     const { classes, segments, blacklistedSegments, ...other } = props;
-
+    const LinkBehaviour = React.forwardRef((linkProps, ref) => (
+        <RouterLink
+            ref = {ref}
+            {...linkProps}
+            to={NavigationUtils.route('backoffice.home')}
+        />
+    ));
+    const LinkBehaviour2 = React.forwardRef((linkProps, ref) => (
+        <RouterLink
+            ref = {ref}
+            {...linkProps}
+            to={
+                '/' +
+                segments
+                    .filter(
+                        (s, i) =>
+                            i <= segments.indexOf(segment),
+                    )
+                    .join('/')
+            }
+        />
+    ));
     return (
-        <MuiBreadcrumbs arial-label="Breadcrumb" {...other} ref = {ref}>
+        <MuiBreadcrumbs arial-label="Breadcrumb" {...other}>
             {segments.length > 0 ? (
                 <Link
+                    color="inherit"
+                    component = {RouterLink} to ="/"
+                    className={classes.breadcrumb}
+                >
+                {/* <Link
                     color="inherit"
                     component={linkProps => (
                         <RouterLink
@@ -26,7 +52,7 @@ const Breadcrumbs = React.forwardRef((props, ref) => {
                         />
                     )}
                     className={classes.breadcrumb}
-                >
+                > */}
                     <HomeIcon className={classes.icon} />
                 </Link>
             ) : (
@@ -59,20 +85,21 @@ const Breadcrumbs = React.forwardRef((props, ref) => {
                     <Link
                         key={key}
                         color="inherit"
-                        component={linkProps => (
-                            <RouterLink
-                                {...linkProps}
-                                to={
-                                    '/' +
-                                    segments
-                                        .filter(
-                                            (s, i) =>
-                                                i <= segments.indexOf(segment),
-                                        )
-                                        .join('/')
-                                }
-                            />
-                        )}
+                        component={RouterLink} to ="/"
+                        // component={linkProps => (
+                        //     <RouterLink
+                        //         {...linkProps}
+                        //         to={
+                        //             '/' +
+                        //             segments
+                        //                 .filter(
+                        //                     (s, i) =>
+                        //                         i <= segments.indexOf(segment),
+                        //                 )
+                        //                 .join('/')
+                        //         }
+                        //     />
+                        // )}
                         className={classes.breadcrumb}
                     >
                         {StringUtils.uppercaseFirst(segment)}

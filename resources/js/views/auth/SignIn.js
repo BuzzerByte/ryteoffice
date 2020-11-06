@@ -77,12 +77,10 @@ const SignIn = React.forwardRef((props, ref) => {
             });
 
             const { history, location } = props;
-            console.log('in identify:'+history);
 
             setIdentified(true);
             setUsername(response.data);
             setLoading(false);
-            console.log('in identify:'+response.data);
             const queryString = UrlUtils.queryString({
                 username: response.data,
             });
@@ -178,12 +176,9 @@ const SignIn = React.forwardRef((props, ref) => {
      * Identify here after component mounts.
      */
     useEffect(() => {
-        console.log('use effect');
-        console.log(identified);
         if (identified) {
             return;
         }
-        console.log('use effect 2');
         const { location } = props;
 
         const q = UrlUtils.queryParams(location.search);
