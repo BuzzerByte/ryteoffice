@@ -7,8 +7,6 @@ import { register as registerServiceWorker } from './helpers/ServiceWorker';
 import App from './App';
 import { dark as darkTheme, light as lightTheme } from './themes/backoffice';
 
-const ref = React.createRef();
-
 if (document.querySelector('#initial-content')) {
     document.querySelector('#initial-content').outerHTML = '';
 }
@@ -19,7 +17,6 @@ if (document.querySelector('#root')) {
             environment="backoffice"
             darkTheme={darkTheme}
             lightTheme={lightTheme}
-            ref = {ref}
         />,
         document.querySelector('#root'),
     );

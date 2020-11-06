@@ -10,6 +10,7 @@ import { Loading } from './views';
 import { AppProvider } from './AppContext';
 
 const App = React.forwardRef((props, ref) => {
+// function App(props){
     const [initialized, setInitialized] = useState(false);
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
@@ -278,12 +279,13 @@ const App = React.forwardRef((props, ref) => {
         handleLock,
         handleSignOut,
     };
+    
     // const ref = React.createRef();
     return (
         <MuiThemeProvider theme={nightMode ? darkTheme : lightTheme}>
             <CssBaseline />
 
-            <AppProvider {...pageProps} {...props} ref={ref}>
+            <AppProvider {...pageProps} {...props} ref={ref} >
                 {loading ? (
                     <Loading/>
                 ) : (

@@ -27,6 +27,7 @@ import { Auth as AuthLayout } from '../layouts';
 import { AppContext } from '../../AppContext';
 
 const SignIn = React.forwardRef((props, ref) => {
+// function SignIn(props) {
     const { authenticate } = useContext(AppContext);
 
     const [loading, setLoading] = useState(false);
@@ -194,7 +195,23 @@ const SignIn = React.forwardRef((props, ref) => {
     }, [identified]);
 
     const { classes, ...other } = props;
-
+    const LinkBehaviour = React.forwardRef((props, ref) => (
+        <RouterLink
+            ref = {ref}
+            
+            to={{
+                search: UrlUtils.queryString(
+                    {
+                        username,
+                    },
+                ),
+                pathname: NavigationUtils.route(
+                    'auth.passwords.request',
+                ),
+            }}
+            {...props}
+        />
+    ));
     return (
         <AuthLayout
             {...other}
@@ -218,7 +235,6 @@ const SignIn = React.forwardRef((props, ref) => {
             }
             loading={loading}
             message={message}
-            ref = {ref}
         >
             <Formik
                 initialValues={{
@@ -318,22 +334,7 @@ const SignIn = React.forwardRef((props, ref) => {
 
                                     <Grid item className={classes.formGroup}>
                                         <Link
-                                            component={props => (
-                                                <RouterLink
-                                                    {...props}
-                                                    
-                                                    to={{
-                                                        search: UrlUtils.queryString(
-                                                            {
-                                                                username,
-                                                            },
-                                                        ),
-                                                        pathname: NavigationUtils.route(
-                                                            'auth.passwords.request',
-                                                        ),
-                                                    }}
-                                                />
-                                            )}
+                                            component = {RouterLink} to ="/"
                                         >
                                             {Lang.get(
                                                 'navigation.forgot_password',
