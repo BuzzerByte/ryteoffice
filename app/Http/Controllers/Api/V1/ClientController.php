@@ -8,10 +8,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Services\ClientService;
+use Response;
 
 class ClientController extends Controller
 {
     const ITEM_PER_PAGE = 15;
+    protected $clients;
+
+    public function __construct(ClientService $clients){
+        $this->clients = $clients;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -126,20 +133,23 @@ class ClientController extends Controller
         if ($request->input('step') === 1) {
             return response()->json(200);
         }
-        $client = Client::create([
-            'name' => $request->input('name'),
-            'company' => $request->input('company'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
-            'billing_address' => $request->input('billing_address'),
-            'shipping_address' => $request->input('shipping_address'),
-            'fax' => $request->input('fax'),
-            'open_balance' => $request->input('open_balance'),
-            'website' => $request->input('website'),
-            'note' => $request->input('note'),
-        ]);
+        $result = $this->clients->store($request);
 
-        return response()->json($client, 201);
+        // return redirect()->route('client.index');
+        // $client = Client::create([
+        //     'name' => $request->input('name'),
+        //     'company' => $request->input('company'),
+        //     'phone' => $request->input('phone'),
+        //     'email' => $request->input('email'),
+        //     'billing_address' => $request->input('billing_address'),
+        //     'shipping_address' => $request->input('shipping_address'),
+        //     'fax' => $request->input('fax'),
+        //     'open_balance' => $request->input('open_balance'),
+        //     'website' => $request->input('website'),
+        //     'note' => $request->input('note'),
+        // ]);
+
+        return response()->json($result['client'], 201);
         // sleep(1);
         // $params = $request->all();
         // $user = Client::create([

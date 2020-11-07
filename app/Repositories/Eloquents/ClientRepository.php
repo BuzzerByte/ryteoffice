@@ -41,7 +41,10 @@ class ClientRepository implements IClientRepository
         $client->shipping_address = $request->s_address;
         $client->note = $request->note;
         $client->user_id = Auth::user()->id;
-        return $client->save();
+        return [
+            'result' => $client->save(),
+            'client' => $client
+        ];
     }
 
     public function import(Request $request){

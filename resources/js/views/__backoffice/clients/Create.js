@@ -16,6 +16,7 @@ import { Master as MasterLayout } from '../layouts';
 import { Client } from '../../../models';
 import { Profile, Address, Others } from './Forms';
 
+// function Create(props) {
 const Create = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
@@ -92,6 +93,7 @@ const Create = React.forwardRef((props, ref) => {
             setLoading(false);
             setFormValues(newFormValues);
             setClient(client);
+            if(activeStep == 2) activeStep = 0;
             setActiveStep(activeStep + 1);
         } catch (error) {
             if (!error.response) {
