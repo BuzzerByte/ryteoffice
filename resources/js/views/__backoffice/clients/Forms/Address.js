@@ -68,7 +68,7 @@ const Address = React.forwardRef((props, ref) => {
                         Address Settings
                     </Typography>
 
-                    <Grid container spacing={24}>
+                    <Grid container >
                         <Grid item xs={12} sm={12}>
                             <FormControl
                                 className={classes.formControl}
@@ -104,7 +104,7 @@ const Address = React.forwardRef((props, ref) => {
                         </Grid>
                     </Grid>
 
-                    <Grid container spacing={24}>
+                    <Grid container >
                         <Grid item xs={12} sm={12}>
                             <FormControl
                                 className={classes.formControl}
@@ -140,7 +140,7 @@ const Address = React.forwardRef((props, ref) => {
 
                     <div className={classes.sectionSpacer} />
 
-                    <Grid container spacing={24} justify="flex-end">
+                    <Grid container  justify="flex-end">
                         <Grid item>
                             <Button
                                 onClick={handleBack}
