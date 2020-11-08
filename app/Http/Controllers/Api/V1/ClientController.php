@@ -26,26 +26,7 @@ class ClientController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        
         return response()->json($this->paginatedQuery($request));
-        // $searchParams = $request->all();
-        // $userQuery = Client::query();
-        // $limit = Arr::get($searchParams, 'limit', static::ITEM_PER_PAGE);
-        // $role = Arr::get($searchParams, 'role', '');
-        // $keyword = Arr::get($searchParams, 'keyword', '');
-        
-        // if (!empty($role)) {
-        //     $userQuery->whereHas('roles', function($q) use ($role) { $q->where('name', $role); });
-           
-        // }
-        
-        // if (!empty($keyword)) {
-        //     $userQuery->where('name', 'LIKE', '%' . $keyword . '%');
-        //     $userQuery->where('email', 'LIKE', '%' . $keyword . '%');
-            
-        // }
-       
-        // return ClientResource::collection($userQuery->paginate($limit));
     }
     /**
      * Get the paginated resource query.
@@ -134,37 +115,7 @@ class ClientController extends Controller
             return response()->json(200);
         }
         $result = $this->clients->store($request);
-
-        // return redirect()->route('client.index');
-        // $client = Client::create([
-        //     'name' => $request->input('name'),
-        //     'company' => $request->input('company'),
-        //     'phone' => $request->input('phone'),
-        //     'email' => $request->input('email'),
-        //     'billing_address' => $request->input('billing_address'),
-        //     'shipping_address' => $request->input('shipping_address'),
-        //     'fax' => $request->input('fax'),
-        //     'open_balance' => $request->input('open_balance'),
-        //     'website' => $request->input('website'),
-        //     'note' => $request->input('note'),
-        // ]);
-
         return response()->json($result['client'], 201);
-        // sleep(1);
-        // $params = $request->all();
-        // $user = Client::create([
-        //     'name' => $params['name'],
-        //     'email' => $params['email'],
-        //     'company' => $params['company'],
-        //     'phone' => $params['phone'],
-        //     'open_balance' => $params['open_balance'],
-        //     'fax' => $params['fax'],
-        //     'website' => $params['website'],
-        //     'billing_address' => $params['billing_address'],
-        //     'shipping_address' => $params['shipping_address'],
-        //     'note' => $params['note'],
-        // ]);
-        // return new ClientResource($user);
     }
 
     public function downloadClientSample(){
@@ -255,7 +206,8 @@ class ClientController extends Controller
      */
     public function show(Request $request,Client $client) : JsonResponse
     {
-        return response()->json($client);
+        // return $this->clients->show($client);
+        return response()->json($this->clients->show($client), 200);
     }
 
     /**
@@ -295,13 +247,15 @@ class ClientController extends Controller
             'website'=>'nullable|string|max:255',
         ]);
 
-        $attributes = $request->all();
-        unset($attributes['step']);
+        $result = $this->clients->update($request, $client);
 
-        $client->fill($attributes);
-        $client->update();
+        // $attributes = $request->all();
+        // unset($attributes['step']);
 
-        return response()->json($client);
+        // $client->fill($attributes);
+        // $client->update();
+
+        return response()->json($result['client'], 200);
     }
 
     /**
@@ -313,13 +267,14 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         //
-        try {
-            $client->delete();
-        } catch (\Exception $ex) {
-            response()->json(['error' => $ex->getMessage()], 403);
-        }
-
-        return response()->json(null, 204);
+        // try {
+        //     $client->delete();
+        // } catch (\Exception $ex) {
+        //     response()->json(['error' => $ex->getMessage()], 403);
+        // }
+        $result = $this->clients->destroy($client);
+        // return response()->json(null, 204);
+        return response()->json(null, 200);
     }
 
     /**

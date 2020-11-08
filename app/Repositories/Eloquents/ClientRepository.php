@@ -31,14 +31,14 @@ class ClientRepository implements IClientRepository
 
     public function store(Request $request){
         $client = $this->clients;
-        $client->company = $request->company_name;
+        $client->company = $request->company;
         $client->name = $request->name;
         $client->phone = $request->phone;
         $client->fax = $request->fax;
         $client->email = $request->email;
         $client->website = $request->website;
-        $client->billing_address = $request->b_address;
-        $client->shipping_address = $request->s_address;
+        $client->billing_address = $request->billing_address;
+        $client->shipping_address = $request->shipping_address;
         $client->note = $request->note;
         $client->user_id = Auth::user()->id;
         return [
@@ -80,15 +80,18 @@ class ClientRepository implements IClientRepository
     public function update(Request $request, Client $client){
         $client = $this->clients->find($client->id);
         $client->name = $request->name;
-        $client->company = $request->company_name;
+        $client->company = $request->company;
         $client->phone = $request->phone;
         $client->fax = $request->fax;
         $client->email = $request->email;
         $client->website = $request->website;
-        $client->billing_address = $request->b_address;
-        $client->shipping_address = $request->s_address;
+        $client->billing_address = $request->billing_address;
+        $client->shipping_address = $request->shipping_address;
         $client->note = $request->note;
-        return $client->save();
+        return [
+            'result' => $client->save(),
+            'client' => $client
+        ];
     }
 
     public function destroy(Client $client){

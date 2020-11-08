@@ -101,7 +101,7 @@ const Edit = React.forwardRef((props, ref) => {
             if (activeStep === 2) {
                 setMessage({
                     type: 'success',
-                    body: Lang.get('resources.created', {
+                    body: Lang.get('resources.updated', {
                         name: 'Client',
                     }),
                     closed: () => setMessage({}),
