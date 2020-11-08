@@ -14,26 +14,54 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - php
-      - mysql
+      - postgreSQL
     networks:
       - laravel
 
-  mysql:
-    image: mysql:5.7.29
-    container_name: react_oms_mysql
+  # mysql:
+  #   image: mysql:5.7.29
+  #   container_name: react_oms_mysql
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_DATABASE: rbuzzeroffice
+  #     MYSQL_USER: root
+  #     MYSQL_PASSWORD: root
+  #     MYSQL_ROOT_PASSWORD: root
+  #     SERVICE_TAGS: dev
+  #     SERVICE_NAME: mysql
+  #   networks:
+  #     - laravel
+
+  postgreSQL:
+    image: "postgres" # use latest official postgres version
+    container_name: react_oms_postgresql
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_DATABASE: rbuzzeroffice
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: rbuzzeroffice
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
       SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      SERVICE_NAME: postgreSQL
     networks:
       - laravel
+
+  # pgadmin:
+  #   container_name: react_pgadmin
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: rujyi94@hotmail.com
+  #     PGADMIN_DEFAULT_PASSWORD: root
+  #   ports:
+  #     - "8081:81"
+  #   networks:
+  #     - laravel
+  #   restart: unless-stopped
 
   php:
     build:
@@ -74,7 +102,7 @@ services:
     volumes:
       - ./:/var/www/html
     depends_on:
-      - mysql
+      - postgreSQL
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
