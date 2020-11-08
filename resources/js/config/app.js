@@ -1,3 +1,3 @@
 export default {
-    name: 'Buzzer Office',
+    name:'Ryte Office',
 };

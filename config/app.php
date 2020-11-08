@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Ryte Office'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ return [
     | This value just provides additional information for the application.
     |
     */
-    'description' => env('APP_DESCRIPTION', 'Laravel Application'),
+    'description' => env('APP_DESCRIPTION', 'React Office Management System'),
 
     /*
     |--------------------------------------------------------------------------

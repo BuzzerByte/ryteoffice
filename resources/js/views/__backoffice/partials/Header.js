@@ -532,7 +532,7 @@ const Header = React.forwardRef((props, ref) => {
 
                         <Grid item xs />
 
-                        <Grid item>
+                        {/* <Grid item>
                             <Tooltip title={Lang.get('navigation.github')}>
                                 <IconButton
                                     href="https://github.com/palonponjovertlota/lra"
@@ -543,9 +543,9 @@ const Header = React.forwardRef((props, ref) => {
                                     <GitHubIcon />
                                 </IconButton>
                             </Tooltip>
-                        </Grid>
+                        </Grid> */}
 
-                        {monitoringEnabled && (
+                        {/* {monitoringEnabled && (
                             <Grid item>
                                 <Tooltip
                                     title={Lang.get('navigation.monitoring')}
@@ -560,9 +560,9 @@ const Header = React.forwardRef((props, ref) => {
                                     </IconButton>
                                 </Tooltip>
                             </Grid>
-                        )}
+                        )} */}
 
-                        <Grid item>
+                        {/* <Grid item>
                             <Tooltip
                                 title={Lang.get('navigation.notifications')}
                             >
@@ -577,9 +577,9 @@ const Header = React.forwardRef((props, ref) => {
                                     </Badge>
                                 </IconButton>
                             </Tooltip>
-                        </Grid>
+                        </Grid> */}
 
-                        <Grid item>
+                        {/* <Grid item>
                             <Tooltip title={Lang.get('navigation.locale')}>
                                 <div className={classes.navLinkMenuWrapper}>
                                     <IconButton
@@ -596,7 +596,7 @@ const Header = React.forwardRef((props, ref) => {
                                     <LocaleMenu {...props} ref={ref}/>
                                 </div>
                             </Tooltip>
-                        </Grid>
+                        </Grid> */}
 
                         <Grid item>
                             <Tooltip
@@ -674,7 +674,7 @@ const Header = React.forwardRef((props, ref) => {
                                     </Grid>
                                 )}
 
-                                <Grid item>
+                                {/* <Grid item>
                                     <Tooltip
                                         title={Lang.get('navigation.help')}
                                     >
@@ -682,7 +682,7 @@ const Header = React.forwardRef((props, ref) => {
                                             <HelpIcon />
                                         </IconButton>
                                     </Tooltip>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Toolbar>
                     </AppBar>
