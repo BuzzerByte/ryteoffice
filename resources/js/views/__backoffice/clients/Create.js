@@ -85,7 +85,7 @@ const Create = React.forwardRef((props, ref) => {
                 
                 history.push(
                     NavigationUtils.route(
-                        'clients.resources.clients.create',
+                        'clients.resources.clients.index',
                     )
                 );
             }

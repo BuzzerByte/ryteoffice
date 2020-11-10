@@ -109,7 +109,7 @@ const Edit = React.forwardRef((props, ref) => {
                 
                 history.push(
                     NavigationUtils.route(
-                        'backoffice.resources.clients.index',
+                        'clients.resources.clients.index',
                     )
                 );
             }
@@ -117,6 +117,7 @@ const Edit = React.forwardRef((props, ref) => {
             setLoading(false);
             setFormValues(newFormValues);
             setClient(client);
+            if(activeStep == 2) activeStep = 0;
             setActiveStep(activeStep + 1);
         } catch (error) {
             if (!error.response) {
