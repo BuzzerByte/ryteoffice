@@ -14,13 +14,13 @@ import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
 import { Vendor } from '../../../models';
-import { Address, Account, Other } from './Forms';
+import { Address, Profile, Other } from './Forms';
 
 const Create = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
-    const [client, setClient] = useState({});
+    const [vendor, setVendor] = useState({});
     const [message, setMessage] = useState({});
 
     /**
@@ -68,7 +68,7 @@ const Create = React.forwardRef((props, ref) => {
             // Instruct the API the current step.
             values.step = activeStep;
             
-            const client = await Vendor.store({ ...previousValues, ...values });
+            const vendor = await Vendor.store({ ...previousValues, ...values });
 
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
@@ -84,14 +84,14 @@ const Create = React.forwardRef((props, ref) => {
                 
                 history.push(
                     NavigationUtils.route(
-                        'backoffice.resources.clients.index',
+                        'vendors.resources.vendors.index',
                     )
                 );
             }
             
             setLoading(false);
             setFormValues(newFormValues);
-            setClient(client);
+            setVendor(vendor);
             setActiveStep(activeStep + 1);
         } catch (error) {
             if (!error.response) {
@@ -109,7 +109,7 @@ const Create = React.forwardRef((props, ref) => {
     const { classes, ...other } = props;
     const { history } = props;
 
-    const steps = ['Account', 'Address', 'Other'];
+    const steps = ['Profile', 'Address', 'Other'];
 
     const renderForm = () => {
         const defaultProfileValues = {
@@ -128,7 +128,7 @@ const Create = React.forwardRef((props, ref) => {
         switch (activeStep) {
             case 0:
                 return (
-                    <Account
+                    <Profile
                         {...other}
                         values={
                             formValues[0] ? formValues[0] : defaultProfileValues
@@ -172,7 +172,7 @@ const Create = React.forwardRef((props, ref) => {
     return (
         <MasterLayout
             {...other}
-            pageTitle="Create a client"
+            pageTitle="Create a vendor"
             tabs={[]}
             message={message}
             ref = {ref}

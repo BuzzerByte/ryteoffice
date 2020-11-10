@@ -8,9 +8,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
+use App\Services\VendorService;
+use Response;
 
 class VendorController extends Controller
 {
+    protected $vendors;
+
+    public function __construct(VendorService $vendors)
+    {
+        $this->vendors = $vendors;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,13 +26,13 @@ class VendorController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        //
+    //
         return response()->json($this->paginatedQuery($request));
     }
 
     protected function paginatedQuery(Request $request) : LengthAwarePaginator
     {
-        $vendor = Vendor::orderBy(
+        $vendors = Vendor::orderBy(
             $request->input('sortBy') ?? 'name',
             $request->input('sortType') ?? 'ASC'
         );
@@ -34,14 +42,14 @@ class VendorController extends Controller
         // }
 
         if ($name = $request->input('name')) {
-            $this->filter($clients, 'name', $name);
+            $this->filter($vendors, 'name', $name);
         }
 
         if ($email = $request->input('email')) {
-            $this->filter($clients, 'email', $email);
+            $this->filter($vendors, 'email', $email);
         }
 
-        return $clients->paginate($request->input('perPage') ?? 10);
+        return $vendors->paginate($request->input('perPage') ?? 10);
     }
 
     protected function filter($clients, string $property, array $filters)
@@ -102,21 +110,12 @@ class VendorController extends Controller
         if ($request->input('step') === 1) {
             return response()->json(200);
         }
-        $vendor = Vendor::create([
-            'name' => $request->input('name'),
-            'company' => $request->input('company'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
-            'billing_address' => $request->input('billing_address'),
-            'shipping_address' => $request->input('shipping_address'),
-            'fax' => $request->input('fax'),
-            'open_balance' => $request->input('open_balance'),
-            'website' => $request->input('website'),
-            'note' => $request->input('note'),
-        ]);
 
-        return response()->json($vendor, 201);
+        $result = $this->vendors->store($request);
+
+        return response()->json($result['vendor'], 201);
     }
+
     public function downloadClientSample(){
         // Check if file exists in app/storage/file folder
         $file_path = storage_path() . "/app/downloads/client.csv";
@@ -259,14 +258,14 @@ class VendorController extends Controller
             'note' =>'nullable|string|max:255',
             'website'=>'nullable|string|max:255',
         ]);
+        $result = $this->vendors->update($request, $vendor);
+        // $attributes = $request->all();
+        // unset($attributes['step']);
 
-        $attributes = $request->all();
-        unset($attributes['step']);
+        // $client->fill($attributes);
+        // $client->update();
 
-        $client->fill($attributes);
-        $client->update();
-
-        return response()->json($vendor);
+        return response()->json($result['vendor'], 200);
     }
 
     /**

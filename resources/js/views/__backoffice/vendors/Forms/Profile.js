@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-
 
 import {
     Button,
@@ -17,34 +16,20 @@ import {
     withStyles,
 } from '@material-ui/core';
 
-import { Dropzone } from '../../../../ui';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import MomentUtils from '@date-io/moment';
 
-// const Others = props => {
-const Others = React.forwardRef((props, ref) => {
-    const { classes, values, handleSubmit, handleBack } = props;
+// const Profile = props => {
+const Profile = React.forwardRef((props, ref) => {
+    const { classes, values, handleSubmit } = props;
 
     return (
         <Formik
             initialValues={values}
             validationSchema={Yup.object().shape({
-                open_balance: Yup.string().required(
+                name: Yup.string().required(
                     Lang.get('validation.required', {
-                        attribute: 'open_balance',
-                    }),
-                ),
-                fax: Yup.string().required(
-                    Lang.get('validation.required', {
-                        attribute: 'open_balance',
-                    }),
-                ),
-                website: Yup.string().required(
-                    Lang.get('validation.required', {
-                        attribute: 'website',
-                    }),
-                ),
-                note: Yup.string().required(
-                    Lang.get('validation.required', {
-                        attribute: 'note',
+                        attribute: 'name',
                     }),
                 ),
             })}
@@ -74,41 +59,77 @@ const Others = React.forwardRef((props, ref) => {
             validateOnBlur={false}
             ref = {ref}
         >
-            {({ values, handleChange, errors, submitCount, isSubmitting }) => (
+            {({
+                values,
+                errors,
+                submitCount,
+                isSubmitting,
+                handleChange,
+                setFieldValue,
+            }) => (
                 <Form>
                     <Typography variant="h6" gutterBottom>
-                        Others Settings
+                        Vendor Information
                     </Typography>
 
-                    <Grid container >
+                    {/* <Grid container spacing={24}> */}
+                    <Grid container>
+                        <Grid item xs={12} sm={12}>
+                            <FormControl
+                                className={classes.formControl}
+                                error={
+                                    submitCount > 0 &&
+                                    errors.hasOwnProperty('name')
+                                }
+                            >
+                                <InputLabel htmlFor="name">
+                                    Name{' '}
+                                    <span className={classes.required}>*</span>
+                                </InputLabel>
+
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    value={values.name}
+                                    onChange={handleChange}
+                                    fullWidth
+                                />
+
+                                {submitCount > 0 &&
+                                    errors.hasOwnProperty('name') && (
+                                        <FormHelperText>
+                                            {errors.name}
+                                        </FormHelperText>
+                                    )}
+                            </FormControl>
+                        </Grid>
+
+                    </Grid>
+
+                    {/* <Grid container spacing={24}> */}
+                    <Grid container>
                         <Grid item xs={12} sm={6}>
                             <FormControl
                                 className={classes.formControl}
                                 error={
                                     submitCount > 0 &&
-                                    errors.hasOwnProperty('open_balance')
+                                    errors.hasOwnProperty('company')
                                 }
                             >
-                                <InputLabel htmlFor="open_balance">
-                                    Open Balance{' '}
-                                    <span className={classes.required}>*</span>
-                                </InputLabel>
+                                <InputLabel htmlFor="company">Company</InputLabel>
 
                                 <Input
-                                    id="open_balance"
-                                    name="open_balance"
-                                    value={values.open_balance}
+                                    id="company"
+                                    name="company"
+                                    value={values.company}
                                     onChange={handleChange}
-                                    input={<Input fullWidth />}
                                     fullWidth
-                                >
-                
-                                </Input>
+                                />
 
                                 {submitCount > 0 &&
-                                    errors.hasOwnProperty('open_balance') && (
+                                    errors.hasOwnProperty('company') && (
                                         <FormHelperText>
-                                            {errors.open_balance}
+                                            {errors.company}
                                         </FormHelperText>
                                     )}
                             </FormControl>
@@ -119,93 +140,56 @@ const Others = React.forwardRef((props, ref) => {
                                 className={classes.formControl}
                                 error={
                                     submitCount > 0 &&
-                                    errors.hasOwnProperty('fax')
+                                    errors.hasOwnProperty('phone')
                                 }
                             >
-                                <InputLabel htmlFor="fax">
-                                    Fax{' '}
-                                    <span className={classes.required}>*</span>
-                                </InputLabel>
+
+                            <InputLabel htmlFor="phone">Phone</InputLabel>
 
                                 <Input
-                                    id="fax"
-                                    name="fax"
-                                    value={values.fax}
+                                    id="phone"
+                                    name="phone"
+                                    value={values.phone}
                                     onChange={handleChange}
-                                    input={<Input fullWidth />}
                                     fullWidth
-                                >
-                
-                                </Input>
+                                />
 
                                 {submitCount > 0 &&
-                                    errors.hasOwnProperty('fax') && (
+                                    errors.hasOwnProperty('phone') && (
                                         <FormHelperText>
-                                            {errors.fax}
+                                            {errors.phone}
                                         </FormHelperText>
                                     )}
                             </FormControl>
                         </Grid>
                     </Grid>
 
-                    <Grid container >
-                        <Grid item xs={12} sm={6}>
+                    {/* <Grid container spacing={24}> */}
+                    <Grid container>
+                        <Grid item xs={12} sm={12}>
                             <FormControl
                                 className={classes.formControl}
                                 error={
                                     submitCount > 0 &&
-                                    errors.hasOwnProperty('website')
+                                    errors.hasOwnProperty('email')
                                 }
                             >
-                                <InputLabel htmlFor="website">
-                                    Website{' '}
-                                    <span className={classes.required}>*</span>
+                                <InputLabel htmlFor="email">
+                                    Email
                                 </InputLabel>
 
                                 <Input
-                                    id="website"
-                                    name="website"
-                                    value={values.website}
+                                    id="email"
+                                    name="email"
+                                    value={values.email}
                                     onChange={handleChange}
-                                    input={<Input fullWidth />}
                                     fullWidth
                                 />
 
                                 {submitCount > 0 &&
-                                    errors.hasOwnProperty('website') && (
+                                    errors.hasOwnProperty('email') && (
                                         <FormHelperText>
-                                            {errors.website}
-                                        </FormHelperText>
-                                    )}
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <FormControl
-                                className={classes.formControl}
-                                error={
-                                    submitCount > 0 &&
-                                    errors.hasOwnProperty('note')
-                                }
-                            >
-                                <InputLabel htmlFor="website">
-                                    Note{' '}
-                                    <span className={classes.required}>*</span>
-                                </InputLabel>
-
-                                <Input
-                                    id="note"
-                                    name="note"
-                                    value={values.note}
-                                    onChange={handleChange}
-                                    input={<Input fullWidth />}
-                                    fullWidth
-                                />
-
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('note') && (
-                                        <FormHelperText>
-                                            {errors.note}
+                                            {errors.email}
                                         </FormHelperText>
                                     )}
                             </FormControl>
@@ -214,14 +198,9 @@ const Others = React.forwardRef((props, ref) => {
 
                     <div className={classes.sectionSpacer} />
 
-                    <Grid container  justify="flex-end">
+                    {/* <Grid container spacing={24} justify="flex-end"> */}
+                    <Grid container justify="flex-end">
                         <Grid item>
-                            <Button
-                                onClick={handleBack}
-                                className={classes.backButton}
-                            >
-                                Back
-                            </Button>
                             <Button
                                 type="submit"
                                 variant="contained"
@@ -233,7 +212,7 @@ const Others = React.forwardRef((props, ref) => {
                                     isSubmitting
                                 }
                             >
-                                Finish
+                                Next
                             </Button>
                         </Grid>
                     </Grid>
@@ -243,27 +222,18 @@ const Others = React.forwardRef((props, ref) => {
     );
 });
 
-Others.propTypes = {
+Profile.propTypes = {
     values: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
 };
 
 const styles = theme => ({
-    sectionSpacer: {
-        marginTop: theme.spacing(1) * 2,
-    },
-
     formControl: {
         minWidth: '100%',
     },
-
     required: {
         color: theme.palette.error.main,
     },
-
-    backButton: {
-        marginRight: theme.spacing(1),
-    },
 });
 
-export default withStyles(styles)(Others);
+export default withStyles(styles)(Profile);

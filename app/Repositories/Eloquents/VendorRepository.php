@@ -32,17 +32,20 @@ class VendorRepository implements IVendorRepository
     }
 
     public function store(Request $request){
-        $vendor = new Vendor;
-        $vendor->company = $request->company_name;
+        $vendor = $this->vendors;
+        $vendor->company = $request->company;
         $vendor->name = $request->name;
         $vendor->phone = $request->phone;
         $vendor->fax = $request->fax;
         $vendor->email = $request->email;
         $vendor->website = $request->website;
-        $vendor->billing_address = $request->b_address;
+        $vendor->billing_address = $request->billing_address;
         $vendor->note = $request->note;
         $vendor->user_id = Auth::user()->id;
-        return $vendor->save();
+        return [
+            'result' => $vendor->save(),
+            'vendor' => $vendor
+        ];
     }
 
     public function downloadVendorSample(){
@@ -85,16 +88,19 @@ class VendorRepository implements IVendorRepository
     }
 
     public function update(Request $request,Vendor $vendor){
-        $vendor = Vendor::find($vendor->id);
+        $vendor = $this->vendors->find($vendor->id);
+        $vendor->company = $request->company;
         $vendor->name = $request->name;
-        $vendor->company = $request->company_name;
         $vendor->phone = $request->phone;
         $vendor->fax = $request->fax;
         $vendor->email = $request->email;
         $vendor->website = $request->website;
-        $vendor->billing_address = $request->b_address;
+        $vendor->billing_address = $request->billing_address;
         $vendor->note = $request->note;
-        return $vendor->save();
+        return [
+            'result' => $vendor->save(),
+            'vendor' => $vendor
+        ];
     }
 
     public function destroy(Vendor $vendor){

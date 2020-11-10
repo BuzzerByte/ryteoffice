@@ -16,28 +16,21 @@ import {
     withStyles,
 } from '@material-ui/core';
 
-import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
-import MomentUtils from '@date-io/moment';
-
+// const Address = props => {
 const Address = React.forwardRef((props, ref) => {
-    const { classes, values, handleSubmit } = props;
+    const { classes, values, handleSubmit, handleBack } = props;
 
     return (
         <Formik
             initialValues={values}
             validationSchema={Yup.object().shape({
-                firstname: Yup.string().required(
+                billing_address: Yup.string().required(
                     Lang.get('validation.required', {
-                        attribute: 'firstname',
-                    }),
-                ),
-
-                lastname: Yup.string().required(
-                    Lang.get('validation.required', {
-                        attribute: 'lastname',
+                        attribute: 'billing_address',
                     }),
                 ),
             })}
+            
             onSubmit={async (values, form) => {
                 let mappedValues = {};
                 let valuesArray = Object.values(values);
@@ -64,213 +57,40 @@ const Address = React.forwardRef((props, ref) => {
             validateOnBlur={false}
             ref = {ref}
         >
-            {({
-                values,
-                errors,
-                submitCount,
-                isSubmitting,
-                handleChange,
-                setFieldValue,
-            }) => (
+            {({ values, handleChange, errors, submitCount, isSubmitting }) => (
                 <Form>
                     <Typography variant="h6" gutterBottom>
-                        Personal Information
+                        Address Settings
                     </Typography>
 
-                    <Grid container spacing={24}>
-                        <Grid item xs={12} sm={4}>
-                            <FormControl
-                                className={classes.formControl}
-                                error={
-                                    submitCount > 0 &&
-                                    errors.hasOwnProperty('firstname')
-                                }
-                            >
-                                <InputLabel htmlFor="firstname">
-                                    Firstname{' '}
-                                    <span className={classes.required}>*</span>
-                                </InputLabel>
-
-                                <Input
-                                    id="firstname"
-                                    name="firstname"
-                                    value={values.firstname}
-                                    onChange={handleChange}
-                                    fullWidth
-                                />
-
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('firstname') && (
-                                        <FormHelperText>
-                                            {errors.firstname}
-                                        </FormHelperText>
-                                    )}
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item xs={12} sm={4}>
-                            <FormControl
-                                className={classes.formControl}
-                                error={
-                                    submitCount > 0 &&
-                                    errors.hasOwnProperty('middlename')
-                                }
-                            >
-                                <InputLabel htmlFor="middlename">
-                                    Middlename
-                                </InputLabel>
-
-                                <Input
-                                    id="middlename"
-                                    name="middlename"
-                                    value={values.middlename}
-                                    onChange={handleChange}
-                                    fullWidth
-                                />
-
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('middlename') && (
-                                        <FormHelperText>
-                                            {errors.middlename}
-                                        </FormHelperText>
-                                    )}
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item xs={12} sm={4}>
-                            <FormControl
-                                className={classes.formControl}
-                                error={
-                                    submitCount > 0 &&
-                                    errors.hasOwnProperty('lastname')
-                                }
-                            >
-                                <InputLabel htmlFor="lastname">
-                                    Lastname{' '}
-                                    <span className={classes.required}>*</span>
-                                </InputLabel>
-
-                                <Input
-                                    id="lastname"
-                                    name="lastname"
-                                    value={values.lastname}
-                                    onChange={handleChange}
-                                    fullWidth
-                                />
-
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('lastname') && (
-                                        <FormHelperText>
-                                            {errors.lastname}
-                                        </FormHelperText>
-                                    )}
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container spacing={24}>
-                        <Grid item xs={12} sm={6}>
-                            <FormControl
-                                className={classes.formControl}
-                                error={
-                                    submitCount > 0 &&
-                                    errors.hasOwnProperty('gender')
-                                }
-                            >
-                                <InputLabel htmlFor="gender">Gender</InputLabel>
-
-                                <Select
-                                    id="gender"
-                                    name="gender"
-                                    value={values.gender}
-                                    onChange={handleChange}
-                                    input={<Input fullWidth />}
-                                    autoWidth
-                                >
-                                    <MenuItem value="">
-                                        Please select the gender
-                                    </MenuItem>
-
-                                    <MenuItem value="female">Female</MenuItem>
-
-                                    <MenuItem value="male">Male</MenuItem>
-                                </Select>
-
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('gender') && (
-                                        <FormHelperText>
-                                            {errors.gender}
-                                        </FormHelperText>
-                                    )}
-                            </FormControl>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <FormControl
-                                className={classes.formControl}
-                                error={
-                                    submitCount > 0 &&
-                                    errors.hasOwnProperty('birthdate')
-                                }
-                            >
-                                <MuiPickersUtilsProvider utils={MomentUtils}>
-                                    <DatePicker
-                                        id="birthdate"
-                                        name="birthdate"
-                                        label="Birthdate"
-                                        placeholder="Please pick the birthdate"
-                                        value={values.birthdate}
-                                        onChange={date =>
-                                            setFieldValue('birthdate', date)
-                                        }
-                                        format="YYYY-MM-DD"
-                                        maxDate={moment()
-                                            .subtract(10, 'y')
-                                            .subtract(1, 'd')
-                                            .format('YYYY-MM-DD')}
-                                        keyboard
-                                        clearable
-                                        disableFuture
-                                    />
-                                </MuiPickersUtilsProvider>
-
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('birthdate') && (
-                                        <FormHelperText>
-                                            {errors.birthdate}
-                                        </FormHelperText>
-                                    )}
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container spacing={24}>
+                    <Grid container >
                         <Grid item xs={12} sm={12}>
                             <FormControl
                                 className={classes.formControl}
                                 error={
                                     submitCount > 0 &&
-                                    errors.hasOwnProperty('address')
+                                    errors.hasOwnProperty('billing_address')
                                 }
                             >
-                                <InputLabel htmlFor="address">
-                                    Address
+                                <InputLabel htmlFor="billing_address">
+                                    Billing Address{' '}
+                                    <span className={classes.required}>*</span>
                                 </InputLabel>
 
                                 <Input
-                                    id="address"
-                                    name="address"
-                                    value={values.address}
+                                    id="billing_address"
+                                    name="billing_address"
+                                    value={values.billing_address}
                                     onChange={handleChange}
-                                    fullWidth
+                                    input={<Input fullWidth />}
                                     multiline
-                                    rows={3}
+                                    rows = {3}
                                 />
 
                                 {submitCount > 0 &&
-                                    errors.hasOwnProperty('address') && (
+                                    errors.hasOwnProperty('billing_address') && (
                                         <FormHelperText>
-                                            {errors.address}
+                                            {errors.billing_address}
                                         </FormHelperText>
                                     )}
                             </FormControl>
@@ -279,8 +99,15 @@ const Address = React.forwardRef((props, ref) => {
 
                     <div className={classes.sectionSpacer} />
 
-                    <Grid container spacing={24} justify="flex-end">
+                    <Grid container  justify="flex-end">
                         <Grid item>
+                            <Button
+                                onClick={handleBack}
+                                className={classes.backButton}
+                            >
+                                Back
+                            </Button>
+
                             <Button
                                 type="submit"
                                 variant="contained"
@@ -308,12 +135,20 @@ Address.propTypes = {
 };
 
 const styles = theme => ({
+    sectionSpacer: {
+        marginTop: theme.spacing(1) * 2,
+    },
+
     formControl: {
         minWidth: '100%',
     },
 
     required: {
         color: theme.palette.error.main,
+    },
+
+    backButton: {
+        marginRight: theme.spacing(1),
     },
 });
 

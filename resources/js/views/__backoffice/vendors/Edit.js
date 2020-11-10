@@ -17,29 +17,29 @@ import { Vendor } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
 
-import { Account, Address, Other } from './Forms';
+import { Profile, Address, Other } from './Forms';
 
 const Edit = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
-    const [client, setClient] = useState({});
+    const [vendor, setVendor] = useState({});
     const [message, setMessage] = useState({});
 
     /**
-     * Fetch the client.
+     * Fetch the vendor.
      *
      * @param {number} id
      *
      * @return {undefined}
      */
-    const fetchClient = async id => {
+    const fetchVendor = async id => {
         setLoading(true);
 
         try {
-            const client = await Vendor.show(id);
+            const vendor = await Vendor.show(id);
 
-            setClient(client);
+            setVendor(vendor);
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -91,7 +91,7 @@ const Edit = React.forwardRef((props, ref) => {
             // Instruct the API the current step.
             values.step = activeStep;
             
-            const updatedClient = await Vendor.update(client.id, {
+            const updatedVendor = await Vendor.update(vendor.id, {
                 ...previousValues,
                 ...values,
             });
@@ -109,14 +109,14 @@ const Edit = React.forwardRef((props, ref) => {
                 
                 history.push(
                     NavigationUtils.route(
-                        'backoffice.resources.clients.index',
+                        'vendors.resources.vendors.index',
                     )
                 );
             }
             
             setLoading(false);
             setFormValues(newFormValues);
-            setClient(client);
+            setVendor(vendor);
             setActiveStep(activeStep + 1);
         } catch (error) {
             if (!error.response) {
@@ -132,7 +132,7 @@ const Edit = React.forwardRef((props, ref) => {
     };
 
     useEffect(() => {
-        if (Object.keys(client).length > 0) {
+        if (Object.keys(vendor).length > 0) {
             return;
         }
 
@@ -145,13 +145,13 @@ const Edit = React.forwardRef((props, ref) => {
             setActiveStep(parseInt(queryParams.step));
         }
 
-        fetchClient(params.id);
+        fetchVendor(params.id);
     });
 
     const { classes, ...other } = props;
     const { history } = props;
 
-    const steps = ['Account', 'Address', 'Other'];
+    const steps = ['Profile', 'Address', 'Other'];
 
     const renderLoading = (
         <Grid
@@ -172,22 +172,22 @@ const Edit = React.forwardRef((props, ref) => {
         }
 
         const defaultProfileValues = {
-            name: client.name === null ? '' : client.name,
-            company: client.company === null ? '' : client.company,
-            phone: client.phone === null ? '' : client.phone,
-            email: client.email === null ? '' : client.email,
-            fax: client.fax === null ? '' : client.fax,
-            open_balance: client.open_balance === null ? '' : client.open_balance,
-            billing_address: client.billing_address === null ? '' : client.billing_address,
-            shipping_address: client.shipping_address === null ? '' : client.shipping_address,
-            website: client.website === null ? '' : client.website,
-            note:client.note === null ? '' : client.note,
+            name: vendor.name === null ? '' : vendor.name,
+            company: vendor.company === null ? '' : vendor.company,
+            phone: vendor.phone === null ? '' : vendor.phone,
+            email: vendor.email === null ? '' : vendor.email,
+            fax: vendor.fax === null ? '' : vendor.fax,
+            open_balance: vendor.open_balance === null ? '' : vendor.open_balance,
+            billing_address: vendor.billing_address === null ? '' : vendor.billing_address,
+            shipping_address: vendor.shipping_address === null ? '' : vendor.shipping_address,
+            website: vendor.website === null ? '' : vendor.website,
+            note:vendor.note === null ? '' : vendor.note,
         };
 
         switch (activeStep) {
             case 0:
                 return (
-                    <Account
+                    <Profile
                         {...other}
                         values={
                             formValues[0] ? formValues[0] : defaultProfileValues
@@ -201,8 +201,8 @@ const Edit = React.forwardRef((props, ref) => {
                     <Address
                         {...other}
                         values={{
-                            billing_address: client.billing_address === null ? '' : client.billing_address,
-                            shipping_address: client.shipping_address === null ? '' : client.shipping_address,
+                            billing_address: vendor.billing_address === null ? '' : vendor.billing_address,
+                            shipping_address: vendor.shipping_address === null ? '' : vendor.shipping_address,
                         }}
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
@@ -214,10 +214,10 @@ const Edit = React.forwardRef((props, ref) => {
                     <Other
                         {...other}
                         values={{
-                            fax: client.fax === null ? '' : client.fax,
-                            website: client.website === null ? '' : client.website,
-                            open_balance:client.open_balance === null ? '' : client.open_balance,
-                            note: client.note === null ? '' : client.note,
+                            fax: vendor.fax === null ? '' : vendor.fax,
+                            website: vendor.website === null ? '' : vendor.website,
+                            open_balance:vendor.open_balance === null ? '' : vendor.open_balance,
+                            note: vendor.note === null ? '' : vendor.note,
                         }}
                         handleSubmit={handleSubmit}
                         handleBack={handleBack}
@@ -232,7 +232,7 @@ const Edit = React.forwardRef((props, ref) => {
     return (
         <MasterLayout
             {...other}
-            pageTitle="Edit client"
+            pageTitle="Edit vendor"
             tabs={[]}
             message={message}
             ref = {ref}

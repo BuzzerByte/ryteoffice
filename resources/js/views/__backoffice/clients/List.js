@@ -396,7 +396,7 @@ const List = React.forwardRef((props, ref) => {
                 email: client.email,
                 actions: (
                     <div style={{ width: 120, flex: 'no-wrap' }}>
-                        <Tooltip
+                        {/* <Tooltip
                             title={Lang.get('resources.edit_image', {
                                 name: 'Client',
                             })}
@@ -418,7 +418,7 @@ const List = React.forwardRef((props, ref) => {
                             >
                                 <ImageIcon />
                             </IconButton>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         <Tooltip
                             title={Lang.get('resources.edit', {

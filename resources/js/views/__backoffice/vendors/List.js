@@ -11,7 +11,7 @@ import {
 import {
     Delete as DeleteIcon,
     Edit as EditIcon,
-    Image as ImageIcon
+    Image as ImageIcon,
 } from '@material-ui/icons';
 
 import * as RandomUtils from '../../../helpers/Random';
@@ -19,6 +19,7 @@ import * as NavigationUtils from '../../../helpers/Navigation';
 import * as UrlUtils from '../../../helpers/URL';
 import { Table } from '../../../ui';
 import { Master as MasterLayout } from '../layouts';
+import { User } from '../../../models';
 import { Vendor } from '../../../models';
 import { AppContext } from '../../../AppContext';
 
@@ -352,7 +353,7 @@ const List = React.forwardRef((props, ref) => {
         }),
         clicked: () =>
             history.push(
-                NavigationUtils.route('clients.resources.clients.create'),
+                NavigationUtils.route('vendors.resources.vendors.create'),
             ),
     };
 
@@ -377,7 +378,7 @@ const List = React.forwardRef((props, ref) => {
 
     const data =
         rawData &&
-        rawData.map(client => {
+        rawData.map(vendor => {
             return {
                 name: (
                     <Grid
@@ -388,14 +389,14 @@ const List = React.forwardRef((props, ref) => {
                     >
                         
 
-                        <Grid item>{client.name}</Grid>
+                        <Grid item>{vendor.name}</Grid>
                     </Grid>
                 ),
-                company: client.company,
-                email: client.email,
+                company: vendor.company,
+                email: vendor.email,
                 actions: (
                     <div style={{ width: 120, flex: 'no-wrap' }}>
-                        <Tooltip
+                        {/* <Tooltip
                             title={Lang.get('resources.edit_image', {
                                 name: 'Vendor',
                             })}
@@ -404,9 +405,9 @@ const List = React.forwardRef((props, ref) => {
                                 onClick={() =>
                                     history.push(
                                         NavigationUtils.route(
-                                            'clients.resources.clients.edit',
+                                            'vendors.resources.vendors.edit',
                                             {
-                                                id: client.id,
+                                                id: vendor.id,
                                             },
                                             {
                                                 step: 2,
@@ -417,7 +418,7 @@ const List = React.forwardRef((props, ref) => {
                             >
                                 <ImageIcon />
                             </IconButton>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         <Tooltip
                             title={Lang.get('resources.edit', {
@@ -428,9 +429,9 @@ const List = React.forwardRef((props, ref) => {
                                 onClick={() =>
                                     history.push(
                                         NavigationUtils.route(
-                                            'clients.resources.clients.edit',
+                                            'vendors.resources.vendors.edit',
                                             {
-                                                id: client.id,
+                                                id: vendor.id,
                                             },
                                         ),
                                     )
@@ -440,7 +441,7 @@ const List = React.forwardRef((props, ref) => {
                             </IconButton>
                         </Tooltip>
 
-                        {authUser.id !== client.id && (
+                        {authUser.id !== vendor.id && (
                             <Tooltip
                                 title={Lang.get('resources.delete', {
                                     name: 'Vendor',
@@ -448,7 +449,7 @@ const List = React.forwardRef((props, ref) => {
                             >
                                 <IconButton
                                     color="secondary"
-                                    onClick={() => handleDeleteClick(client.id)}
+                                    onClick={() => handleDeleteClick(vendor.id)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>
@@ -492,7 +493,6 @@ const List = React.forwardRef((props, ref) => {
                     onChangePerPage={handlePerPageChange}
                     onFilter={handleFiltering}
                     onFilterRemove={handleFilterRemove}
-                    ref = {ref}
                 />
             )}
         </MasterLayout>
