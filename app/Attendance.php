@@ -4,7 +4,7 @@ namespace App;
 use App\Department;
 use App\Employee;
 use App\Leavetype;
-use Illuminate\Database\Eloquent\Model;
+use App\BaseModel as Model;
 
 class Attendance extends Model
 {

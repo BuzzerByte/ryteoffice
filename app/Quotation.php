@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\BaseModel as Model;
 use Carbon\Carbon;
 
 class Quotation extends Model

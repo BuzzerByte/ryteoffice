@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\BaseModel as Model;
 use App\Purchase;
 use App\Quotation;
 use Carbon\Carbon;

@@ -2,7 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use App\BaseModel as Model;
 use App\User;
 use App\JobHistory;
 use App\JobTitle;

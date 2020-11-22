@@ -10,10 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Http\Traits\UseUuid;
 
 class User extends Authenticatable implements JWTSubject, Uploader
 {
-    use Notifiable, HasJWT, UploadsFiles;
+    use Notifiable, HasJWT, UploadsFiles, UseUuid;
 
     /**
      * The attributes that are mass assignable.

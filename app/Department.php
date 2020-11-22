@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\JobHistory;
 use App\Department;
+use App\BaseModel as Model;
 
 class Department extends Model
 {

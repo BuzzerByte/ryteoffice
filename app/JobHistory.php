@@ -4,7 +4,7 @@ namespace App;
 use App\User;
 use App\Department;
 use App\JobCategory;
-use Illuminate\Database\Eloquent\Model;
+use App\BaseModel as Model;
 
 class JobHistory extends Model
 {

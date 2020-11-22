@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Http\Str;
 
 class CreateQuotationsTable extends Migration
 {
@@ -14,8 +15,8 @@ class CreateQuotationsTable extends Migration
     public function up()
     {
         Schema::create('quotations', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('client_id')->unsigned();
+            $table->uuid('id')->primary();
+            $table->uuid('client_id');
             $table->date('estimate_date')->nullable();
             $table->date('expiration_date')->nullable();
             $table->float('total')->nullable();
@@ -25,6 +26,7 @@ class CreateQuotationsTable extends Migration
             $table->string('status')->nullable();
             $table->string('order_activities')->nullable();
             $table->string('order_note')->nullable();
+            $table->string('invoice_number');
             $table->timestamps();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
         });
