@@ -138,6 +138,111 @@ const Sidebar = React.forwardRef((props, ref) => {
             ],
         },
         {
+            name: Lang.get('navigation.sales'),
+            id: 'sales',
+            links:[
+                {
+                    name:Lang.get('navigation.createInvoice'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.createInvoice') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'orders.resources.orders.create',
+                    ),
+                },{
+                    name:Lang.get('navigation.allInvoice'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.allInvoice') :''
+                            }
+                        >
+                        <PeopleIcon/>
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'orders.resources.orders.index',
+                    ),
+                },{
+                    name:Lang.get('navigation.processingOrder'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.allInvoice') :''
+                            }
+                        >
+                        <PeopleIcon/>
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'orders.resources.orders.process',
+                    ),
+                },{
+                    name:Lang.get('navigation.pendingShipment'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.pendingShipment') :''
+                            }
+                        >
+                        <PeopleIcon/>
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'orders.resources.orders.pending',
+                    ),
+                },{
+                    name:Lang.get('navigation.deliveredOrder'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.deliveredOrder') :''
+                            }
+                        >
+                        <PeopleIcon/>
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'orders.resources.orders.deliver',
+                    ),
+                },{
+                    name:Lang.get('navigation.quotation'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.quotation') :''
+                            }
+                        >
+                        <PeopleIcon/>
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'quotations.resources.quotations.create',
+                    ),
+                },{
+                    name:Lang.get('navigation.allQuotation'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.allQuotation') :''
+                            }
+                        >
+                        <PeopleIcon/>
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'quotations.resources.quotations.index',
+                    ),
+                }
+            ],
+        },
+        {
             name: 'Analytics',
             id: 'analytics',
             links: [

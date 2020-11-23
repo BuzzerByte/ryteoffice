@@ -61,5 +61,13 @@ return [
     'clients'=>'Clients',
     'traders' => 'Traders',
     'vendors' => 'Vendors',
+    'sales' => 'Sales',
+    'createInvoice' => 'Create Invoice',
+    'allInvoice' => 'All Invoice',
+    'processingOrder' => 'Processing Order',
+    'pendingShipment' => 'Pending Shipment',
+    'deliveredOrder' => 'Deliver Order',
+    'quotation' => 'Quotation',
+    'allQuotation' => 'All Quotation',
     'citation' => 'Built with ❤️ by'
 ];
