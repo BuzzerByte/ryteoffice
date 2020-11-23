@@ -13,7 +13,7 @@ import * as NavigationUtils from '../../../helpers/Navigation';
 import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
-import { Client } from '../../../models';
+import { Order } from '../../../models';
 import { Profile, Address, Others } from './Forms';
 
 // function Create(props) {
@@ -69,7 +69,7 @@ const Create = React.forwardRef((props, ref) => {
             // Instruct the API the current step.
             values.step = activeStep;
             
-            const client = await Client.store({ ...previousValues, ...values });
+            const client = await Order.store({ ...previousValues, ...values });
 
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
@@ -78,7 +78,7 @@ const Create = React.forwardRef((props, ref) => {
                 setMessage({
                     type: 'success',
                     body: Lang.get('resources.created', {
-                        name: 'Client',
+                        name: 'Order',
                     }),
                     closed: () => setMessage({}),
                 });
@@ -190,7 +190,7 @@ const Create = React.forwardRef((props, ref) => {
                             align="center"
                             gutterBottom
                         >
-                            Client Creation
+                            Order Creation
                         </Typography>
 
                         <Stepper
