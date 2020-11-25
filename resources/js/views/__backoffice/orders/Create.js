@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 import {
     Paper,
-    Step,
-    StepLabel,
-    Stepper,
     Typography,
     withStyles,
     Menu,
     MenuItem,
-    Button
+    Button,
+    Grid,
+    FormControl,
+    FormHelperText,
+    Input,
+    InputLabel
 } from '@material-ui/core';
 
 import * as NavigationUtils from '../../../helpers/Navigation';
@@ -19,22 +23,30 @@ import { Master as MasterLayout } from '../layouts';
 import { Order } from '../../../models';
 import { Profile, Address, Others } from './Forms';
 
-// function Create(props) {
 const Create = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
-    const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
     const [order, setOrder] = useState({});
     const [message, setMessage] = useState({});
+    const [anchorEl, setAnchorEl] = useState(null);
+    const { history, classes, values, ...other } = props;
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+  
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
 
     /**
      * This should return back to the previous step.
      *
      * @return {undefined}
      */
-    const handleBack = () => {
-        setActiveStep(activeStep - 1);
-    };
+    // const handleBack = () => {
+    //     setActiveStep(activeStep - 1);
+    // };
 
     /**
      * Handle form submit, this should send an API response
@@ -55,49 +67,28 @@ const Create = React.forwardRef((props, ref) => {
 
         try {
             let previousValues = {};
-
-            // Merge the form values here.
-            if (activeStep === 1) {
-                previousValues = formValues.reduce((prev, next) => {
-                    return { ...prev, ...next };
-                });
-
-            }
-            if (activeStep === 2) {
-                previousValues = formValues.reduce((prev, next) => {
-                    return { ...prev, ...next };
-                });
-            }
-
-            // Instruct the API the current step.
-            values.step = activeStep;
             
-            const client = await Order.store({ ...previousValues, ...values });
+            const order = await Order.store({ ...previousValues, ...values });
 
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
-            newFormValues[activeStep] = values;
-            if (activeStep === 2) {
-                setMessage({
-                    type: 'success',
-                    body: Lang.get('resources.created', {
-                        name: 'Order',
-                    }),
-                    closed: () => setMessage({}),
-                });
-                
-                history.push(
-                    NavigationUtils.route(
-                        'clients.resources.clients.index',
-                    )
-                );
-            }
+            setMessage({
+                type: 'success',
+                body: Lang.get('resources.created', {
+                    name: 'Order',
+                }),
+                closed: () => setMessage({}),
+            });
+            
+            history.push(
+                NavigationUtils.route(
+                    'orders.resources.orders.index',
+                )
+            );
             
             setLoading(false);
             setFormValues(newFormValues);
-            setClient(client);
-            if(activeStep == 2) activeStep = 0;
-            setActiveStep(activeStep + 1);
+            setOrder(order);
         } catch (error) {
             if (!error.response) {
                 throw new Error('Unknown error');
@@ -111,13 +102,32 @@ const Create = React.forwardRef((props, ref) => {
         }
     };
 
-    const { classes, ...other } = props;
-    const { history } = props;
+    /**
+     * This should send an API request to fetch all resource.
+     *
+     * @param {object} params
+     *
+     * @return {undefined}
+     */
+    const fetchData = () => {
+        setLoading(true);
 
-    // const steps = ['Profile', 'Address', 'Others'];
+        try {
+            const pagination = await Order.create();
+            setLoading(false);
+            setMessage({});
+        } catch (error) {
+            setLoading(false);
+        }
+    };
 
+    useEffect(()=>{
+        fetchData();
+    });
+    
     const renderForm = () => {
-        const defaultProfileValues = {
+        
+        const values = {
             serial_number: '',
             client_id: '',
             invoice_date: '',
@@ -218,36 +228,24 @@ const Create = React.forwardRef((props, ref) => {
                                     className={classes.formControl}
                                     error={
                                         submitCount > 0 &&
-                                        errors.hasOwnProperty('client')
+                                        errors.hasOwnProperty('order')
                                     }
                                 >
-                                    <InputLabel htmlFor="client">
-                                        Client{' '}
-                                        <span className={classes.required}>*</span>
-                                    </InputLabel>
-
-                                    {/* <Input
-                                        id="client"
-                                        name="client"
-                                        value={values.client}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    /> */}
-                                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                                    <Button aria-controls="client-menu" aria-haspopup="true" onClick={handleClick}>
                                         Select Client
                                     </Button>
                                     <Menu
-                                        id="client"
+
+                                        id="client-menu"
                                         anchorEl={anchorEl}
                                         keepMounted
-                                        value={values.client}
+                                        value = {values.client_id}
                                         open={Boolean(anchorEl)}
-                                        onChange={handleChange}
-                                        fullWidth
+                                        onClose={handleClose}
                                     >
-                                        <MenuItem onClick={handleChange}>Profile</MenuItem>
-                                        <MenuItem onClick={handleChange}>My account</MenuItem>
-                                        <MenuItem onClick={handleChange}>Logout</MenuItem>
+                                        <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                        <MenuItem onClick={handleClose}>My account</MenuItem>
+                                        <MenuItem onClick={handleClose}>Logout</MenuItem>
                                     </Menu>
 
                                     {submitCount > 0 &&
@@ -260,8 +258,8 @@ const Create = React.forwardRef((props, ref) => {
                             </Grid>
                         </Grid>
 
-                        {/* <Grid container spacing={24}> */}
-                        <Grid container>
+                        
+                        {/* <Grid container>
                             <Grid item xs={12} sm={6}>
                                 <FormControl
                                     className={classes.formControl}
@@ -318,7 +316,6 @@ const Create = React.forwardRef((props, ref) => {
                             </Grid>
                         </Grid>
 
-                        {/* <Grid container spacing={24}> */}
                         <Grid container>
                             <Grid item xs={12} sm={12}>
                                 <FormControl
@@ -348,7 +345,7 @@ const Create = React.forwardRef((props, ref) => {
                                         )}
                                 </FormControl>
                             </Grid>
-                        </Grid>
+                        </Grid> */}
 
                         <div className={classes.sectionSpacer} />
 
@@ -366,7 +363,7 @@ const Create = React.forwardRef((props, ref) => {
                                         isSubmitting
                                     }
                                 >
-                                    Next
+                                    Save
                                 </Button>
                             </Grid>
                         </Grid>
@@ -374,52 +371,12 @@ const Create = React.forwardRef((props, ref) => {
                 )}
             </Formik>
         );
-        // switch (activeStep) {
-        //     case 0:
-        //         return (
-        //             <Profile
-        //                 {...other}
-        //                 values={
-        //                     formValues[0] ? formValues[0] : defaultProfileValues
-        //                 }
-        //                 handleSubmit={handleSubmit}
-        //             />
-        //         );
-        //     case 1:
-        //         return (
-        //             <Address
-        //                 {...other}
-        //                 values={{
-        //                     billing_address: '',
-        //                     shipping_address: '',
-        //                 }}
-        //                 handleSubmit={handleSubmit}
-        //                 handleBack={handleBack}
-        //             />
-        //         );
-        //     case 2:
-        //         return (
-        //             <Others
-        //                 {...other}
-        //                 values={{
-        //                     fax: '',
-        //                     website: '',
-        //                     open_balance:'',
-        //                     note: '',
-        //                 }}
-        //                 handleSubmit={handleSubmit}
-        //                 handleBack={handleBack}
-        //             />
-        //         );
-        //     default:
-        //         throw new Error('Unknown step!');
-        // }
     };
 
     return (
         <MasterLayout
             {...other}
-            pageTitle="Create a client"
+            pageTitle="Create an order"
             tabs={[]}
             message={message}
             ref = {ref}
@@ -435,19 +392,8 @@ const Create = React.forwardRef((props, ref) => {
                             align="center"
                             gutterBottom
                         >
-                            Order Creation
+                            Create Order
                         </Typography>
-
-                        {/* <Stepper
-                            activeStep={activeStep}
-                            className={classes.stepper}
-                        >
-                            {steps.map(name => (
-                                <Step key={name}>
-                                    <StepLabel>{name}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper> */}
 
                         {renderForm()}
                     </div>
