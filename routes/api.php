@@ -53,6 +53,8 @@ Route::namespace('Api')->name('api.')->group(function () {
 
             Route::resource('clients','ClientController');
             Route::resource('vendors','VendorController');
+            Route::resource('orders','OrderController');
+            Route::resource('quotations','QuotationController');
         });
     });
 });

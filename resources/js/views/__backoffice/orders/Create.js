@@ -109,7 +109,7 @@ const Create = React.forwardRef((props, ref) => {
      *
      * @return {undefined}
      */
-    const fetchData = () => {
+    const fetchData = async () => {
         setLoading(true);
 
         try {

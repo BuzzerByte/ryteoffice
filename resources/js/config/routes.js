@@ -20,7 +20,6 @@ export default [
         component: Auth.PasswordRequest,
         auth: false,
     },
-
     {
         name: 'auth.passwords.reset',
         path: '/password/reset/:token',

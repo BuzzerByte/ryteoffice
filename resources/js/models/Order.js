@@ -20,6 +20,12 @@ export default class Order {
         return response.data;
     }
 
+    static async create(){
+        const response = await axios.get('/api/v1/orders/create');
+        if(response.status !== 200) return {};
+        return response.data;
+    }
+
     /**
      * Store a new user.
      *

@@ -6,7 +6,6 @@ const resources = [
         path: '/orders',
         component: Orders.List,
     },
-
     {
         name: 'orders.create',
         path: '/orders/create',
