@@ -113,7 +113,9 @@ const Create = React.forwardRef((props, ref) => {
         setLoading(true);
 
         try {
-            const pagination = await Order.create();
+            const formValues = await Order.create();
+            console.log(formValues);
+            setFormValues(formValues);
             setLoading(false);
             setMessage({});
         } catch (error) {
@@ -123,8 +125,12 @@ const Create = React.forwardRef((props, ref) => {
 
     useEffect(()=>{
         fetchData();
-    });
+    },[]);
     
+    const {
+        data: rawData
+    } = formValues;
+
     const renderForm = () => {
         
         const values = {
