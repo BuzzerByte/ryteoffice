@@ -387,8 +387,6 @@ const List = React.forwardRef((props, ref) => {
                         alignItems="center"
                         wrap="nowrap"
                     >
-                        
-
                         <Grid item>{client.name}</Grid>
                     </Grid>
                 ),

@@ -29,7 +29,8 @@ const Create = React.forwardRef((props, ref) => {
     const [order, setOrder] = useState({});
     const [message, setMessage] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
-    const { history, classes, values, ...other } = props;
+    const { classes, values, ...other } = props;
+    const { history } = props;
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -102,6 +103,22 @@ const Create = React.forwardRef((props, ref) => {
         }
     };
 
+    const primaryAction = {
+        text: Lang.get('resources.create', {
+            name: 'Invoice',
+        }),
+        clicked: () =>
+            history.push(
+                NavigationUtils.route('orders.resources.orders.create'),
+            ),
+    }
+
+    const tabs = [
+        {
+            name: 'Create Invoice',
+            active: true,
+        },
+    ];
     /**
      * This should send an API request to fetch all resource.
      *
@@ -113,8 +130,7 @@ const Create = React.forwardRef((props, ref) => {
         setLoading(true);
 
         try {
-            const formValues = await Order.create();
-            console.log(formValues);
+            const formValues = await Order.create();               // })} 
             setFormValues(formValues);
             setLoading(false);
             setMessage({});
@@ -126,13 +142,8 @@ const Create = React.forwardRef((props, ref) => {
     useEffect(()=>{
         fetchData();
     },[]);
-    
-    const {
-        data: rawData
-    } = formValues;
 
     const renderForm = () => {
-        
         const values = {
             serial_number: '',
             client_id: '',
@@ -227,7 +238,6 @@ const Create = React.forwardRef((props, ref) => {
                             Create Order
                         </Typography>
 
-                        {/* <Grid container spacing={24}> */}
                         <Grid container>
                             <Grid item xs={12} sm={12}>
                                 <FormControl
@@ -241,7 +251,6 @@ const Create = React.forwardRef((props, ref) => {
                                         Select Client
                                     </Button>
                                     <Menu
-
                                         id="client-menu"
                                         anchorEl={anchorEl}
                                         keepMounted
@@ -249,9 +258,9 @@ const Create = React.forwardRef((props, ref) => {
                                         open={Boolean(anchorEl)}
                                         onClose={handleClose}
                                     >
-                                        <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                        <MenuItem onClick={handleClose}>My account</MenuItem>
-                                        <MenuItem onClick={handleClose}>Logout</MenuItem>
+                                        {loading ? '':formValues[1].map((data)=>{
+                                            return <MenuItem key={data.id}>{data.name}</MenuItem>
+                                        })}
                                     </Menu>
 
                                     {submitCount > 0 &&
@@ -382,9 +391,12 @@ const Create = React.forwardRef((props, ref) => {
     return (
         <MasterLayout
             {...other}
+            loading={loading}
             pageTitle="Create an order"
             tabs={[]}
             message={message}
+            primaryAction={primaryAction}
+            tabs={tabs}
             ref = {ref}
         >
             <div className={classes.pageContentWrapper}>
