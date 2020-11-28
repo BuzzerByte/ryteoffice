@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Formik, Form } from 'formik';
+import { Formik, Form, isEmptyArray } from 'formik';
 import * as Yup from 'yup';
 
 import {
@@ -29,6 +29,7 @@ const Create = React.forwardRef((props, ref) => {
     const [order, setOrder] = useState({});
     const [message, setMessage] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
+    const [client, setClient] = useState([]);
     const { classes, values, ...other } = props;
     const { history } = props;
 
@@ -36,8 +37,9 @@ const Create = React.forwardRef((props, ref) => {
       setAnchorEl(event.currentTarget);
     };
   
-    const handleClose = () => {
-      setAnchorEl(null);
+    const handleClose = (data) => {
+        setClient(data);
+        setAnchorEl(null);
     };
 
     /**
@@ -248,7 +250,7 @@ const Create = React.forwardRef((props, ref) => {
                                     }
                                 >
                                     <Button aria-controls="client-menu" aria-haspopup="true" onClick={handleClick}>
-                                        Select Client
+                                        {isEmptyArray(client) ? 'Select Client': client.name }
                                     </Button>
                                     <Menu
                                         id="client-menu"
@@ -259,9 +261,16 @@ const Create = React.forwardRef((props, ref) => {
                                         onClose={handleClose}
                                     >
                                         {loading ? '':formValues[1].map((data)=>{
-                                            return <MenuItem key={data.id}>{data.name}</MenuItem>
+                                            return <MenuItem key={data.id} onClick={()=>handleClose(data)}>{data.name}</MenuItem>
                                         })}
                                     </Menu>
+                                    <InputLabel htmlFor="client">Client</InputLabel>
+                                    <Input
+                                        id="client"
+                                        name="client"
+                                        value={isEmptyArray(client) ? '':client.name}
+                                        fullWidth
+                                    />
 
                                     {submitCount > 0 &&
                                         errors.hasOwnProperty('name') && (
