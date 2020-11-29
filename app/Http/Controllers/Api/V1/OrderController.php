@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Session;
 use App\Order;
 use App\Client;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\V1\Controller;
 
 class OrderController extends Controller
 {

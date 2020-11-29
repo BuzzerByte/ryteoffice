@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1\Settings;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\V1\Controller;
 
 class ProfileController extends Controller
 {

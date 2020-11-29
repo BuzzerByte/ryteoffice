@@ -369,34 +369,6 @@ const Create = React.forwardRef((props, ref) => {
                         </Grid>
 
                         <Grid container>
-                            <Grid item xs={11} sm={5}>
-                                <FormControl
-                                    className = {classes.formControl}
-                                    error = {
-                                        submitCount > 0 &&
-                                        errors.hasOwnProperty('invoice_date')
-                                    }
-                                >
-                                    <TextField
-                                        id="invoice_date"
-                                        label="Invoice Date"
-                                        type="date"
-                                        defaultValue="2017-05-24"
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-                                {submitCount > 0 &&
-                                    errors.hasOwnProperty('invoice_date') && (
-                                        <FormHelperText>
-                                            {errors.shipping_address}
-                                        </FormHelperText>
-                                )}
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-
-                        <Grid container>
                             <Grid item xs={12} sm={6}>
                                 <FormControl
                                     className = {classes.formControl}
