@@ -13,7 +13,8 @@ import {
     FormControl,
     FormHelperText,
     Input,
-    InputLabel
+    InputLabel,
+    TextField
 } from '@material-ui/core';
 
 import * as NavigationUtils from '../../../helpers/Navigation';
@@ -236,107 +237,34 @@ const Create = React.forwardRef((props, ref) => {
                     setFieldValue,
                 }) => (
                     <Form>
-                        <Typography variant="h6" gutterBottom>
-                            Create Order
-                        </Typography>
-
                         <Grid container>
-                            <Grid item xs={12} sm={12}>
-                                <FormControl
-                                    className={classes.formControl}
-                                    error={
-                                        submitCount > 0 &&
-                                        errors.hasOwnProperty('order')
-                                    }
-                                >
-                                    <Button aria-controls="client-menu" aria-haspopup="true" onClick={handleClick}>
-                                        {isEmptyArray(client) ? 'Select Client': client.name }
-                                    </Button>
-                                    <Menu
-                                        id="client-menu"
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        value = {values.client_id}
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleClose}
-                                    >
-                                        {loading ? '':formValues[1].map((data)=>{
-                                            return <MenuItem key={data.id} onClick={()=>handleClose(data)}>{data.name}</MenuItem>
-                                        })}
-                                    </Menu>
-                                    <InputLabel htmlFor="client">Client</InputLabel>
-                                    <Input
-                                        id="client"
-                                        name="client"
-                                        value={isEmptyArray(client) ? '':client.name}
-                                        fullWidth
-                                    />
-
-                                    {submitCount > 0 &&
-                                        errors.hasOwnProperty('name') && (
-                                            <FormHelperText>
-                                                {errors.name}
-                                            </FormHelperText>
-                                        )}
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-
-                        
-                        {/* <Grid container>
                             <Grid item xs={12} sm={6}>
-                                <FormControl
-                                    className={classes.formControl}
-                                    error={
-                                        submitCount > 0 &&
-                                        errors.hasOwnProperty('company')
-                                    }
+                                <Typography htmlFor="client-menu">
+                                    Client
+                                    <span className={classes.required}>*</span>
+                                </Typography>
+
+                                <Button 
+                                    aria-controls="client-menu" 
+                                    aria-haspopup="true" 
+                                    onClick={handleClick}
+                                    fullWidth
+                                    variant="contained"
                                 >
-                                    <InputLabel htmlFor="company">Company</InputLabel>
-
-                                    <Input
-                                        id="company"
-                                        name="company"
-                                        value={values.company}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-
-                                    {submitCount > 0 &&
-                                        errors.hasOwnProperty('company') && (
-                                            <FormHelperText>
-                                                {errors.company}
-                                            </FormHelperText>
-                                        )}
-                                </FormControl>
-                            </Grid>
-
-                            <Grid item xs={12} sm={6}>
-                                <FormControl
-                                    className={classes.formControl}
-                                    error={
-                                        submitCount > 0 &&
-                                        errors.hasOwnProperty('phone')
-                                    }
+                                    {isEmptyArray(client) ? 'Please Select': client.name }
+                                </Button>
+                                <Menu
+                                    id="client-menu"
+                                    anchorEl={anchorEl}
+                                    keepMounted
+                                    value = {values.client_id}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
                                 >
-
-                                <InputLabel htmlFor="phone">Phone</InputLabel>
-
-                                    <Input
-                                        id="phone"
-                                        name="phone"
-                                        value={values.phone}
-                                        onChange={handleChange}
-                                        fullWidth
-                                    />
-
-                                    {submitCount > 0 &&
-                                        errors.hasOwnProperty('phone') && (
-                                            <FormHelperText>
-                                                {errors.phone}
-                                            </FormHelperText>
-                                        )}
-                                </FormControl>
+                                    {loading ? '':formValues[1].map((data)=>{
+                                        return <MenuItem key={data.id} onClick={()=>handleClose(data)}>{data.name}</MenuItem>
+                                    })}
+                                </Menu>
                             </Grid>
                         </Grid>
 
@@ -351,14 +279,17 @@ const Create = React.forwardRef((props, ref) => {
                                 >
                                     <InputLabel htmlFor="email">
                                         Email
+                                        <span className={classes.required}>*</span>
                                     </InputLabel>
 
                                     <Input
                                         id="email"
                                         name="email"
-                                        value={values.email}
+                                        value={isEmptyArray(client) ? '': client.email }
                                         onChange={handleChange}
                                         fullWidth
+                                        readOnly
+                                        multiline
                                     />
 
                                     {submitCount > 0 &&
@@ -369,12 +300,159 @@ const Create = React.forwardRef((props, ref) => {
                                         )}
                                 </FormControl>
                             </Grid>
-                        </Grid> */}
+                        </Grid>
+
+                        <Grid container>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className = {classes.formControl}
+                                    error = {
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('billing_address')
+                                    }
+                                >
+                                    <InputLabel htmlFor="billing_address">
+                                        Billing Address
+                                        <span className={classes.required}>*</span>
+                                    </InputLabel>
+
+                                    <Input
+                                        id="billing_address"
+                                        name="billing_address"
+                                        value={isEmptyArray(client) ? '':client.billing_address}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        readOnly
+                                        multiline
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('billing_address') && (
+                                            <FormHelperText>
+                                                {errors.billing_address}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className = {classes.formControl}
+                                    error = {
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('shipping_address')
+                                    }
+                                >
+                                    <InputLabel htmlFor="shipping_address">
+                                        Shipping Address
+                                        <span className={classes.required}>*</span>
+                                    </InputLabel>
+
+                                    <Input
+                                        id="shipping_address"
+                                        name="shipping_address"
+                                        value={isEmptyArray(client) ? '':client.shipping_address}
+                                        onChange={handleChange}
+                                        fullWidth
+                                        readOnly
+                                        multiline
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('shipping_address') && (
+                                            <FormHelperText>
+                                                {errors.shipping_address}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        <Grid container>
+                            <Grid item xs={11} sm={5}>
+                                <FormControl
+                                    className = {classes.formControl}
+                                    error = {
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('invoice_date')
+                                    }
+                                >
+                                    <TextField
+                                        id="invoice_date"
+                                        label="Invoice Date"
+                                        type="date"
+                                        defaultValue="2017-05-24"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                {submitCount > 0 &&
+                                    errors.hasOwnProperty('invoice_date') && (
+                                        <FormHelperText>
+                                            {errors.shipping_address}
+                                        </FormHelperText>
+                                )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        <Grid container>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className = {classes.formControl}
+                                    error = {
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('invoice_date')
+                                    }
+                                >
+                                    <TextField
+                                        id="invoice_date"
+                                        label="Invoice Date"
+                                        type="date"
+                                        defaultValue="2017-05-24"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                {submitCount > 0 &&
+                                    errors.hasOwnProperty('invoice_date') && (
+                                        <FormHelperText>
+                                            {errors.shipping_address}
+                                        </FormHelperText>
+                                )}
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className = {classes.formControl}
+                                    error = {
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('due_date')
+                                    }
+                                >
+                                    <TextField
+                                        id="due_date"
+                                        label="Due Date"
+                                        type="date"
+                                        defaultValue="2017-05-24"
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                {submitCount > 0 &&
+                                    errors.hasOwnProperty('due_date') && (
+                                        <FormHelperText>
+                                            {errors.shipping_address}
+                                        </FormHelperText>
+                                )}
+                                </FormControl>                                        
+                            </Grid>
+                        </Grid>
 
                         <div className={classes.sectionSpacer} />
 
                         {/* <Grid container spacing={24} justify="flex-end"> */}
-                        <Grid container justify="flex-end">
+                        <Grid container  justify="flex-end">
                             <Grid item>
                                 <Button
                                     type="submit"
@@ -387,7 +465,7 @@ const Create = React.forwardRef((props, ref) => {
                                         isSubmitting
                                     }
                                 >
-                                    Save
+                                    Next
                                 </Button>
                             </Grid>
                         </Grid>
@@ -413,14 +491,14 @@ const Create = React.forwardRef((props, ref) => {
 
                 <Paper>
                     <div className={classes.pageContent}>
-                        <Typography
+                        {/* <Typography
                             component="h1"
                             variant="h4"
                             align="center"
                             gutterBottom
                         >
                             Create Order
-                        </Typography>
+                        </Typography> */}
 
                         {renderForm()}
                     </div>
@@ -440,6 +518,14 @@ const styles = theme => ({
 
     pageContent: {
         padding: theme.spacing(1) * 3,
+    },
+
+    formControl: {
+        minWidth: '100%',
+    },
+
+    required: {
+        color: theme.palette.error.main,
     },
 });
 
