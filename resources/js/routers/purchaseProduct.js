@@ -1,11 +1,11 @@
-import * as Categories from '../views/__backoffice/categories';
+import * as PurchaseProducts from '../views/__backoffice/purchaseProducts';
 
 const resources = [
     {
-        name: 'categories.index',
-        path: '/categories',
-        component: Categories.List,
-    }
+        name: 'purchases.index',
+        path: '/purchases',
+        component: PurchaseProducts.List,
+    },
 ].map(route => {
     route.name = `resources.${route.name}`;
     route.path = `/resources${route.path}`;

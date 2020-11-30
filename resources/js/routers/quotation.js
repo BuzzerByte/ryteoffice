@@ -10,12 +10,7 @@ const resources = [
         name: 'quotations.create',
         path: '/quotations/create',
         component: Quotations.Create,
-    },
-    {
-        name: 'quotations.edit',
-        path: '/quotations/:id/edit',
-        component: Quotations.Edit,
-    },
+    }
 ].map(route => {
     route.name = `resources.${route.name}`;
     route.path = `/resources${route.path}`;

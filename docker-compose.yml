@@ -1,7 +1,7 @@
 version: '3'
 
 networks:
-  laravel:
+  ryteoffice:
 
 services:
   nginx:
@@ -16,7 +16,7 @@ services:
       - php
       - postgreSQL
     networks:
-      - laravel
+      - ryteoffice
 
   # mysql:
   #   image: mysql:5.7.29
@@ -33,7 +33,7 @@ services:
   #     SERVICE_TAGS: dev
   #     SERVICE_NAME: mysql
   #   networks:
-  #     - laravel
+  #     - ryteoffice
 
   postgreSQL:
     image: "postgres" # use latest official postgres version
@@ -49,7 +49,7 @@ services:
       SERVICE_TAGS: dev
       SERVICE_NAME: postgreSQL
     networks:
-      - laravel
+      - ryteoffice
 
   # pgadmin:
   #   container_name: react_pgadmin
@@ -60,7 +60,7 @@ services:
   #   ports:
   #     - "8081:81"
   #   networks:
-  #     - laravel
+  #     - ryteoffice
   #   restart: unless-stopped
 
   php:
@@ -73,7 +73,7 @@ services:
     ports:
       - "9000:9000"
     networks:
-      - laravel
+      - ryteoffice
 
   composer:
     image: composer:latest
@@ -84,7 +84,7 @@ services:
     depends_on:
       - php
     networks:
-      - laravel
+      - ryteoffice
 
   npm:
     image: node:13.7
@@ -93,6 +93,8 @@ services:
       - ./:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['npm']
+    networks:
+      - ryteoffice
 
   artisan:
     build:
@@ -106,4 +108,4 @@ services:
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
-      - laravel
+      - ryteoffice

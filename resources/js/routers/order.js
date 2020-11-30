@@ -19,17 +19,17 @@ const resources = [
     {
         name: 'orders.process',
         path: '/orders/process',
-        component: Orders.List,
+        component: Orders.Process,
     },
     {
         name: 'orders.pending',
         path: '/orders/pending',
-        component: Orders.List
+        component: Orders.Pending
     },
     {
         name: 'orders.deliver',
         path: '/orders/deliver',
-        component: Orders.List
+        component: Orders.Deliver
     }
 ].map(route => {
     route.name = `resources.${route.name}`;

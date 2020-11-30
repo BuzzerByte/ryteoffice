@@ -4,6 +4,7 @@ import { VENDORS } from '../routers';
 import { ORDERS } from '../routers';
 import { QUOTATIONS } from '../routers';
 import { PURCHASES } from '../routers';
+import { PURCHASEPRODUCTS } from '../routers';
 import { INVENTORIES } from '../routers';
 import { CATEGORIES } from '../routers';
 import { EMPLOYEES } from '../routers';

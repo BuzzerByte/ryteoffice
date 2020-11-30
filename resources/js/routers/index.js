@@ -4,6 +4,7 @@ export { default as VENDORS } from './vendor';
 export { default as ORDERS  } from './order';
 export { default as QUOTATIONS } from './quotation';
 import { default as PURCHASES } from './purchase';
+import { default as PURCHASEPRODUCTS } from './purchaseProduct';
 import { default as INVENTORIES } from './inventory';
 import { default as CATEGORIES } from './category';
 import { default as EMPLOYEES } from './employee';

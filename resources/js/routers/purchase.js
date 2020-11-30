@@ -2,15 +2,15 @@ import * as Purchases from '../views/__backoffice/purchases';
 
 const resources = [
     {
+        name: 'purchases.create',
+        path: '/purchases/create',
+        component: Purchases.Create,
+    },
+    {
         name: 'purchases.index',
         path: '/purchases',
         component: Purchases.List,
     },
-    {
-        name: 'purchases.create',
-        path: '/purchases/create',
-        component: Purchases.Create,
-    }
 ].map(route => {
     route.name = `resources.${route.name}`;
     route.path = `/resources${route.path}`;
