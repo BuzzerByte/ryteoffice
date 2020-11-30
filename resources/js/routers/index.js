@@ -24,4 +24,4 @@ import { default as SALARIES } from './salary';
 import { default as EMPLOYMENTSTATUS } from './employementStatus';
 import { default as TAXES } from './tax';
 import { default as ROLES } from './role';
-import { default as PERMISSIONS } from '../routers';
+import { default as PERMISSIONS } from '../permission';
