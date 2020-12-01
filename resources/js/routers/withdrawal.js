@@ -1,11 +1,11 @@
-import * as Roles from '../views/__backoffice/roles';
+import * as Withdrawals from '../views/__backoffice/withdrawals';
 
 const resources = [
     {
-        name: `roles.index`,
-        path: `/roles`,
-        component: Roles.List,
-    },
+        name: 'withdrawals.index',
+        path: '/withdrawals',
+        component: Withdrawals.List,
+    }
 ].map(route => {
     route.name = `resources.${route.name}`;
     route.path = `/resources${route.path}`;
@@ -16,7 +16,7 @@ const resources = [
 export default [
     ...resources,
 ].map(route => {
-    route.name = `roles.${route.name}`;
+    route.name = `quotations.${route.name}`;
     route.auth = true;
 
     return route;

@@ -7,6 +7,7 @@ import { PURCHASES } from '../routers';
 import { PURCHASEPRODUCTS } from '../routers';
 import { INVENTORIES } from '../routers';
 import { CATEGORIES } from '../routers';
+import { WITHDRAWALS } from '../routers';
 import { EMPLOYEES } from '../routers';
 import { TERMINATIONS } from '../routers';
 import { AWARDS } from '../routers';

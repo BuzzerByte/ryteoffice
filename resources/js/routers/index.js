@@ -7,6 +7,7 @@ import { default as PURCHASES } from './purchase';
 import { default as PURCHASEPRODUCTS } from './purchaseProduct';
 import { default as INVENTORIES } from './inventory';
 import { default as CATEGORIES } from './category';
+import { default as WITHDRAWALS } from './withdrawal';
 import { default as EMPLOYEES } from './employee';
 import { default as TERMINATIONS } from './termination';
 import { default as AWARDS } from './award';
