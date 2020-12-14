@@ -243,15 +243,15 @@ const Sidebar = React.forwardRef((props, ref) => {
             ],
         },
         {
-            name: 'Analytics',
-            id: 'analytics',
+            name: '',
+            id: '',
             links: [
                 {
-                    name: 'Traffic',
-                    icon: <ShowChartIcon />,
+                    name: '',
+                    icon: <ShowChartIcon/>,
                     path: null,
                 },
-            ],
+            ]
         },
     ];
 

@@ -1,9 +1,9 @@
-import * as EmploymentStatus from '../views/__backoffice/employmentStatus';
+import * as EmploymentStatus from '../views/__backoffice/employeeStatus';
 
 const resources = [
     {
-        name: `employmentStatus.index`,
-        path: `/employmentStatus`,
+        name: `employeeStatus.index`,
+        path: `/employeeStatus`,
         component: EmploymentStatus.List,
     },
 ].map(route => {
@@ -16,7 +16,7 @@ const resources = [
 export default [
     ...resources,
 ].map(route => {
-    route.name = `employmentStatus.${route.name}`;
+    route.name = `employeeStatus.${route.name}`;
     route.auth = true;
 
     return route;
