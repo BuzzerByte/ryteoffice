@@ -86,7 +86,6 @@ const Sidebar = React.forwardRef((props, ref) => {
                         'backoffice.resources.users.index',
                     ),
                 },
-
                 {
                     name: Lang.get('navigation.roles'),
                     icon: (
@@ -243,16 +242,413 @@ const Sidebar = React.forwardRef((props, ref) => {
             ],
         },
         {
-            name: '',
-            id: '',
+            name: Lang.get('navigation.purchase'),
+            id: 'purchases',
             links: [
                 {
-                    name: '',
-                    icon: <ShowChartIcon/>,
-                    path: null,
-                },
+                    name:Lang.get('navigation.newPurchase'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.newPurchase') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'purchases.resources.purchases.create',
+                    ),
+                },{
+                    name:Lang.get('navigation.purchaseList'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.purchaseList') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'purchases.resources.purchases.index',
+                    ),
+                },{
+                    name:Lang.get('navigation.receivedProduct'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.receivedProduct') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'purchaseProducts.resources.purchaseProducts.index',
+                    ),
+                }
             ]
         },
+        {
+            name: Lang.get('navigation.productAndServices'),
+            id: 'productAndServices',
+            links: [
+                {
+                    name:Lang.get('navigation.productList'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.productList') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'inventories.resources.inventories.index',
+                    ),
+                },{
+                    name:Lang.get('navigation.importProduct'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.importProduct') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'inventories.resources.inventories.import',
+                    ),
+                },{
+                    name:Lang.get('navigation.withdrawal'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.withdrawal') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'inventories.resources.inventories.index',
+                    ),
+                }
+            ]
+        },
+        {
+            name: Lang.get('navigation.employee'),
+            id: 'employee',
+            links: [
+                {
+                    name:Lang.get('navigation.addEmployee'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.addEmployee') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'employees.resources.employees.create',
+                    ),
+                },{
+                    name:Lang.get('navigation.importEmployee'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.importEmployee') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'employees.resources.employees.import',
+                    ),
+                },{
+                    name:Lang.get('navigation.employeeList'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.employeeList') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'employees.resources.employees.index',
+                    ),
+                },
+                {
+                    name: Lang.get('navigation.setAttendance'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.setAttendance') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'attendances.resources.attendances.setAttendance',
+                    ),
+                },{
+                    name: Lang.get('navigation.importAttendance'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.importAttendance') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'attendances.resources.attendances.import',
+                    ),
+                },{
+                    name: Lang.get('navigation.attendanceReport'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.setAttendance') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'attendances.resources.attendances.attendanceReport',
+                    ),
+                },
+                {
+                    name: Lang.get('navigation.applicationList'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.applicationList') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'applications.resources.applications.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.reimbursement'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.reimbursement') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'reimbursements.resources.reimbursements.index',
+                    ),
+                }
+            ]
+        },
+        {
+            name: Lang.get('navigation.officeSettings'),
+            id: 'officeSettings',
+            links: [
+                {
+                    name:Lang.get('navigation.department'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.department') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'departments.resources.departments.index',
+                    ),
+                },{
+                    name:Lang.get('navigation.jobTitle'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.jobTitle') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'jobTitles.resources.jobTitles.index',
+                    ),
+                },{
+                    name:Lang.get('navigation.jobCategories'),
+                    icon:(
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.jobCategories') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'jobCategories.resources.jobCategories.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.workShifts'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.workShifts') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'workShifts.resources.workShifts.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.workingDays'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.workingDays') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'workingDays.resources.workingDays.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.holidayList'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.holidayList') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'holidays.resources.holidays.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.leaveType'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.leaveType') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'leaveTypes.resources.leaveTypes.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.payGrades'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.payGrades') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'payGrades.resources.payGrades.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.salaryComponent'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.salaryComponent') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'salaries.resources.salaries.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.employmentStatus'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.employmentStatus') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'employeeStatus.resources.employeeStatus.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.tax'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.tax') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'taxes.resources.taxes.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.role'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.role') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'roles.resources.roles.index',
+                    ),
+                },{
+                    name: Lang.get('navigation.permission'),
+                    icon: (
+                        <Tooltip
+                            title={
+                                minimized ? Lang.get('navigation.permission') : ''
+                            }
+                        >
+                            <PeopleIcon />
+                        </Tooltip>
+                    ),
+                    path: NavigationUtils.route(
+                        'permissions.resources.permissions.index',
+                    ),
+                }
+            ]
+        }
     ];
 
     useEffect(() => {

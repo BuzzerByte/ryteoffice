@@ -12,8 +12,8 @@ const resources = [
         component: Attendances.Import,
     },
     {
-        name: `attendances.index`,
-        path: `/attendances`,
+        name: `attendances.attendanceReport`,
+        path: `/attendances/attendanceReport`,
         component: Attendances.Report,
     },
 ].map(route => {

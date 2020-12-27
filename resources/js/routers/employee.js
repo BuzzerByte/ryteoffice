@@ -26,7 +26,7 @@ const resources = [
 export default [
     ...resources,
 ].map(route => {
-    route.name = `purchases.${route.name}`;
+    route.name = `employees.${route.name}`;
     route.auth = true;
 
     return route;

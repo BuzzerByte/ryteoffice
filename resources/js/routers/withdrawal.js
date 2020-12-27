@@ -16,7 +16,7 @@ const resources = [
 export default [
     ...resources,
 ].map(route => {
-    route.name = `quotations.${route.name}`;
+    route.name = `withdrawals.${route.name}`;
     route.auth = true;
 
     return route;
