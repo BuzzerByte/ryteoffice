@@ -3,3 +3,4 @@ export { default as Client } from './Client';
 export { default as Vendor } from './Vendor';
 export { default as Order } from './Order';
 export { default as Quotation } from './Quotation';
+export { default as Inventory } from './Inventory';

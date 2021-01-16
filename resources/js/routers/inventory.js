@@ -10,6 +10,11 @@ const resources = [
         name: 'inventories.import',
         path: '/inventories/import',
         component: Inventories.Import,
+    },
+    {
+        name: 'inventories.create',
+        path: '/inventories/create',
+        component: Inventories.Create,
     }
 ].map(route => {
     route.name = `resources.${route.name}`;

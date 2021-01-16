@@ -19,8 +19,7 @@ import * as NavigationUtils from '../../../helpers/Navigation';
 import * as UrlUtils from '../../../helpers/URL';
 import { Table } from '../../../ui';
 import { Master as MasterLayout } from '../layouts';
-import { User } from '../../../models';
-import { Client } from '../../../models';
+import { Inventory } from '../../../models';
 import { AppContext } from '../../../AppContext';
 
 const List = React.forwardRef((props, ref) => {
@@ -46,13 +45,13 @@ const List = React.forwardRef((props, ref) => {
         setAlert({
             type: 'confirmation',
             title: Lang.get('resources.delete_confirmation_title', {
-                name: 'Client',
+                name: 'Inventory',
             }),
             body: Lang.get('resources.delete_confirmation_body', {
-                name: 'Client',
+                name: 'Inventory',
             }),
             confirmText: Lang.get('actions.continue'),
-            confirmed: async () => await deleteUser(resourceId),
+            confirmed: async () => await deleteInventory(resourceId),
             cancelled: () => setAlert({}),
         });
     };
@@ -69,7 +68,7 @@ const List = React.forwardRef((props, ref) => {
         const newFilters = { ...filters };
         delete newFilters[key];
 
-        await fetchUsers({
+        await fetchInventories({
             ...defaultQueryString(),
             filters: newFilters,
         });
@@ -92,7 +91,7 @@ const List = React.forwardRef((props, ref) => {
             [`${values.filterBy}[${values.filterType}]`]: values.filterValue,
         };
         
-        await fetchUsers({
+        await fetchInventories({
             ...defaultQueryString(),
             filters: newFilters,
         });
@@ -107,7 +106,7 @@ const List = React.forwardRef((props, ref) => {
      * @return {undefined}
      */
     const handleSorting = async (sortBy, sortType) => {
-        await fetchUsers({
+        await fetchInventories({
             ...defaultQueryString(),
             sortBy,
             sortType,
@@ -123,7 +122,7 @@ const List = React.forwardRef((props, ref) => {
      * @return {undefined}
      */
     const handlePageChange = async page => {
-        await fetchUsers({
+        await fetchInventories({
             ...defaultQueryString(),
             page,
         });
@@ -139,7 +138,7 @@ const List = React.forwardRef((props, ref) => {
      * @return {undefined}
      */
     const handlePerPageChange = async (perPage, page) => {
-        await fetchUsers({
+        await fetchInventories({
             ...defaultQueryString(),
             perPage,
             page,
@@ -153,11 +152,11 @@ const List = React.forwardRef((props, ref) => {
      *
      * @return {undefined}
      */
-    const restoreUser = async resourceId => {
+    const restoreInventory = async resourceId => {
         setLoading(true);
 
         try {
-            const pagination = await Client.restore(resourceId);
+            const pagination = await Inventory.restore(resourceId);
 
             setLoading(false);
             setPagination(pagination);
@@ -165,7 +164,7 @@ const List = React.forwardRef((props, ref) => {
             setMessage({
                 type: 'success',
                 body: Lang.get('resources.restored', {
-                    name: 'Client',
+                    name: 'Inventory',
                 }),
                 closed: () => setMessage({}),
             });
@@ -175,11 +174,11 @@ const List = React.forwardRef((props, ref) => {
             setMessage({
                 type: 'error',
                 body: Lang.get('resources.not_restored', {
-                    name: 'Client',
+                    name: 'Inventory',
                 }),
                 closed: () => setMessage({}),
                 actionText: Lang.get('actions.retry'),
-                action: () => restoreUser(resourceId),
+                action: () => restoreInventory(resourceId),
             });
         }
     };
@@ -191,11 +190,11 @@ const List = React.forwardRef((props, ref) => {
      *
      * @return {undefined}
      */
-    const deleteUser = async resourceId => {
+    const deleteInventory = async resourceId => {
         setLoading(true);
 
         try {
-            const pagination = await Client.delete(resourceId);
+            const pagination = await Inventory.delete(resourceId);
 
             setLoading(false);
             setPagination(pagination);
@@ -203,11 +202,11 @@ const List = React.forwardRef((props, ref) => {
             setMessage({
                 type: 'success',
                 body: Lang.get('resources.deleted', {
-                    name: 'Client',
+                    name: 'Inventory',
                 }),
                 closed: () => setMessage({}),
                 actionText: Lang.get('actions.undo'),
-                action: () => restoreUser(resourceId),
+                action: () => restoreInventory(resourceId),
             });
         } catch (error) {
             setLoading(false);
@@ -215,11 +214,11 @@ const List = React.forwardRef((props, ref) => {
             setMessage({
                 type: 'error',
                 body: Lang.get('resources.not_deleted', {
-                    name: 'Client',
+                    name: 'Inventory',
                 }),
                 closed: () => setMessage({}),
                 actionText: Lang.get('actions.retry'),
-                action: () => deleteUser(resourceId),
+                action: () => deleteInventory(resourceId),
             });
         }
     };
@@ -231,7 +230,7 @@ const List = React.forwardRef((props, ref) => {
      *
      * @return {undefined}
      */
-    const fetchUsers = async (params = {}) => {
+    const fetchInventories = async (params = {}) => {
         setLoading(true);
 
         try {
@@ -329,7 +328,7 @@ const List = React.forwardRef((props, ref) => {
             }
         });
 
-        fetchUsers({
+        fetchInventories({
             ...queryParams,
             filters: prevFilters,
         });
@@ -349,11 +348,11 @@ const List = React.forwardRef((props, ref) => {
 
     const primaryAction = {
         text: Lang.get('resources.create', {
-            name: 'Client',
+            name: 'Inventory',
         }),
         clicked: () =>
             history.push(
-                NavigationUtils.route('clients.resources.clients.create'),
+                NavigationUtils.route('inventories.resources.inventories.create'),
             ),
     };
 
@@ -378,7 +377,7 @@ const List = React.forwardRef((props, ref) => {
 
     const data =
         rawData &&
-        rawData.map(client => {
+        rawData.map(inventory => {
             return {
                 name: (
                     <Grid
@@ -387,49 +386,26 @@ const List = React.forwardRef((props, ref) => {
                         alignItems="center"
                         wrap="nowrap"
                     >
-                        <Grid item>{client.name}</Grid>
+                        <Grid item>{inventory.name}</Grid>
                     </Grid>
                 ),
-                company: client.company,
-                email: client.email,
+                company: inventory.company,
+                email: inventory.email,
                 actions: (
                     <div style={{ width: 120, flex: 'no-wrap' }}>
-                        {/* <Tooltip
-                            title={Lang.get('resources.edit_image', {
-                                name: 'Client',
-                            })}
-                        >
-                            <IconButton
-                                onClick={() =>
-                                    history.push(
-                                        NavigationUtils.route(
-                                            'clients.resources.clients.edit',
-                                            {
-                                                id: client.id,
-                                            },
-                                            {
-                                                step: 2,
-                                            },
-                                        ),
-                                    )
-                                }
-                            >
-                                <ImageIcon />
-                            </IconButton>
-                        </Tooltip> */}
 
                         <Tooltip
                             title={Lang.get('resources.edit', {
-                                name: 'Client',
+                                name: 'Inventory',
                             })}
                         >
                             <IconButton
                                 onClick={() =>
                                     history.push(
                                         NavigationUtils.route(
-                                            'clients.resources.clients.edit',
+                                            'inventories.resources.inventories.edit',
                                             {
-                                                id: client.id,
+                                                id: inventory.id,
                                             },
                                         ),
                                     )
@@ -439,15 +415,15 @@ const List = React.forwardRef((props, ref) => {
                             </IconButton>
                         </Tooltip>
 
-                        {authUser.id !== client.id && (
+                        {authUser.id !== inventory.id && (
                             <Tooltip
                                 title={Lang.get('resources.delete', {
-                                    name: 'Client',
+                                    name: 'Inventory',
                                 })}
                             >
                                 <IconButton
                                     color="secondary"
-                                    onClick={() => handleDeleteClick(client.id)}
+                                    onClick={() => handleDeleteClick(inventory.id)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>
@@ -462,7 +438,7 @@ const List = React.forwardRef((props, ref) => {
         <MasterLayout
             {...childProps}
             loading={loading}
-            pageTitle={Lang.get('navigation.clients')}
+            pageTitle={Lang.get('navigation.productList')}
             primaryAction={primaryAction}
             tabs={tabs}
             loading={loading}
@@ -472,7 +448,7 @@ const List = React.forwardRef((props, ref) => {
         >
             {!loading && data && (
                 <Table
-                    title={Lang.get('navigation.clients')}
+                    title={Lang.get('navigation.productList')}
                     data={data}
                     total={total}
                     columns={columns}
