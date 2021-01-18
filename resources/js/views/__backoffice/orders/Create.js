@@ -18,11 +18,9 @@ import {
 } from '@material-ui/core';
 
 import * as NavigationUtils from '../../../helpers/Navigation';
-import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
 import { Order } from '../../../models';
-import { Profile, Address, Others } from './Forms';
 
 const Create = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);

@@ -1,37 +1,32 @@
 import React, { useState } from 'react';
+import { Formik, Form, isEmptyArray } from 'formik';
 
 import {
+    Grid,
     Paper,
-    Step,
-    StepLabel,
-    Stepper,
     Typography,
+    Button,
     withStyles,
+    FormControl,
+    FormHelperText,
+    Input,
+    InputLabel,
+    TextField
 } from '@material-ui/core';
 
 import * as NavigationUtils from '../../../helpers/Navigation';
-import { User } from '../../../models';
 import { LinearIndeterminate } from '../../../ui/Loaders';
 import { Master as MasterLayout } from '../layouts';
-import { Client } from '../../../models';
-import { Profile, Address, Others } from './Forms';
+import { Inventory } from '../../../models';
+import * as Yup from 'yup';
 
 // function Create(props) {
 const Create = React.forwardRef((props, ref) => {
     const [loading, setLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(0);
     const [formValues, setFormValues] = useState([]);
-    const [client, setClient] = useState({});
+    const [inventory, setInventory] = useState({});
     const [message, setMessage] = useState({});
-
-    /**
-     * This should return back to the previous step.
-     *
-     * @return {undefined}
-     */
-    const handleBack = () => {
-        setActiveStep(activeStep - 1);
-    };
 
     /**
      * Handle form submit, this should send an API response
@@ -51,59 +46,35 @@ const Create = React.forwardRef((props, ref) => {
         setLoading(true);
 
         try {
-            let previousValues = {};
-
-            // Merge the form values here.
-            if (activeStep === 1) {
-                previousValues = formValues.reduce((prev, next) => {
-                    return { ...prev, ...next };
-                });
-
-            }
-            if (activeStep === 2) {
-                previousValues = formValues.reduce((prev, next) => {
-                    return { ...prev, ...next };
-                });
-            }
-
-            // Instruct the API the current step.
-            values.step = activeStep;
-            
-            const client = await Client.store({ ...previousValues, ...values });
+            const inventory = await Inventory.store({ ...previousValues, ...values });
 
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
             newFormValues[activeStep] = values;
-            if (activeStep === 2) {
-                setMessage({
-                    type: 'success',
-                    body: Lang.get('resources.created', {
-                        name: 'Client',
-                    }),
-                    closed: () => setMessage({}),
-                });
-                
-                history.push(
-                    NavigationUtils.route(
-                        'clients.resources.clients.index',
-                    )
-                );
-            }
+
+            setMessage({
+                type: 'success',
+                body: Lang.get('resources.created', {
+                    name: 'Inventory',
+                }),
+                closed: () => setMessage({}),
+            });
+            
+            history.push(
+                NavigationUtils.route(
+                    'inventories.resources.inventories.index',
+                )
+            );
             
             setLoading(false);
             setFormValues(newFormValues);
-            setClient(client);
-            if(activeStep == 2) activeStep = 0;
-            setActiveStep(activeStep + 1);
+            setInventory(inventory);
         } catch (error) {
             if (!error.response) {
                 throw new Error('Unknown error');
             }
-
             const { errors } = error.response.data;
-
             setErrors(errors);
-
             setLoading(false);
         }
     };
@@ -111,70 +82,463 @@ const Create = React.forwardRef((props, ref) => {
     const { classes, ...other } = props;
     const { history } = props;
 
-    const steps = ['Profile', 'Address', 'Others'];
-
     const renderForm = () => {
-        const defaultProfileValues = {
+        const values = {
             name: '',
-            company: '',
-            phone: '',
-            email: '',
-            fax: '',
-            open_balance: '',
-            billing_address: '',
-            shipping_address: '',
-            website: '',
-            note:'',
+            model_no: '',
+            in_house: '',
+            image: '',
+            s_price: '',
+            s_information: '',
+            p_price: '',
+            p_information: '',
+            category_id: '',
+            tax_id:'',
+            quantity: '',
+            type: ''
         };
 
-        switch (activeStep) {
-            case 0:
-                return (
-                    <Profile
-                        {...other}
-                        values={
-                            formValues[0] ? formValues[0] : defaultProfileValues
+        return (
+            <Formik
+                initialValues={values}
+                validationSchema={Yup.object().shape({
+                    name: Yup.string().required(
+                        Lang.get('validation.required', {
+                            attribute: 'name',
+                        }),
+                    ),
+                })}
+                onSubmit={async (values, form) => {
+                    let mappedValues = {};
+                    let valuesArray = Object.values(values);
+
+                    // Format values specially the object ones (i.e Moment)
+                    Object.keys(values).forEach((filter, key) => {
+                        if (
+                            valuesArray[key] !== null &&
+                            typeof valuesArray[key] === 'object' &&
+                            valuesArray[key].hasOwnProperty('_isAMomentObject')
+                        ) {
+                            mappedValues[filter] = moment(valuesArray[key]).format(
+                                'YYYY-MM-DD',
+                            );
+
+                            return;
                         }
-                        handleSubmit={handleSubmit}
-                    />
-                );
 
-            case 1:
-                return (
-                    <Address
-                        {...other}
-                        values={{
-                            billing_address: '',
-                            shipping_address: '',
-                        }}
-                        handleSubmit={handleSubmit}
-                        handleBack={handleBack}
-                    />
-                );
+                        mappedValues[filter] = valuesArray[key];
+                    });
 
-            case 2:
-                return (
-                    <Others
-                        {...other}
-                        values={{
-                            fax: '',
-                            website: '',
-                            open_balance:'',
-                            note: '',
-                        }}
-                        handleSubmit={handleSubmit}
-                        handleBack={handleBack}
-                    />
-                );
-            default:
-                throw new Error('Unknown step!');
-        }
+                    await handleSubmit(mappedValues, form);
+                }}
+                validateOnBlur={false}
+            >
+                {({
+                    values,
+                    errors,
+                    submitCount,
+                    isSubmitting,
+                    handleChange
+                }) => (
+                    <Form>
+                        <Typography variant="h6" gutterBottom>
+                            Inventory Information
+                        </Typography>
+
+                        {/* <Grid container spacing={24}> */}
+                        <Grid container>
+                            <Grid item xs={12} sm={12}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('name')
+                                    }
+                                >
+                                    <InputLabel htmlFor="name">
+                                        Name{' '}
+                                        <span className={classes.required}>*</span>
+                                    </InputLabel>
+
+                                    <Input
+                                        id="name"
+                                        name="name"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('name') && (
+                                            <FormHelperText>
+                                                {errors.name}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        {/* <Grid container spacing={24}> */}
+                        <Grid container>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('model_no')
+                                    }
+                                >
+                                    <InputLabel htmlFor="model_no">Model No.</InputLabel>
+
+                                    <Input
+                                        id="model_no"
+                                        name="model_no"
+                                        value={values.model_no}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('model_no') && (
+                                            <FormHelperText>
+                                                {errors.model_no}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('in_house')
+                                    }
+                                >
+
+                                <InputLabel htmlFor="in_house">In House No.</InputLabel>
+
+                                    <Input
+                                        id="in_house"
+                                        name="in_house"
+                                        value={values.in_house}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('in_house') && (
+                                            <FormHelperText>
+                                                {errors.in_house}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        {/* <Grid container spacing={24}> */}
+                        <Grid container>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('image')
+                                    }
+                                >
+                                    <InputLabel htmlFor="image">
+                                        Image
+                                    </InputLabel>
+
+                                    <Input
+                                        id="image"
+                                        name="image"
+                                        value={values.image}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('image') && (
+                                            <FormHelperText>
+                                                {errors.image}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('category_id')
+                                    }
+                                >
+                                    <InputLabel htmlFor="category_id">
+                                        Category
+                                    </InputLabel>
+
+                                    <Input
+                                        id="category_id"
+                                        name="category_id"
+                                        value={values.category_id}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('category_id') && (
+                                            <FormHelperText>
+                                                {errors.category_id}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        <Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('s_price')
+                                    }
+                                >
+                                    <InputLabel htmlFor="s_price">
+                                        Sale Price
+                                    </InputLabel>
+
+                                    <Input
+                                        id="s_price"
+                                        name="s_price"
+                                        value={values.s_price}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('s_price') && (
+                                            <FormHelperText>
+                                                {errors.s_price}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('s_information')
+                                    }
+                                >
+                                    <InputLabel htmlFor="s_information">
+                                        Sale Information
+                                    </InputLabel>
+
+                                    <Input
+                                        id="s_information"
+                                        name="s_information"
+                                        value={values.s_information}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('s_information') && (
+                                            <FormHelperText>
+                                                {errors.s_information}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        <Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('p_price')
+                                    }
+                                >
+                                    <InputLabel htmlFor="p_price">
+                                        Purchase Price
+                                    </InputLabel>
+
+                                    <Input
+                                        id="p_price"
+                                        name="p_price"
+                                        value={values.p_price}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('p_price') && (
+                                            <FormHelperText>
+                                                {errors.p_price}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('p_information')
+                                    }
+                                >
+                                    <InputLabel htmlFor="p_information">
+                                        Purchase Information
+                                    </InputLabel>
+
+                                    <Input
+                                        id="p_information"
+                                        name="p_information"
+                                        value={values.p_information}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('p_information') && (
+                                            <FormHelperText>
+                                                {errors.p_information}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        <Grid>
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('tax_id')
+                                    }
+                                >
+                                    <InputLabel htmlFor="tax_id">
+                                        Tax
+                                    </InputLabel>
+
+                                    <Input
+                                        id="tax_id"
+                                        name="tax_id"
+                                        value={values.tax_id}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('tax_id') && (
+                                            <FormHelperText>
+                                                {errors.tax_id}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('quantity')
+                                    }
+                                >
+                                    <InputLabel htmlFor="quantity">
+                                        Quantity
+                                    </InputLabel>
+
+                                    <Input
+                                        id="quantity"
+                                        name="quantity"
+                                        value={values.quantity}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('quantity') && (
+                                            <FormHelperText>
+                                                {errors.quantity}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        <Grid>
+                            <Grid item xs={12} sm={12}>
+                                <FormControl
+                                    className={classes.formControl}
+                                    error={
+                                        submitCount > 0 &&
+                                        errors.hasOwnProperty('type')
+                                    }
+                                >
+                                    <InputLabel htmlFor="type">
+                                        Type
+                                    </InputLabel>
+
+                                    <Input
+                                        id="type"
+                                        name="type"
+                                        value={values.type}
+                                        onChange={handleChange}
+                                        fullWidth
+                                    />
+
+                                    {submitCount > 0 &&
+                                        errors.hasOwnProperty('type') && (
+                                            <FormHelperText>
+                                                {errors.type}
+                                            </FormHelperText>
+                                        )}
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        
+
+                        <div className={classes.sectionSpacer} />
+
+                        {/* <Grid container spacing={24} justify="flex-end"> */}
+                        <Grid container justify="flex-end">
+                            <Grid item>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    disabled={
+                                        (errors &&
+                                            Object.keys(errors).length > 0 &&
+                                            submitCount > 0) ||
+                                        isSubmitting
+                                    }
+                                >
+                                    Next
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Form>
+                )}
+            </Formik>
+        );
     };
 
     return (
         <MasterLayout
             {...other}
-            pageTitle="Create a client"
+            pageTitle="Create a inventory"
             tabs={[]}
             message={message}
             ref = {ref}
@@ -190,19 +554,8 @@ const Create = React.forwardRef((props, ref) => {
                             align="center"
                             gutterBottom
                         >
-                            Client Creation
+                            Inventory Creation
                         </Typography>
-
-                        <Stepper
-                            activeStep={activeStep}
-                            className={classes.stepper}
-                        >
-                            {steps.map(name => (
-                                <Step key={name}>
-                                    <StepLabel>{name}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
 
                         {renderForm()}
                     </div>
