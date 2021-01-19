@@ -44,10 +44,10 @@ const Create = React.forwardRef((props, ref) => {
         //Stop here as it is the last step...
 
         setLoading(true);
-
+        
         try {
-            const inventory = await Inventory.store({ ...previousValues, ...values });
-
+            const inventory = await Inventory.store({ ...values });
+            console.log(inventory);
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
             newFormValues[activeStep] = values;
@@ -111,7 +111,7 @@ const Create = React.forwardRef((props, ref) => {
                 onSubmit={async (values, form) => {
                     let mappedValues = {};
                     let valuesArray = Object.values(values);
-                    console.log(values);
+
                     // Format values specially the object ones (i.e Moment)
                     Object.keys(values).forEach((filter, key) => {
                         if (
@@ -575,6 +575,14 @@ const styles = theme => ({
 
     pageContent: {
         padding: theme.spacing(1) * 3,
+    },
+
+    formControl: {
+        minWidth: '96%',
+    },
+
+    required: {
+        color: theme.palette.error.main,
     },
 });
 
