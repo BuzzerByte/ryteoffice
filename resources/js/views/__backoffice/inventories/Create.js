@@ -111,7 +111,7 @@ const Create = React.forwardRef((props, ref) => {
                 onSubmit={async (values, form) => {
                     let mappedValues = {};
                     let valuesArray = Object.values(values);
-
+                    console.log(values);
                     // Format values specially the object ones (i.e Moment)
                     Object.keys(values).forEach((filter, key) => {
                         if (
@@ -525,7 +525,7 @@ const Create = React.forwardRef((props, ref) => {
                                         isSubmitting
                                     }
                                 >
-                                    Next
+                                    Submit
                                 </Button>
                             </Grid>
                         </Grid>
