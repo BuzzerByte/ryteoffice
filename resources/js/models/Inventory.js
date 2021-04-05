@@ -28,8 +28,9 @@ export default class Inventory {
      * @return {object}
      */
     static async store(attributes) {
+        console.log(attributes);
         const response = await axios.post('/api/v1/inventories', attributes);
-        console.log(response);
+        
         if (response.status !== 201) {
             return {};
         }

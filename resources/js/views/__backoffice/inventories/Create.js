@@ -47,7 +47,6 @@ const Create = React.forwardRef((props, ref) => {
         
         try {
             const inventory = await Inventory.store({ ...values });
-            console.log(inventory);
             // After persisting the previous values. Move to the next step...
             let newFormValues = [...formValues];
             newFormValues[activeStep] = values;

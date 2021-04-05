@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Services\InventoryService;
-use Illuminate\Http\Request;
 use App\Inventory;
+use App\Http\Controllers\Api\V1\Controller;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use App\Services\InventoryService;
 use Response;
 
 class InventoryController extends Controller
@@ -66,8 +68,9 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
-            'p_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         
         $file_name = $this->inventories->getFileName($request);

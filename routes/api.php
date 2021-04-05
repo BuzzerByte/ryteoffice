@@ -27,8 +27,6 @@ Route::namespace('Api')->name('api.')->group(function () {
                 Route::post('request', 'ForgotPasswordController@sendResetLinkEmail')->name('request');
                 Route::patch('reset/{token}', 'ResetPasswordController@reset')->name('reset');
             });
-
-            
         });
 
         Route::middleware('auth:api')->group(function () {
@@ -57,7 +55,7 @@ Route::namespace('Api')->name('api.')->group(function () {
             Route::resource('quotations','QuotationController');
             Route::resource('applications','ApplicationController');
             Route::resource('attendances','AttendanceController');
-            Route::resource('awards','AwardController');
+            Route::resource('awards','EmployeeAwardController');
             Route::resource('categories','CategoryController');
             Route::resource('departments','DepartmentController');
             Route::resource('employees','EmployeeController');
@@ -73,9 +71,9 @@ Route::namespace('Api')->name('api.')->group(function () {
             Route::resource('purchaseProducts','PurchaseProductController');
             Route::resource('reimbursements','ReimbursementController');
             Route::resource('roles','RoleController');
-            Route::resource('salaries','SalaryController');
+            Route::resource('salaries','EmployeeSalaryController');
             Route::resource('taxes','TaxController');
-            Route::resource('terminations','TerminationController');
+            Route::resource('terminations','EmployeeTerminationController');
             Route::resource('withdrawals','WithdrawalController');
             Route::resource('workingDays','WorkingDayController');
             Route::resource('workShifts','WorkShiftController');
