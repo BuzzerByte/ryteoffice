@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Formik, Form, isEmptyArray } from 'formik';
 import * as Yup from 'yup';
+import { Table } from '../../../ui';
 
 import {
     Paper,
@@ -29,6 +30,12 @@ const Create = React.forwardRef((props, ref) => {
     const [message, setMessage] = useState({});
     const [anchorEl, setAnchorEl] = useState(null);
     const [client, setClient] = useState([]);
+    const [pagination, setPagination] = useState({});
+    const [sorting, setSorting] = useState({
+        by: 'name',
+        type: 'asc',
+    });
+    const [filters, setFilters] = useState({});
     const { classes, values, ...other } = props;
     const { history } = props;
 
@@ -42,13 +49,45 @@ const Create = React.forwardRef((props, ref) => {
     };
 
     /**
-     * This should return back to the previous step.
+     * Event listener that is triggered when a filter is removed.
+     * This should re-fetch the resource.
+     *
+     * @param {string} key
      *
      * @return {undefined}
      */
-    // const handleBack = () => {
-    //     setActiveStep(activeStep - 1);
-    // };
+     const handleFilterRemove = async key => {
+        const newFilters = { ...filters };
+        delete newFilters[key];
+
+        await fetchUsers({
+            ...defaultQueryString(),
+            filters: newFilters,
+        });
+    };
+    
+    /**
+     * Event listener that is triggered when the filter form is submitted.
+     * This should re-fetch the resource.
+     *
+     * @param {object} values
+     * @param {object} form
+     *
+     * @return {undefined}
+     */
+    const handleFiltering = async (values, { setSubmitting }) => {
+        setSubmitting(false);
+
+        const newFilters = {
+            ...filters,
+            [`${values.filterBy}[${values.filterType}]`]: values.filterValue,
+        };
+        
+        await fetchUsers({
+            ...defaultQueryString(),
+            filters: newFilters,
+        });
+    };
 
     /**
      * Handle form submit, this should send an API response
@@ -104,6 +143,54 @@ const Create = React.forwardRef((props, ref) => {
         }
     };
 
+        /**
+     * Event listener that is triggered when a sortable TableCell is clicked.
+     * This should re-fetch the resource.
+     *
+     * @param {string} column
+     *
+     * @return {undefined}
+     */
+    const handleSorting = async (sortBy, sortType) => {
+        await fetchUsers({
+            ...defaultQueryString(),
+            sortBy,
+            sortType,
+        });
+    };
+
+    /**
+     * Event listener that is triggered when a Table Component's Page is changed.
+     * This should re-fetch the resource.
+     *
+     * @param {number} page
+     *
+     * @return {undefined}
+     */
+    const handlePageChange = async page => {
+        await fetchUsers({
+            ...defaultQueryString(),
+            page,
+        });
+    };
+
+    /**
+     * Event listener that is triggered when a Table Component's Per Page is changed.
+     * This should re-fetch the resource.
+     *
+     * @param {number} perPage
+     * @param {number} page
+     *
+     * @return {undefined}
+     */
+    const handlePerPageChange = async (perPage, page) => {
+        await fetchUsers({
+            ...defaultQueryString(),
+            perPage,
+            page,
+        });
+    };
+
     const primaryAction = {
         text: Lang.get('resources.create', {
             name: 'Invoice',
@@ -139,6 +226,25 @@ const Create = React.forwardRef((props, ref) => {
             setLoading(false);
         }
     };
+
+    const {
+        data: rawData,
+        total,
+        per_page: perPage,
+        current_page: page,
+    } = pagination;
+
+    const columns = [
+        { name: 'Name', property: 'name', sort: true },
+        { name: 'Company', property: 'company', sort: true },
+        { name: 'Email', property: 'email', sort: true },
+        {
+            name: 'Actions',
+            property: 'actions',
+            filter: false,
+            sort: false,
+        },
+    ];
 
     useEffect(()=>{
         fetchData();
@@ -266,6 +372,8 @@ const Create = React.forwardRef((props, ref) => {
                             </Grid>
                         </Grid>
 
+                        <div className={classes.sectionSpacer} />
+
                         <Grid container>
                             <Grid item xs={12} sm={12}>
                                 <FormControl
@@ -299,6 +407,8 @@ const Create = React.forwardRef((props, ref) => {
                                 </FormControl>
                             </Grid>
                         </Grid>
+
+                        <div className={classes.sectionSpacer} />
 
                         <Grid container>
                             <Grid item xs={12} sm={6}>
@@ -365,6 +475,8 @@ const Create = React.forwardRef((props, ref) => {
                                 </FormControl>
                             </Grid>
                         </Grid>
+
+                        <div className={classes.sectionSpacer} />
 
                         <Grid container>
                             <Grid item xs={12} sm={6}>
@@ -439,6 +551,32 @@ const Create = React.forwardRef((props, ref) => {
                                 </Button>
                             </Grid>
                         </Grid>
+                    
+                        {/* {!loading && data && ( */}
+                        {!loading && (
+                            <Table
+                                title={Lang.get('navigation.productAndServices')}
+                                // data={data}
+                                total={total}
+                                columns={columns}
+                                filters={filters}
+                                sortBy={sorting.by}
+                                sortType={sorting.type}
+                                headerCellClicked={cellName =>
+                                    handleSorting(
+                                        cellName,
+                                        sorting.type === 'asc' ? 'desc' : 'asc',
+                                    )
+                                }
+                                page={parseInt(page)}
+                                perPage={parseInt(perPage)}
+                                onChangePage={handlePageChange}
+                                onChangePerPage={handlePerPageChange}
+                                onFilter={handleFiltering}
+                                onFilterRemove={handleFilterRemove}
+                            />
+                        )}
+                        
                     </Form>
                 )}
             </Formik>
@@ -479,6 +617,10 @@ const Create = React.forwardRef((props, ref) => {
 });
 
 const styles = theme => ({
+    sectionSpacer: {
+        marginTop: theme.spacing(1) * 2,
+    },
+
     pageContentWrapper: {
         width: '100%',
         marginTop: theme.spacing(1) * 3,
